@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>R para Estudantes de Marketing</title>
+  <meta name="description" content="R para Estudantes de Marketing" />
+  <meta name="generator" content="bookdown #bookdown:version# and GitBook 2.6.7" />
+
+  <meta property="og:title" content="R para Estudantes de Marketing" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="R para Estudantes de Marketing" />
+  
+  
+  
+
+<meta name="author" content="KU Leuven Marketing department (tradução: Rodrigo Hermont Ozon)" />
+
+
+<meta name="date" content="2020-09-15" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<!--bookdown:link_prev-->
+<!--bookdown:link_next-->
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+<!--bookdown:title:start-->
+<div id="header">
+<h1 class="title">R para Estudantes de Marketing</h1>
+<p class="author"><em>KU Leuven Marketing department (tradução: Rodrigo Hermont Ozon)</em></p>
+<p class="date"><em>2020-09-15</em></p>
+</div>
+<!--bookdown:title:end-->
+
+<!--bookdown:toc:start-->
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+<!--bookdown:toc2:start-->
+<ul>
+<li><a href="#sobre-o-autor-desta-tradução">Sobre o autor desta tradução</a><ul>
+<li><a href="#resumo">Resumo</a></li>
+</ul></li>
+<li><a href="#sobre-este-tutorial">Sobre este tutorial</a><ul>
+<li><a href="#download-e-instalação-do-r-e-do-rstudio">Download e instalação do R e do RStudio</a></li>
+<li><a href="#obtendo-familiaridade-com-o-studio">Obtendo familiaridade com o Studio</a><ul>
+<li><a href="#console-vs.-script">Console vs. script</a></li>
+</ul></li>
+<li><a href="#comentários">Comentários</a></li>
+</ul></li>
+<li><a href="#sobre-o-autor-desta-tradução"><span class="toc-section-number">1</span> Sobre o autor desta tradução</a></li>
+<li><a href="#a-caucus-race-and-a-long-tale"><span class="toc-section-number">2</span> A caucus-race and a long tale</a></li>
+</ul>
+<!--bookdown:toc2:end-->
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R para Estudantes de Marketing</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<!--bookdown:toc:end-->
+<!--bookdown:body:start-->
+<div id="sobre-o-autor-desta-tradução" class="section level1 unlisted unnumbered">
+<h1>Sobre o autor desta tradução</h1>
+<p><img src="https://github.com/rhozon/site/raw/master/me.jpg" /></p>
+<p><em>Rodrigo Hermont Ozon,</em> economista e apaixonado por econometria, pelas aplicações de modelos econômicos a problemas reais e cotidianos vivenciados na sociedade e na realidade do mundo empresarial e corporativo.</p>
+<p>Seus contatos podem ser acessados em:</p>
+<ul>
+<li><p><a href="https://rhozon.github.io/">WebSite</a></p></li>
+<li><p><a href="https://www.linkedin.com/in/rodrigohermontozon/">LinkeDin</a></p></li>
+</ul>
+<div id="resumo" class="section level3 unlisted unnumbered">
+<h3>Resumo</h3>
+<p>O objetivo de traduzir esse tutorial consiste em facilitar o aprendizado e utilização da linguagem estatística R para os profissionais de marketing e demais áreas de negócio que precisam se adequar a uma realidade mutante e movida por um fluxo significativo de informações por todos os lados. Trabalhar e interpretar bem os dados é um desafio computacional para muitos profissionais dessa área; e esta tradução visa cobrir (ainda que superficialmente) tal lacuna.</p>
+<p>Este bookdown foi escrito no inicialmente no <a href="http://www.overleaf.com">overleaf</a> com o pacote knitr <a href="https://bookdown.org/content/1340/">para a página interativa de autoria de KU Leven Marketing Department.</a></p>
+<hr />
+<p>Ao meu amado paizão e professor pra vida inteira, Ronaldo – <em>“Ensina a criança no caminho em que deve andar, e, ainda quando for velho, não se desviará dele.”</em></p>
+
+<p><a href="https://bibliaportugues.com/proverbs/22-6.htm">Provérbios 22:6</a></p>
+<div id="nota-do-tradutor" class="section level4 unlisted unnumbered">
+<h4>Nota do tradutor</h4>
+<p>Esse e-book traduzido é oriundo de <a href="https://bookdown.org/content/1340/"><em>R for marketing students</em></a>.</p>
+
+<p><em>As traduções aqui são somente as transcrições. Não me preocupei em aperfeiçoá-las para a língua portuguesa com maior nível de clareza nos textos. As figuras e imagens não foram traduzidas.</em></p>
+<hr />
+</div>
+</div>
+</div>
+<div id="sobre-este-tutorial" class="section level1 unlisted unnumbered">
+<h1>Sobre este tutorial</h1>
+<p>Neste tutorial, exploraremos o R como uma ferramenta para analisar e visualizar dados. O R é uma linguagem de programação estatística que rapidamente ganhou popularidade em muitos campos científicos. A principal diferença entre o R e outro <em>software</em> estatístico como o SPSS é que o R não possui interface gráfica com o usuário. Não há botões para clicar. O R é executado inteiramente digitando comandos em uma interface de texto. Isso pode parecer assustador, mas, esperançosamente, no final deste tutorial, você verá como o R pode ajudá-lo a fazer uma melhor análise estatística.</p>
+<p>Então, por que estamos usando R e não um dos muitos outros pacotes estatísticos como SPSS, SAS ou Microsoft Excel? Algumas das razões mais importantes:</p>
+<p>Ao contrário de outros <em>softwares</em>, o R é gratuito e de código aberto, e sempre será!
+R é uma linguagem de programação e não uma interface gráfica como o SPSS. Ele realiza análises ou visualizações executando algumas linhas de código. Essas linhas de código podem ser salvas como scripts para repetição futura das análises ou visualizações. Também facilita o compartilhamento de seu trabalho com outras pessoas, que podem aprender ou corrigi-lo se houver algum erro.</p>
+<p>O R tem uma comunidade online muito ativa e útil. Quando você se depara com um problema, muitas vezes basta uma rápida pesquisa no Google para encontrar uma solução de origem coletiva.</p>
+<p>Todas as principais empresas de pesquisa de marketing indicam que estão experimentando o R e que o R é o software do futuro.
+Este tutorial se concentra em análises estatísticas relevantes para estudantes de marketing. Se você quiser uma introdução mais extensa, porém acessível, ao R, confira o excelente e gratuito livro “<a href="http://r4ds.had.co.nz/index.html">R for Data Science</a>”. Este capítulo introdutório e o próximo são baseados na introdução ao R, encontrada nos tutoriais do <a href="https://ourcodingclub.github.io/"><em>Coding Club</em></a>, que também possui muitos outros ótimos tutoriais de R.</p>
+<p>Este tutorial foi escrito no RMarkdown, com a ajuda do incrível <a href="https://bookdown.org/yihui/bookdown/">pacote bookdown.</a></p>
+<p>Questões? Comentários? Sugestões? Envie-me um e-mail: <a href="mailto:samuel.franssens@kuleuven.be">samuel.franssens@kuleuven.be</a></p>
+<div id="download-e-instalação-do-r-e-do-rstudio" class="section level2 unlisted unnumbered">
+<h2>Download e instalação do R e do RStudio</h2>
+<p>Para fornecer algumas funcionalidades extras e facilitar um pouco a transição, usaremos um programa chamado R Studio como um front-end gráfico para o R.</p>
+<p>Você pode fazer o download do R em <a href="https://cloud.r-project.org/">https://cloud.r-project.org/</a>. Selecione o link apropriado para o seu sistema operacional e instale o R no seu computador (no Windows, você primeiro precisa clicar em “base”).</p>
+<p>Em seguida, faça o download do R Studio em <a href="https://www.rstudio.com/products/rstudio/download/">https://www.rstudio.com/products/rstudio/download/</a>. Selecione o instalador para a versão gratuita e instale o R Studio (nota: você precisa ter o R instalado primeiro).</p>
+</div>
+<div id="obtendo-familiaridade-com-o-studio" class="section level2 unlisted unnumbered">
+<h2>Obtendo familiaridade com o Studio</h2>
+<div id="console-vs.-script" class="section level3 unlisted unnumbered">
+<h3>Console vs. script</h3>
+<p>Ao abrir o R Studio, você verá uma janela como a acima. Você pode digitar o código diretamente no console (janela inferior esquerda) - basta digitar seu código após o prompt (<span class="math inline">\(&gt;\)</span>) e pressionar enter no final da linha para executar o código. Você também pode escrever seu código no arquivo de script (a janela superior esquerda). Se você não ver uma janela com um arquivo de script, abra uma clicando em Arquivo, Novo arquivo, R Script. Para executar uma linha de código a partir do seu script, pressione Ctrl + R ou Ctrl + Enter no Windows e Cmd + Enter no Mac ou use o botão ‘Executar’ no canto superior direito da janela do script.</p>
+<p>O código digitado diretamente no console não será salvo pelo R. O código digitado em um arquivo de script pode ser salvo como um registro reproduzível de sua análise. Se você estiver trabalhando no console e quiser editar ou executar novamente uma linha de código anterior, pressione a seta para cima. Se você estiver trabalhando em um script, lembre-se de clicar em Salvar frequentemente (Arquivo, Salvar), para que você realmente salve o seu script!</p>
+<p>É melhor trabalhar em arquivos de script. Também é altamente recomendável salvar seu arquivo de script em uma pasta que é automaticamente copiada pelo software de compartilhamento de arquivos que oferece a funcionalidade “versões anteriores” (o <a href="https://www.dropbox.com/business/landing-t61fl-v2?_tk=paid_sem_goog_biz_b&amp;_camp=1411326950&amp;_kw=dropbox%7Ce&amp;_ad=389658655593%7C%7Cc&amp;gclid=CjwKCAjwtqj2BRBYEiwAqfzur1JwrYwkXrKtxYHo_nfrnCMIUBe-IpmrIgCZmTt0l3gibHmKgokdvBoChx8QAvD_BwE">Dropbox</a> é provavelmente o mais famoso; aqui estão algumas <a href="https://medium.com/@Vanina/dropbox-alternatives-top-5best-cloud-storage-services-2017-a703af7d7796">alternativas</a>. Isso lhe dará a opção de restaurar versões salvas anteriormente de seus arquivos sempre que você salvar algo por engano. Como qualquer peça escrita, os roteiros se beneficiam de estrutura e clareza - a <a href="https://ourcodingclub.github.io/2017/04/25/etiquette.html">Coding Etiquette do Coding Club</a> oferece mais conselhos sobre isso.</p>
+</div>
+</div>
+<div id="comentários" class="section level2 unlisted unnumbered">
+<h2>Comentários</h2>
+<p>Ao escrever um script, é muito importante adicionar comentários para descrever o que você está fazendo e por quê. Você pode fazer isso inserindo um # na frente de uma linha de texto. Comece seu script gravando quem está escrevendo o roteiro, a data e o objetivo principal - no capítulo introdutório, aprenderemos sobre as acomodações do Airbnb na Bélgica. Aqui está um exemplo:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Aprendendo a importar e explorar dados e criar graficos investigando as acomodacoes do Airbnb na Belgica</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="co"># Escrito por Samuel Franssens 28/01/2018</span></span></code></pre></div>
+<!--chapter:end:index.Rmd-->
+</div>
+</div>
+<div id="sobre-o-autor-desta-tradução" class="section level1">
+<h1><span class="header-section-number">1</span> Sobre o autor desta tradução</h1>
+<p><em>Rodrigo Hermont Ozon,</em> economista e apaixonado por econometria, pelas aplicações de modelos econômicos a problemas reais e cotidianos vivenciados na sociedade e na realidade do mundo empresarial e corporativo.</p>
+<p>Seus contatos podem ser acessados em:</p>
+<ul>
+<li><p><a href="https://rhozon.github.io/">https://rhozon.github.io/</a></p></li>
+<li><p><a href="\faLinkedin">https://www.linkedin.com/in/rodrigohermontozon/</a></p></li>
+</ul>
+<!--chapter:end:02-tears.Rmd-->
+</div>
+<div id="a-caucus-race-and-a-long-tale" class="section level1">
+<h1><span class="header-section-number">2</span> A caucus-race and a long tale</h1>
+<!--chapter:end:03-race.Rmd-->
+</div>
+<!--bookdown:body:end-->
+            </section>
+
+          </div>
+        </div>
+      </div>
+<!--bookdown:link_prev-->
+<!--bookdown:link_next-->
+    </div>
+  </div>
+<!--bookdown:config-->
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -99,3 +99,25 @@ Ao escrever um script, é muito importante adicionar comentários para descrever
 # Aprendendo a importar e explorar dados e criar graficos investigando as acomodacoes do Airbnb na Belgica
 # Escrito por Samuel Franssens 28/01/2018
 ```
+
+<!--chapter:end:index.Rmd-->
+
+# Sobre o autor desta tradução
+
+
+
+_Rodrigo Hermont Ozon,_ economista e apaixonado por econometria, pelas aplicações de modelos econômicos a problemas reais e cotidianos vivenciados na sociedade e na realidade do mundo empresarial e corporativo.
+
+Seus contatos podem ser acessados em:
+
+
+- [https://rhozon.github.io/](https://rhozon.github.io/)
+
+- [https://www.linkedin.com/in/rodrigohermontozon/](\faLinkedin) 
+
+<!--chapter:end:02-tears.Rmd-->
+
+# A caucus-race and a long tale
+
+<!--chapter:end:03-race.Rmd-->
+

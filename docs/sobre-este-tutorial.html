@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>R para Estudantes de Marketing</title>
-  <meta name="description" content="R para Estudantes de Marketing" />
+  <title>Sobre este tutorial | R para Estudantes de Marketing</title>
+  <meta name="description" content="Sobre este tutorial | R para Estudantes de Marketing" />
   <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="R para Estudantes de Marketing" />
+  <meta property="og:title" content="Sobre este tutorial | R para Estudantes de Marketing" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="R para Estudantes de Marketing" />
+  <meta name="twitter:title" content="Sobre este tutorial | R para Estudantes de Marketing" />
   
   
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="sobre-este-tutorial.html"/>
+<link rel="prev" href="index.html"/>
+<link rel="next" href="sobre-o-autor-desta-tradução.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -165,35 +165,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">R para Estudantes de Marketing</h1>
-<p class="author"><em>KU Leuven Marketing department (tradução: Rodrigo Hermont Ozon)</em></p>
-<p class="date"><em>2020-09-15</em></p>
+<div id="sobre-este-tutorial" class="section level1 unlisted unnumbered">
+<h1>Sobre este tutorial</h1>
+<p>Neste tutorial, exploraremos o R como uma ferramenta para analisar e visualizar dados. O R é uma linguagem de programação estatística que rapidamente ganhou popularidade em muitos campos científicos. A principal diferença entre o R e outro <em>software</em> estatístico como o SPSS é que o R não possui interface gráfica com o usuário. Não há botões para clicar. O R é executado inteiramente digitando comandos em uma interface de texto. Isso pode parecer assustador, mas, esperançosamente, no final deste tutorial, você verá como o R pode ajudá-lo a fazer uma melhor análise estatística.</p>
+<p>Então, por que estamos usando R e não um dos muitos outros pacotes estatísticos como SPSS, SAS ou Microsoft Excel? Algumas das razões mais importantes:</p>
+<p>Ao contrário de outros <em>softwares</em>, o R é gratuito e de código aberto, e sempre será!
+R é uma linguagem de programação e não uma interface gráfica como o SPSS. Ele realiza análises ou visualizações executando algumas linhas de código. Essas linhas de código podem ser salvas como scripts para repetição futura das análises ou visualizações. Também facilita o compartilhamento de seu trabalho com outras pessoas, que podem aprender ou corrigi-lo se houver algum erro.</p>
+<p>O R tem uma comunidade online muito ativa e útil. Quando você se depara com um problema, muitas vezes basta uma rápida pesquisa no Google para encontrar uma solução de origem coletiva.</p>
+<p>Todas as principais empresas de pesquisa de marketing indicam que estão experimentando o R e que o R é o software do futuro.
+Este tutorial se concentra em análises estatísticas relevantes para estudantes de marketing. Se você quiser uma introdução mais extensa, porém acessível, ao R, confira o excelente e gratuito livro “<a href="http://r4ds.had.co.nz/index.html">R for Data Science</a>”. Este capítulo introdutório e o próximo são baseados na introdução ao R, encontrada nos tutoriais do <a href="https://ourcodingclub.github.io/"><em>Coding Club</em></a>, que também possui muitos outros ótimos tutoriais de R.</p>
+<p>Este tutorial foi escrito no RMarkdown, com a ajuda do incrível <a href="https://bookdown.org/yihui/bookdown/">pacote bookdown.</a></p>
+<p>Questões? Comentários? Sugestões? Envie-me um e-mail: <a href="mailto:samuel.franssens@kuleuven.be">samuel.franssens@kuleuven.be</a></p>
+<div id="download-e-instalação-do-r-e-do-rstudio" class="section level2 unlisted unnumbered">
+<h2>Download e instalação do R e do RStudio</h2>
+<p>Para fornecer algumas funcionalidades extras e facilitar um pouco a transição, usaremos um programa chamado R Studio como um front-end gráfico para o R.</p>
+<p>Você pode fazer o download do R em <a href="https://cloud.r-project.org/">https://cloud.r-project.org/</a>. Selecione o link apropriado para o seu sistema operacional e instale o R no seu computador (no Windows, você primeiro precisa clicar em “base”).</p>
+<p>Em seguida, faça o download do R Studio em <a href="https://www.rstudio.com/products/rstudio/download/">https://www.rstudio.com/products/rstudio/download/</a>. Selecione o instalador para a versão gratuita e instale o R Studio (nota: você precisa ter o R instalado primeiro).</p>
 </div>
-<div id="sobre-o-autor-desta-tradução" class="section level1 unlisted unnumbered">
-<h1>Sobre o autor desta tradução</h1>
-<p><img src="https://github.com/rhozon/site/raw/master/me.jpg" /></p>
-<p><em>Rodrigo Hermont Ozon,</em> economista e apaixonado por econometria, pelas aplicações de modelos econômicos a problemas reais e cotidianos vivenciados na sociedade e na realidade do mundo empresarial e corporativo.</p>
-<p>Seus contatos podem ser acessados em:</p>
-<ul>
-<li><p><a href="https://rhozon.github.io/">WebSite</a></p></li>
-<li><p><a href="https://www.linkedin.com/in/rodrigohermontozon/">LinkeDin</a></p></li>
-</ul>
-<div id="resumo" class="section level3 unlisted unnumbered">
-<h3>Resumo</h3>
-<p>O objetivo de traduzir esse tutorial consiste em facilitar o aprendizado e utilização da linguagem estatística R para os profissionais de marketing e demais áreas de negócio que precisam se adequar a uma realidade mutante e movida por um fluxo significativo de informações por todos os lados. Trabalhar e interpretar bem os dados é um desafio computacional para muitos profissionais dessa área; e esta tradução visa cobrir (ainda que superficialmente) tal lacuna.</p>
-<p>Este bookdown foi escrito no inicialmente no <a href="http://www.overleaf.com">overleaf</a> com o pacote knitr <a href="https://bookdown.org/content/1340/">para a página interativa de autoria de KU Leven Marketing Department.</a></p>
-<hr />
-<p>Ao meu amado paizão e professor pra vida inteira, Ronaldo – <em>“Ensina a criança no caminho em que deve andar, e, ainda quando for velho, não se desviará dele.”</em></p>
-
-<p><a href="https://bibliaportugues.com/proverbs/22-6.htm">Provérbios 22:6</a></p>
-<div id="nota-do-tradutor" class="section level4 unlisted unnumbered">
-<h4>Nota do tradutor</h4>
-<p>Esse e-book traduzido é oriundo de <a href="https://bookdown.org/content/1340/"><em>R for marketing students</em></a>.</p>
-
-<p><em>As traduções aqui são somente as transcrições. Não me preocupei em aperfeiçoá-las para a língua portuguesa com maior nível de clareza nos textos. As figuras e imagens não foram traduzidas.</em></p>
-<hr />
+<div id="obtendo-familiaridade-com-o-studio" class="section level2 unlisted unnumbered">
+<h2>Obtendo familiaridade com o Studio</h2>
+<div id="console-vs.-script" class="section level3 unlisted unnumbered">
+<h3>Console vs. script</h3>
+<p>Ao abrir o R Studio, você verá uma janela como a acima. Você pode digitar o código diretamente no console (janela inferior esquerda) - basta digitar seu código após o prompt (<span class="math inline">\(&gt;\)</span>) e pressionar enter no final da linha para executar o código. Você também pode escrever seu código no arquivo de script (a janela superior esquerda). Se você não ver uma janela com um arquivo de script, abra uma clicando em Arquivo, Novo arquivo, R Script. Para executar uma linha de código a partir do seu script, pressione Ctrl + R ou Ctrl + Enter no Windows e Cmd + Enter no Mac ou use o botão ‘Executar’ no canto superior direito da janela do script.</p>
+<p>O código digitado diretamente no console não será salvo pelo R. O código digitado em um arquivo de script pode ser salvo como um registro reproduzível de sua análise. Se você estiver trabalhando no console e quiser editar ou executar novamente uma linha de código anterior, pressione a seta para cima. Se você estiver trabalhando em um script, lembre-se de clicar em Salvar frequentemente (Arquivo, Salvar), para que você realmente salve o seu script!</p>
+<p>É melhor trabalhar em arquivos de script. Também é altamente recomendável salvar seu arquivo de script em uma pasta que é automaticamente copiada pelo software de compartilhamento de arquivos que oferece a funcionalidade “versões anteriores” (o <a href="https://www.dropbox.com/business/landing-t61fl-v2?_tk=paid_sem_goog_biz_b&amp;_camp=1411326950&amp;_kw=dropbox%7Ce&amp;_ad=389658655593%7C%7Cc&amp;gclid=CjwKCAjwtqj2BRBYEiwAqfzur1JwrYwkXrKtxYHo_nfrnCMIUBe-IpmrIgCZmTt0l3gibHmKgokdvBoChx8QAvD_BwE">Dropbox</a> é provavelmente o mais famoso; aqui estão algumas <a href="https://medium.com/@Vanina/dropbox-alternatives-top-5best-cloud-storage-services-2017-a703af7d7796">alternativas</a>. Isso lhe dará a opção de restaurar versões salvas anteriormente de seus arquivos sempre que você salvar algo por engano. Como qualquer peça escrita, os roteiros se beneficiam de estrutura e clareza - a <a href="https://ourcodingclub.github.io/2017/04/25/etiquette.html">Coding Etiquette do Coding Club</a> oferece mais conselhos sobre isso.</p>
 </div>
+</div>
+<div id="comentários" class="section level2 unlisted unnumbered">
+<h2>Comentários</h2>
+<p>Ao escrever um script, é muito importante adicionar comentários para descrever o que você está fazendo e por quê. Você pode fazer isso inserindo um # na frente de uma linha de texto. Comece seu script gravando quem está escrevendo o roteiro, a data e o objetivo principal - no capítulo introdutório, aprenderemos sobre as acomodações do Airbnb na Bélgica. Aqui está um exemplo:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="sobre-este-tutorial.html#cb1-1"></a><span class="co"># Aprendendo a importar e explorar dados e criar graficos investigando as acomodacoes do Airbnb na Belgica</span></span>
+<span id="cb1-2"><a href="sobre-este-tutorial.html#cb1-2"></a><span class="co"># Escrito por Samuel Franssens 28/01/2018</span></span></code></pre></div>
+
 </div>
 </div>
             </section>
@@ -201,8 +204,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-
-<a href="sobre-este-tutorial.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="sobre-o-autor-desta-tradução.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
