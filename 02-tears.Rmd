@@ -1,12 +1,480 @@
-# Sobre o autor desta tradução
+# Introdução ao R {.unlisted .unnumbered}
+
+Neste capítulo introdutório, você aprenderá:
+
+
+- como importar dados
+- como manipular um conjunto de dados com o operador de canal
+- como resumir um conjunto de dados
+- como fazer gráficos de dispersão e histogramas
+
+## Importando dados {.unlisted .unnumbered}
+
+Neste capítulo, exploraremos um conjunto de dados publicamente disponível dos dados do Airbnb. Encontramos esses dados [aqui.](http://tomslee.net/airbnb-data-collection-get-the-data) (Estes são dados reais “raspados” do airbnb.com em julho de 2017. Isso significa que o proprietário do site criou um script para coletar automaticamente esses dados no site airbnb.com. Essa é uma das muitas coisas que você também pode fazer no R. Mas primeiro vamos aprender o básico.) Você pode baixar o conjunto de dados clicando com o botão direito do mouse [neste link](http://users.telenet.be/samuelfranssens/tutorial_data/tomslee_airbnb_belgium_1454_2017-07-14.csv), selecionando “Salvar link como…” (ou algo semelhante) e salvando o arquivo .csv em um diretório no disco rígido. Como mencionado na [introdução ](https://bookdown.org/content/1340/getting-familiar-with-rstudio.html#console_script), é uma boa ideia salvar seu trabalho em um diretório que é automaticamente copiado pelo software de compartilhamento de arquivos. Mais tarde, salvaremos nosso script no mesmo diretório.
+
+## Importando arquivos .csv {.unlisted .unnumbered}
+
+![](https://bookdown.org/content/1340/images/rstudio2.png)
+
+Para importar dados para o R, clique em Import Dataset e depois em From text (readr). Uma nova janela será exibida. Clique em Procurar e encontre seu arquivo de dados. Certifique-se de que Primeira linha como nomes esteja selecionada (isso diz ao R para tratar a primeira linha dos seus dados como os títulos das colunas) e clique em Importar. Após clicar em importar, o R Studio abre uma guia Visualizador. Isso mostra seus dados em uma planilha.
+
+Alguns computadores salvam arquivos .csv com ponto e vírgula (;) em vez de vírgulas (,) como separadores ou "delimitadores". Isso geralmente acontece quando o inglês não é o primeiro ou o único idioma do seu computador. Se seus arquivos estiverem separados por ponto e vírgula, clique em Importar conjunto de dados e encontre seu arquivo de dados, mas agora escolha Ponto e vírgula no delimitador do menu suspenso.
+
+Nota: se você não salvou o conjunto de dados clicando com o botão direito do mouse no link e selecionando “Salvar link como…”, mas clicou com o botão esquerdo do mouse no link, seu navegador pode ter acabado abrindo o conjunto de dados. Você pode salvar o conjunto de dados pressionando Ctrl + S. Observe, no entanto, que seu navegador pode acabar salvando o conjunto de dados como um arquivo .txt. É importante alterar a extensão do seu arquivo nos argumentos para o comando read\_csv abaixo.
+
+
+## Ajustando seu diretório de trabalho  {.unlisted .unnumbered}
+
+Depois de importar seus dados com Import Dataset, verifique a janela do console. Você verá o comando para abrir o Visualizador (View()) e, uma linha acima, verá o comando que lê os dados. Copie o comando que lê os dados do console para o seu script. No meu caso, fica assim:
+
+```{r}
+#tomslee_airbnb_belgium_1454_2017_07_14 <- read.csv("c:/Dropbox/work/teaching/R/data/tomslee_airbnb_belgium_1454_2017-07-14.csv") 
+# Mude .csv para .txt se necessario
+
+airbnb<-read.csv(file="http://users.telenet.be/samuelfranssens/tutorial_data/tomslee_airbnb_belgium_1454_2017-07-14.csv", sep=",", head=TRUE)
+```
+
+Esta linha tem a seguinte leitura (da direita para a esquerda): a funcao read\_csv deve ler o arquivo tomslee\_airbnb\_belgium\_1454\_2017-07-14.csv no diretorio c: / Dropbox / work / teaching / R / data / (voce vera um diretorio diferente aqui ) Em seguida, R deve atribuir ($<-$) esses dados a um objeto chamado tomslee\_airbnb\_belgium\_1454\_2017\_07\_14.
+
+Antes de explicar cada um desses conceitos, vamos simplificar esta linha de código:
+
+```{r}
+#setwd("c:/Dropbox/work/teaching/R/data/") # Ajusta o diretorio de trabalho para onde o R precisa apontar para o arquivo .csv
+#airbnb <- read_csv("tomslee_airbnb_belgium_1454_2017-07-14.csv") 
+# read_csv agora nao precisa mais de um diretorio e somente precisa de um nome de arquivo
+# Atribuimos os dados a um objeto com um nome mais simples: airbnb em vez de tomslee_airbnb_belgium_1454_2017_07_14
+```
+
+O comando setwd informa ao R onde está o seu diretório de trabalho. Seu diretório de trabalho é uma pasta no seu computador onde o R procurará dados, onde as plotagens serão salvas etc. Defina seu diretório de trabalho na pasta em que os dados foram armazenados. Agora, o arquivo read\_csv não requer mais um diretório.
+
+Você só precisa definir seu diretório de trabalho uma vez, na parte superior do seu script. Você pode verificar se está definido corretamente executando getwd(). Observe que em um computador com Windows, os caminhos de arquivo possuem barras invertidas que separam as pastas ("C: \ folder \ data"). 
+
+No entanto, o caminho do arquivo digitado no R deve usar barras ("C: / folder / data").
+
+Salve este script no diretório de trabalho (no meu caso: c: / Dropbox / trabalho / ensino / R / dados /)). No futuro, você pode simplesmente executar essas linhas de código para importar seus dados em vez de clicar em Importar conjunto de dados (a execução de linhas de código é muito mais rápida do que apontar e clicar - uma das vantagens do uso do R).
+
+Não se esqueça de carregar o pacote tidyverse na parte superior do seu script (mesmo antes de definir o diretório de trabalho) com a biblioteca (tidyverse).
+
+
+## Atribuindo dados a objetos {.unlisted .unnumbered}
+
+Observe a seta $<-$ no meio da linha que importou o arquivo .csv:
+
+```{r}
+#airbnb <- read_csv("tomslee_airbnb_belgium_1454_2017-07-14.csv")
+```
+
+$<-$ é o operador de atribuição. Nesse caso, atribuímos o conjunto de dados (ou seja, os dados que lemos do arquivo .csv) a um objeto chamado airbnb. Um objeto é uma estrutura de dados. Todos os objetos que você criar serão exibidos no painel Ambiente (a janela superior direita). O R Studio fornece um atalho para escrever $<-$: Alt + - (no Windows). É uma boa ideia aprender esse atalho de cor.
+
+Quando você importa dados para o R, ele se torna um objeto chamado quadro de dados. Um quadro de dados é como uma tabela ou uma planilha do Excel. Tem duas dimensões: linhas e colunas. Geralmente, as linhas representam suas observações, as colunas representam as diferentes variáveis. Quando seus dados consistem em apenas uma dimensão (por exemplo, uma sequência de números ou palavras), eles são armazenados em um segundo tipo de objeto chamado vetor. Mais tarde, aprenderemos como criar vetores.
+
+## Importando arquivos do Excel {.unlisted .unnumbered}
+
+O R funciona melhor com arquivos .csv (valores separados por vírgula). No entanto, os dados geralmente são armazenados como um arquivo do Excel (você pode baixar o conjunto de dados do Airbnb como um arquivo do Excel aqui). O R também pode lidar com isso, mas você precisará carregar primeiro um pacote chamado readxl (este pacote faz parte do pacote tidyverse, mas não é carregado com a biblioteca (tidyverse) porque não é um pacote tidyverse principal):
+
+```{r}
+library(readxl) # carrega o pacote
+
+#airbnb.excel <- read_excel (path = "tomslee_airbnb_belgium_1454_2017-07-14.xlsx", sheet = "Sheet1")
+# verifique se o arquivo do Excel está salvo no seu diretório de trabalho
+
+# você também pode deixar de fora o path = & sheet =
+# então o comando se torna: read_excel ("tomslee_airbnb_belgium_1454_2017-07-14.xlsx", "Sheet1")
+```
+
+read\_excel é uma função do pacote readxl. São necessários dois argumentos: o primeiro é o nome do arquivo e o segundo é o nome da planilha do Excel que você deseja ler.
+
+## Lendo os dados do Airbnb {.unlisted .unnumbered}
+
+Nosso conjunto de dados contém informações sobre quartos na Bélgica listados no airbnb.com. Sabemos para cada sala (identificada por room\_id): quem é o hóspede (host\_id), que tipo de sala é (room\_type), onde está localizada (country, city, neighborhood e até a latitude e longitude exata), como muitas críticas que recebeu (\reviews), como as pessoas estavam satisfeitas (overall\_satisfaction), preço (price) e características dos quartos (accommodates, bedrooms, bathrooms, minstay).
+
+Uma etapa realmente importante é verificar se seus dados foram importados corretamente. É uma boa prática sempre inspecionar seus dados. Você vê algum valor ausente, os números e os nomes fazem sentido? Se você começar imediatamente com a análise, corre o risco de ter que refazê-la porque os dados não foram lidos corretamente, ou pior, analisando dados errados sem perceber.
+
+
+```{r}
+airbnb[1:10,] # Visualiza o conteudo do conjunto de dados da Airbnb para as dez primeiras linhas
+
+```
+
+O R nos diz que estamos lidando com uma __tibble_ (essa é apenas outra palavra para quadro de dados) com 17651 linhas ou observações e 20 colunas ou variáveis. Para cada coluna, é fornecido o tipo da variável: int (inteiro), chr (caractere), dbl (duplo), dttm (data e hora). Variáveis inteiras e duplas armazenam números (inteiro para números redondos, duplicam para números com decimais), variáveis de caracteres armazenam letras, variáveis de data e hora armazenam datas e / ou horas.
+
+O R imprime apenas os dados das dez primeiras linhas e o número máximo de colunas que cabem na tela. Se, no entanto, você deseja inspecionar todo o conjunto de dados, clique duas vezes no objeto airbnb no painel Ambiente (a janela superior direita) para abrir uma aba Visualizador ou executar a Visualização (airbnb). Observe o V maiúsculo no comando Visualizar. O R sempre diferencia maiúsculas de minúsculas!
+
+Você também pode usar o comando print para solicitar mais (ou menos) linhas e colunas na janela do console:
+
+```{r}
+# Imprima 25 linhas (defina como Inf para imprimir todas as linhas) e defina a largura como 100 para ver mais colunas.
+# Observe que as colunas que nao cabem na primeira tela com 25 linhas
+# sao impressos abaixo das 25 linhas iniciais.
+
+#print (airbnb, n = 25, width = 100)
+
+airbnb[1:25,]
+```
 
 
 
-_Rodrigo Hermont Ozon,_ economista e apaixonado por econometria, pelas aplicações de modelos econômicos a problemas reais e cotidianos vivenciados na sociedade e na realidade do mundo empresarial e corporativo.
+## Manipulando dataframes {.unlisted .unnumbered}
+### Transformando variáveis {.unlisted .unnumbered}
+#### Fatoração {.unlisted .unnumbered}
 
-Seus contatos podem ser acessados em:
+Vamos observar nosso dataset novamente:
+
+```{r}
+airbnb[1:20,1:8]
+```
+
+Vimos que room\_id e host\_id são "identificadores" ou rótulos que identificam as observações. São nomes (neste caso, apenas números) para as salas(quartos) e hóspedes específicos. No entanto, vemos que o R os trata como números inteiros, ou seja, como números. Isso significa que poderíamos adicionar os room\_id‘s de duas salas diferentes e obter um novo número. No entanto, isso não faria muito sentido, porque os room\_id são apenas rótulos.
+
+Certifique-se de que R trate os identificadores como rótulos, em vez de números, fatorando-os. Observe o operador \$. Este operador muito importante nos permite selecionar variáveis específicas de um quadro de dados, neste caso room\_id e host\_id.
+
+```{r}
+airbnb$room_id_F <- factor(airbnb$room_id)
+airbnb$host_id_F <- factor(airbnb$host_id)
+```
+
+Uma variável de fator é semelhante a uma variável de caractere, pois armazena letras. Os fatores são mais úteis para variáveis que podem assumir apenas um número de categorias pré-determinadas. Eles devem, por exemplo, ser usados para variáveis dependentes categóricas - por exemplo, se uma venda foi feita ou não: venda _versus_ não venda. Você pode pensar em fatores como variáveis que armazenam rótulos. Os rótulos reais não são tão importantes (não nos importamos se uma venda é chamada de venda ou sucesso ou algo mais), apenas os usamos para fazer uma distinção entre categorias diferentes. É muito importante fatorar variáveis inteiras que representam variáveis independentes ou dependentes categóricas, porque, se não fatorarmos essas variáveis, elas serão tratadas como contínuas em vez de variáveis categóricas nas análises. Por exemplo, uma variável pode representar uma venda como 1 e uma não-venda como 0. Nesse caso, é importante informar ao R que essa variável deve ser tratada como uma variável categórica em vez de contínua.
+
+As variáveis de caractere são diferentes das variáveis de fator, pois não são apenas rótulos para categorias. Um exemplo de variável de caractere seria uma variável que armazena as respostas dos entrevistados para uma pergunta em aberto. Aqui, o conteúdo real é importante (nós nos importamos se alguém descreve sua estadia no Airbnb como muito boa ou excelente ou outra coisa).
+
+No conjunto de dados do airbnb, os room\_id não são rigorosamente determinados de antemão, mas definitivamente são rótulos e não devem ser tratados como números. Por isso, pedimos para o R convertê-los em fatores. Vamos dar uma olhada no conjunto de dados do airbnb novamente para verificar se o tipo dessas variáveis mudou após fatorar:
+
+```{r}
+str(airbnb)
+```
+
+Vemos que o tipo de room\_id e host\_id agora é fct (fator).
+
+### Transformações numéricas {.unlisted .unnumbered}
+
+Vamos dar uma olhada nas classificações das acomodações:
+
+```{r}
+# Uso a funcao head para garantir que o R mostre apenas as primeiras classificacoes.
+# Caso contrario, teremos uma lista muito longa de classificacoes..
+head(airbnb$overall_satisfaction)
+```
+
+Vemos que as classificações estão em uma escala de 0 a 5. Se preferirmos ter classificações em uma escala de 0 a 100, poderíamos simplesmente multiplicar as classificações por 20:
+
+```{r}
+airbnb$overall_satisfaction_100 <- airbnb$overall_satisfaction * 20 
+# Perceba que criamos uma nova variavel overall_satisfaction_100.
+# A variavel original overall_satisfaction continua inalterada.
 
 
-- [https://rhozon.github.io/](https://rhozon.github.io/)
+# Você tambem pode inspecionar todo o conjunto de dados com o Visualizador
+# e veja se ha uma nova coluna a direita.
+head(airbnb$overall_satisfaction_100) 
+```
 
-- [https://www.linkedin.com/in/rodrigohermontozon/](\faLinkedin) 
+### Transformando variáveis com a função mutate {.unlisted .unnumbered}
+
+Também podemos transformar variáveis com a função mutate:
+
+```{r}
+library(dplyr)#pacote da funcao mutate
+airbnb <- mutate(airbnb, 
+                 room_id_F = factor(room_id), host_id_F = factor(host_id),
+                 overall_satisfaction_100 = overall_satisfaction * 20)
+```
+
+Isso instrui R a pegar o conjunto de dados do airbnb, criar uma nova variável room\_id\_F que deve ser a fatoração de room\_id, uma nova variável host\_id\_F que deve ser a fatoração de host\_id e uma nova variável overall\_satisfaction\_100 que deve ser a satisfação geral vezes 20. O conjunto de dados com esses mutações (transformações) devem ser atribuídas ao objeto airbnb. Observe que não precisamos usar o operador \$ aqui, porque a função mutate sabe desde seu primeiro argumento (airbnb) onde procurar determinadas variáveis e, portanto, não precisamos especificá-lo posteriormente com airbnb \$. Uma vantagem do uso da função mutate é que ela mantém bem todas as transformações desejadas dentro de um comando. Outra grande vantagem do uso do mutate será discutida na seção sobre o [operador pipe.](https://bookdown.org/content/1340/pipe.html#pipe)
+
+### Incluindo ou excluindo e renomeando variáveis (colunas) {.unlisted .unnumbered}
+
+
+Se olharmos para os dados, também podemos ver que country é NA, o que significa que não está disponível ou está ausente. city é sempre a Bélgica (o que está errado porque a Bélgica é um país, não uma cidade) e o borought contém as informações da cidade. Vamos corrigir esses erros removendo a variável country de nosso conjunto de dados e renomeando city e borought. Também excluiremos o survey\_id porque essa variável é constante nas observações e não a usaremos no restante da análise:
+
+```{r}
+airbnb <- select(airbnb, -country, -survey_id) 
+# Diga R para remover country & survey_id do quadro de dados do airbnb incluindo um sinal de menos antes dessas variáveis.
+# Atribua novamente esse novo quadro de dados ao objeto airbnb.
+str(airbnb) # Agora você verá que o country e o survey_id se foram.
+
+airbnb <- rename(airbnb, country = city, city = borough) 
+# Diga ao R para renomear algumas variáveis do quadro de dados do airbnb e reatribuir esse novo quadro de dados ao objeto do airbnb.
+# Nota: a sintaxe é um pouco contra-intuitiva: novo nome de variável (country) = nome da variável antiga (city)!
+str(airbnb) # country = Bélgica agora e cidade se refere a cidades
+```
+
+### Incluindo ou excluindo observações (linhas) {.unlisted .unnumbered}
+
+#### Criando um vetor com c() {.unlisted .unnumbered}
+
+[Mais adiante](https://bookdown.org/content/1340/graphs.html#graphs), faremos um gráfico dos preços do Airbnb nas dez maiores cidades da Bélgica (em termos de população): Bruxelas, Antuérpia, Gent, Charleroi, Liège, Bruges, Namur, Lovaina, Mons e Aalst.
+
+Para isso, precisamos criar um objeto de dados que tenha apenas dados para as dez maiores cidades. Para fazer isso, primeiro precisamos de um vetor com os nomes das dez maiores cidades, para que, na próxima seção, possamos dizer ao R para incluir apenas os dados dessas cidades:
+
+```{r}
+topten <- c("Brussel","Antwerpen","Gent","Charleroi","Liege","Brugge","Namur","Leuven","Mons","Aalst") # Cria um vetor com as 10 maiores cidades
+topten # Mostra esse vetor.
+```
+
+
+[Lembre-se](https://bookdown.org/content/1340/airbnbdata.html#assignment) de que um vetor é uma estrutura de dados unidimensional (diferente de um quadro de dados que possui duas dimensões, isto é, colunas e linhas). Usamos o operador \c() para criar um vetor que chamamos de topten. \c() é uma abreviação de concatenar, que significa juntar as coisas. O vetor topten é um vetor de strings (palavras). Deve haver aspas entre as strings. Um vetor de números, no entanto, não requer aspas:
+
+
+```{r}
+number_vector <- c(0,2,4,6)
+number_vector
+```
+
+Qualquer vetor que você criará aparecerá como um objeto no painel Ambiente (janela superior direita).
+
+##### Incluindo ou excluindo observações com a função filter {.unlisted .unnumbered}
+
+Para armazenar apenas os dados das dez maiores cidades, precisamos do operador \%in\% do pacote Hmisc:
+
+```{r}
+#install.packages(Hmisc)
+library(Hmisc)
+```
+
+Agora podemos usar a função de filtro para instruir o R a reter os dados apenas das dez maiores cidades:
+
+```{r}
+airbnb.topten <- filter(airbnb, city %in% topten)
+# Filtre o quadro de dados do airbnb para manter apenas as cidades no vetor topten.
+# Armazene o conjunto de dados filtrado em um objeto chamado airbnb.topten.
+
+# Entao, estamos criando um novo conjunto de dados airbnb.topten, que eh um subconjunto do conjunto de dados airbnb.
+# Verifique o painel Ambiente para ver se o conjunto de dados airbnb.topten tem menos observacoes que o conjunto de dados airbnb,
+# porque soh possui dados para as dez maiores cidades.
+
+```
+
+
+## O operador pipe {.unlisted .unnumbered}
+
+
+### Uma maneira de escrever o código {.unlisted .unnumbered}
+
+Até agora, aprendemos (entre outras coisas) como ler um arquivo .csv e atribuí-lo a um objeto, como transformar variáveis com a função mutate, como remover variáveis (colunas) do nosso conjunto de dados com a função select, como renomear variáveis com a função rename e como remover observações (linhas) do nosso conjunto de dados com a função de filter:
+
+
+```{r}
+#airbnb <- read_csv("tomslee_airbnb_belgium_1454_2017-07-14.csv")
+#airbnb <- mutate(airbnb, room_id_F = factor(room_id), host_id_F = factor(host_id), overall_satisfaction_100 = overall_satisfaction * 20)
+#airbnb <- select(airbnb, -country, -survey_id)
+#airbnb <- rename(airbnb, country = city, city = borough)
+#airbnb <- filter(airbnb, city %in% c("Brussel","Antwerpen","Gent","Charleroi","Liege","Brugge","Namur","Leuven","Mons","Aalst")) 
+```
+
+Ao ler este código, vemos que em cada linha substituímos o objeto airbnb. Não há nada de fundamentalmente errado com essa maneira de escrever, mas estamos repetindo elementos do código porque as últimas quatro linhas consistem em uma atribuição (airbnb $<-$) e em funções (mutate, select, rename, filter) que têm o mesmo primeiro argumento (o objeto airbnb criado na linha anterior).
+
+
+#### Uma maneira melhor de escrever seus códigos {.unlisted .unnumbered}
+
+Existe uma maneira mais elegante de escrever código. Envolve um operador chamado _pipe_ ($\%>\%$). Ele nos permite reescrever nossa sequência usual de operações:
+
+```{r}
+#airbnb <- read_csv("tomslee_airbnb_belgium_1454_2017-07-14.csv")
+#airbnb <- mutate(airbnb, room_id_F = factor(room_id), host_id_F = factor(host_id), overall_satisfaction_100 = overall_satisfaction * 20)
+#airbnb <- select(airbnb, -country, -survey_id)
+#airbnb <- rename(airbnb, country = city, city = borough)
+#airbnb <- filter(airbnb, city %in% c("Brussel","Antwerpen","Gent","Charleroi","Liege","Brugge","Namur","Leuven","Mons","Aalst")) 
+```
+
+como:
+
+```{r}
+airbnb <- airbnb %>% 
+  mutate(room_id_F = factor(room_id), 
+         host_id_F = factor(host_id), 
+         overall_satisfaction_100 = overall_satisfaction * 20) #%>% 
+  #select(-country, -survey_id) %>% 
+  #rename(country = city, city = borough) %>% 
+  #filter(city %in% c("Brussel","Antwerpen","Gent","Charleroi","Liege","Brugge","Namur","Leuven","Mons","Aalst")) 
+```
+
+Isso pode ser lido de maneira natural: “leia o arquivo csv, depois faça a mutação, selecione, renomeie e depois filtre”. Começamos lendo um arquivo .csv. Em vez de armazená-lo em um objeto intermediário, fornecemos como o primeiro argumento para a função mutate usando o _operador pipe_: %$>$%. É uma boa idéia aprender o atalho para %$>$% de cór: *Ctrl $+$ Shift $+$ M*. 
+
+A função mutate usa os mesmos argumentos acima (crie room\_id\_F, que deve ser uma fatoração de room\_id, etc), mas agora não o fazemos precisamos fornecer o primeiro argumento (em qual conjunto de dados queremos que o mutate funcione). O primeiro argumento seria o quadro de dados resultante da leitura do arquivo .csv na linha anterior, mas isso é automaticamente transmitido como primeiro argumento a ser alterado pelo operador pipe. O operador pipe obtém a saída do que está no lado esquerdo do tubo e fornece isso como o primeiro argumento para o que está no lado direito do pipe (ou seja, a próxima linha de código).
+
+Depois de criar novas variáveis com mutate, descartamos algumas variáveis com select. Novamente, a função select usa os mesmos argumentos acima (soltar país e survey\_id), mas não fornecemos o primeiro argumento (de qual conjunto de dados devemos retirar variáveis), porque ele já é fornecido pelo pipe na linha anterior. Continuamos da mesma maneira e renomeamos algumas variáveis com rename e descartamos algumas observações com o filter.
+
+A escrita de código com o operador de pipe explora a estrutura semelhante de mutate, select, rename, filter, que são as funções mais importantes para manipulação de dados. O primeiro argumento para todas essas funções é o quadro de dados no qual ela deve operar. Agora, esse primeiro argumento pode ser deixado de fora, porque é fornecido pelo operador pipe. No restante deste tutorial, escreveremos código usando o operador de pipe, pois melhora consideravelmente a legibilidade do nosso código.
+
+
+## Agrupando e resumindo {.unlisted .unnumbered}
+
+Vamos trabalhar no conjunto de dados completo novamente. Até agora, seu script deve ficar assim:
+
+```{r}
+library(tidyverse)
+#setwd("c:/Dropbox/work/teaching/R/data/") # Direciona seu diretorio de trabalho 
+
+airbnb <- airbnb %>% 
+  mutate(room_id = factor(room_id), host_id = factor(host_id)) #%>% # Nao criamos uma nova variavel room_id_F, mas substituimos room_id com sua fatoracao. O mesmo para host_id.
+  #select(-country, -survey_id) %>% # dropa country e survey_id
+  #rename(country = city, city = borough) # renomeia city e borough
+
+# Deixamos de lado a transformacao da overall_satisfaction
+# e deixamos de fora o comando filter para garantir que nao retenhamos apenas os dados das dez cidades mais populosas
+```
+
+### Tabelas de frequência {.unlisted .unnumbered}
+
+Cada observação em nosso conjunto de dados é uma sala ou quarto; portanto, sabemos que nossos dados contêm informações sobre 17651 quartos. Digamos que queremos saber quantos quartos existem por cidade:
+
+```{r}
+airbnb%>%
+ group_by(city)%>% # Use a funcao group_by para agrupar o quadro de dados do airbnb (fornecido pelo pipe na linha anterior) por cidade
+ summarise(nr_per_city = n()) # Resuma este objeto agrupado (fornecido pelo pipe na linha anterior): peca ao R para criar uma nova variavel nr_per_city que possua o numero de observacoes em cada grupo (cidade)
+```
+
+Dizemos ao R para pegar o objeto airbnb, agrupá-lo por cidade e resumi-lo (summarise). O resumo que queremos é o número de observações por grupo. Nesse caso, as cidades formam os grupos. Os grupos sempre serão a primeira coluna em nossa saída. Obtemos o número de observações por grupo com a função n(). Esses números são armazenados em uma nova coluna denominada nr\_per\_city.
+
+
+Como você pode ver, essas frequências são classificadas em ordem alfabética por cidade. Em vez disso, podemos classificá-los pelo número de quartos por cidade:
+
+```{r}
+airbnb %>% 
+  group_by(city) %>%
+  summarise(nr_per_city = n()) %>%
+  arrange(nr_per_city) # Usa a funcao arrange para classificar em uma coluna selecionada
+```
+
+
+Mostra a cidade com o menor número de quartos no topo. Para exibir a cidade com mais quartos no topo, classifique em ordem decrescente:
+
+```{r}
+airbnb %>% 
+  group_by(city) %>%
+  summarise(nr_per_city = n()) %>%
+  arrange(desc(nr_per_city)) # Classifica por ordem descendente
+```
+
+Você verá que a capital Bruxelas tem mais quartos em oferta, seguidos por Antwerpen e Gent. Observe que isso é muito parecido com trabalhar com a Tabela Dinâmica no Excel. Você poderia ter feito tudo isso no Excel, mas isso tem várias desvantagens, especialmente ao trabalhar com grandes conjuntos de dados como o nosso: você não tem registro do que clicou, de como classificou os dados e do que pode ter copiado ou excluído. No Excel, é mais fácil cometer erros acidentais sem perceber do que no R. No R, você tem seu script, para poder voltar e verificar todas as etapas de sua análise.
+
+Nota: você também poderia ter feito isso sem o operador pipe:
+
+```{r}
+airbnb.grouped <- group_by(airbnb, city)
+airbnb.grouped.summary <- summarise(airbnb.grouped, nr_per_city = n())
+arrange(airbnb.grouped.summary, desc(nr_per_city))
+```
+
+Mas espero que você concorde que o código que usa o operador de pipe é mais fácil de ler. Além disso, sem o operador pipe, você acabará criando muitos objetos desnecessários, como airbnb.grouped e airbnb.grouped.summary.
+
+### Estatísticas Descritivas {.unlisted .unnumbered}
+
+Digamos que, além das frequências por cidade, também desejemos o preço médio por cidade. Queremos que isso seja classificado em ordem decrescente pelo preço médio. Além disso, agora queremos armazenar as frequências e médias em um objeto (na seção anterior, não armazenamos a tabela de frequências em um objeto):
+
+```{r}
+airbnb.summary <- airbnb %>% # Armazena este resumo em um objeto chamado airbnb.summary.
+  group_by(city) %>%
+  summarise(nr_per_city = n(), average_price = mean(price)) %>% # Aqui informamos ao R para criar outra variavel chamada average_price que nos fornece a media dos precos por grupo (city)
+  
+arrange(desc(average_price)) # Agora organiza por average_price e mostra o maior preco praticado dentre os demais
+
+# Veja o painel de Ambiente para visualizar se ha agora um novo objeto chamado airbnb.summary.
+
+# Ao inves de apenas rodar airbnb.summary, 
+# Eu o envolvi em um comando de print e defini n como Inf para ver todas as linhas.
+
+print(airbnb.summary, n = Inf) 
+```
+
+Talvez surpreendentemente, as três principais cidades mais caras são Bastogne, Philippeville e Verviers. Talvez o preço médio dessas cidades seja alto por causa de discrepâncias. 
+
+Vamos calcular algumas estatísticas mais descritivas para ver se nosso palpite está correto:
+
+```{r}
+airbnb %>%
+  group_by(city) %>%
+  summarise(nr_per_city = n(), 
+            average_price = mean(price),
+            median_price = median(price), # calcula a mediana dos precos por grupo (city) 
+            max_price = max(price)) %>% # calcula o preco maximo por grupo (city)
+  arrange(desc(median_price),
+          desc(max_price)) # ordena em descendente pela mediana de preco entao pelo preco maximo
+```
+
+Vemos que duas das três cidades com o preço médio mais alto (Verviers e Bastogne) também estão entre as cinco principais cidades com as medianas de preços; portanto, o seu preço médio alto não se deve apenas a alguns quartos com preços extremamente altos (embora tenham o preço mais alto, quartos nessas cidades são muito caros).
+
+### Exportando (summaries) dos dados {.unlisted .unnumbered}
+
+
+Às vezes, você pode querer exportar dados ou um resumo dos dados. Vamos salvar nossos dados ou resumo em um arquivo .csv (no Excel, podemos convertê-lo em um arquivo do Excel, se quisermos):
+
+
+```{r}
+# o primeiro argumento eh o objeto que voce deseja armazenar, o segundo eh o nome que voce deseja atribuir ao arquivo (nao esqueca a extensao .csv)
+# use write_csv2 quando voce tiver um computador belga (AZERTY), caso contrário, os números decimais não serão armazenados como números
+
+# armazenamento de dados
+write_excel_csv(airbnb, "airbnb.csv")
+write_excel_csv2(airbnb, "airbnb.csv")
+
+# armazenamento de summary
+write_excel_csv(airbnb.summary, "airbnb_summary.csv")
+write_excel_csv2(airbnb.summary, "airbnb_summary.csv")
+```
+
+O arquivo será salvo no seu diretório de trabalho.
+
+
+
+### Gráficos {.unlisted .unnumbered}
+
+Faremos gráficos dos dados das dez cidades mais populosas da Bélgica. Se você possui o conjunto de dados completo do Airbnb em sua memória (verifique o painel Ambiente), basta filtrá-lo:
+
+```{r}
+airbnb.topten <- airbnb %>% 
+  filter(city %in% c("Brussel","Antwerpen","Gent","Charleroi","Liege","Brugge","Namur","Leuven","Mons","Aalst")) # lembre-se de que voce tera que carregar o pacote Hmisc para usar o operador %in%.
+```
+
+Se você acabou de iniciar uma nova sessão R, também pode reler o arquivo .csv executando o código na seção da seção anterior.
+
+### Diagrama de dispersão (scatterplot) {.unlisted .unnumbered}
+
+Vamos criar um _scatterplot_  dos preços por cidade:
+
+
+```{r}
+ggplot(data = airbnb.topten, mapping = aes(x = city, y = price)) + 
+  geom_point()
+```
+
+Se tudo correr bem, uma plotagem deve aparecer no canto inferior direito da tela. As figuras são feitas com o comando ggplot. Na primeira linha, você diz ao ggplot quais dados devem ser usados para criar um gráfico e quais variáveis devem aparecer no eixo X e no eixo Y. Dizemos para colocar cidade no eixo X e preço no eixo Y. A especificação do eixo X e do eixo Y sempre deve vir como argumentos para uma função aes, que por sua vez é fornecida como um argumento para a função mapping (mapeamento). Na segunda linha, você diz ao ggplot para desenhar pontos (geom\_point).
+
+Ao criar um gráfico, lembre-se de sempre adicionar um $+$ no final de cada linha de código que compõe o gráfico, exceto o último (adicionar o $+$ no início de uma linha não funcionará).
+
+O gráfico não é muito informativo porque muitos pontos são desenhados um sobre o outro.
+
+### Jitter {.unlisted .unnumbered}
+
+Vamos adicionar o gráfico do tipo jitter aos nossos pontos:
+
+```{r}
+ggplot(data = airbnb.topten, mapping = aes(x = city, y = price)) + 
+  geom_jitter() # O mesmo codigo de antes mas agora mudamos geom_point para geom_jitter.
+```
+
+
+Em vez de solicitar pontos com geom\_point(), agora solicitamos pontos com jitter adicionado com geom\_jitter(). Jitter é um valor aleatório que é adicionado a cada coordenada X e Y, de modo que os pontos de dados não sejam desenhados um sobre o outro. Observe que fazemos isso apenas para tornar o gráfico mais informativo (compare-o com o gráfico de dispersão anterior, onde muitos pontos de dados são desenhados um sobre o outro); não altera os valores reais em nosso conjunto de dados.
+
+
+### Histograma {.unlisted .unnumbered}
+
+Ainda não está claro. Parece que a distribuição do preço está correta. Isso significa que a distribuição do preço não é normal. Uma distribuição normal tem dois recursos principais.
+
+Uma primeira característica é que existem mais valores próximos à média do que valores distantes da média.
+
+Em outras palavras, valores extremos não ocorrem com muita frequência.
+
+Uma segunda característica é que a distribuição é simétrica. Em outras palavras, o número de valores abaixo da média é igual ao número de valores acima da média. Em uma distribuição distorcida, existem valores extremos em apenas um lado da distribuição. No caso de inclinação à direita, isso significa que existem valores extremos no lado direito da distribuição.
+
+No nosso caso, isso significa que existem algumas listagens do Airbnb com preços muito altos. Isso aumenta a média da distribuição, de modo que as listagens não sejam mais normalmente distribuídas em torno da média.
+
+Vamos desenhar um histograma dos preços:
+
+```{r}
+ggplot(data = airbnb.topten, mapping = aes(x = price)) + # Observe que nao temos mais uma cidade x =. O preco deve estar no eixo X e as frequencias dos precos devem estar no eixo Y
+  geom_histogram() # Eixo Y = frequencia dos valores no eixo X
+```
+
+
+

@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Introdução ao R | R para Estudantes de Marketing</title>
+  <meta name="description" content="Introdução ao R | R para Estudantes de Marketing" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Introdução ao R | R para Estudantes de Marketing" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Introdução ao R | R para Estudantes de Marketing" />
+  
+  
+  
+
+<meta name="author" content="KU Leuven Marketing department (tradução: Rodrigo Hermont Ozon)" />
+
+
+<meta name="date" content="2020-09-15" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="sobre-este-tutorial.html"/>
+<link rel="next" href="a-caucus-race-and-a-long-tale.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">R para Estudantes de Marketing</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Sobre o autor desta tradução</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#resumo"><i class="fa fa-check"></i>Resumo</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="sobre-este-tutorial.html"><a href="sobre-este-tutorial.html"><i class="fa fa-check"></i>Sobre este tutorial</a><ul>
+<li class="chapter" data-level="" data-path="sobre-este-tutorial.html"><a href="sobre-este-tutorial.html#download-e-instalação-do-r-e-do-rstudio"><i class="fa fa-check"></i>Download e instalação do R e do RStudio</a></li>
+<li class="chapter" data-level="" data-path="sobre-este-tutorial.html"><a href="sobre-este-tutorial.html#obtendo-familiaridade-com-o-studio"><i class="fa fa-check"></i>Obtendo familiaridade com o Studio</a><ul>
+<li class="chapter" data-level="" data-path="sobre-este-tutorial.html"><a href="sobre-este-tutorial.html#console-vs.-script"><i class="fa fa-check"></i>Console vs. script</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="sobre-este-tutorial.html"><a href="sobre-este-tutorial.html#comentários"><i class="fa fa-check"></i>Comentários</a></li>
+<li class="chapter" data-level="" data-path="sobre-este-tutorial.html"><a href="sobre-este-tutorial.html#pacotes"><i class="fa fa-check"></i>Pacotes</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html"><i class="fa fa-check"></i>Introdução ao R</a><ul>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#importando-dados"><i class="fa fa-check"></i>Importando dados</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#importando-arquivos-.csv"><i class="fa fa-check"></i>Importando arquivos .csv</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#ajustando-seu-diretório-de-trabalho"><i class="fa fa-check"></i>Ajustando seu diretório de trabalho</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#atribuindo-dados-a-objetos"><i class="fa fa-check"></i>Atribuindo dados a objetos</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#importando-arquivos-do-excel"><i class="fa fa-check"></i>Importando arquivos do Excel</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#lendo-os-dados-do-airbnb"><i class="fa fa-check"></i>Lendo os dados do Airbnb</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#manipulando-dataframes"><i class="fa fa-check"></i>Manipulando dataframes</a><ul>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#transformando-variáveis"><i class="fa fa-check"></i>Transformando variáveis</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#transformações-numéricas"><i class="fa fa-check"></i>Transformações numéricas</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#transformando-variáveis-com-a-função-mutate"><i class="fa fa-check"></i>Transformando variáveis com a função mutate</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#incluindo-ou-excluindo-e-renomeando-variáveis-colunas"><i class="fa fa-check"></i>Incluindo ou excluindo e renomeando variáveis (colunas)</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#incluindo-ou-excluindo-observações-linhas"><i class="fa fa-check"></i>Incluindo ou excluindo observações (linhas)</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#o-operador-pipe"><i class="fa fa-check"></i>O operador pipe</a><ul>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#uma-maneira-de-escrever-o-código"><i class="fa fa-check"></i>Uma maneira de escrever o código</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#agrupando-e-resumindo"><i class="fa fa-check"></i>Agrupando e resumindo</a><ul>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#tabelas-de-frequência"><i class="fa fa-check"></i>Tabelas de frequência</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#estatísticas-descritivas"><i class="fa fa-check"></i>Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#exportando-summaries-dos-dados"><i class="fa fa-check"></i>Exportando (summaries) dos dados</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#gráficos"><i class="fa fa-check"></i>Gráficos</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#diagrama-de-dispersão-scatterplot"><i class="fa fa-check"></i>Diagrama de dispersão (scatterplot)</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#jitter"><i class="fa fa-check"></i>Jitter</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#histograma"><i class="fa fa-check"></i>Histograma</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="a-caucus-race-and-a-long-tale.html"><a href="a-caucus-race-and-a-long-tale.html"><i class="fa fa-check"></i><b>1</b> A caucus-race and a long tale</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R para Estudantes de Marketing</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introdução-ao-r" class="section level1 unlisted unnumbered">
+<h1>Introdução ao R</h1>
+<p>Neste capítulo introdutório, você aprenderá:</p>
+<ul>
+<li>como importar dados</li>
+<li>como manipular um conjunto de dados com o operador de canal</li>
+<li>como resumir um conjunto de dados</li>
+<li>como fazer gráficos de dispersão e histogramas</li>
+</ul>
+<div id="importando-dados" class="section level2 unlisted unnumbered">
+<h2>Importando dados</h2>
+<p>Neste capítulo, exploraremos um conjunto de dados publicamente disponível dos dados do Airbnb. Encontramos esses dados <a href="http://tomslee.net/airbnb-data-collection-get-the-data">aqui.</a> (Estes são dados reais “raspados” do airbnb.com em julho de 2017. Isso significa que o proprietário do site criou um script para coletar automaticamente esses dados no site airbnb.com. Essa é uma das muitas coisas que você também pode fazer no R. Mas primeiro vamos aprender o básico.) Você pode baixar o conjunto de dados clicando com o botão direito do mouse <a href="http://users.telenet.be/samuelfranssens/tutorial_data/tomslee_airbnb_belgium_1454_2017-07-14.csv">neste link</a>, selecionando “Salvar link como…” (ou algo semelhante) e salvando o arquivo .csv em um diretório no disco rígido. Como mencionado na <a href="https://bookdown.org/content/1340/getting-familiar-with-rstudio.html#console_script">introdução</a>, é uma boa ideia salvar seu trabalho em um diretório que é automaticamente copiado pelo software de compartilhamento de arquivos. Mais tarde, salvaremos nosso script no mesmo diretório.</p>
+</div>
+<div id="importando-arquivos-.csv" class="section level2 unlisted unnumbered">
+<h2>Importando arquivos .csv</h2>
+<p><img src="https://bookdown.org/content/1340/images/rstudio2.png" /></p>
+<p>Para importar dados para o R, clique em Import Dataset e depois em From text (readr). Uma nova janela será exibida. Clique em Procurar e encontre seu arquivo de dados. Certifique-se de que Primeira linha como nomes esteja selecionada (isso diz ao R para tratar a primeira linha dos seus dados como os títulos das colunas) e clique em Importar. Após clicar em importar, o R Studio abre uma guia Visualizador. Isso mostra seus dados em uma planilha.</p>
+<p>Alguns computadores salvam arquivos .csv com ponto e vírgula (;) em vez de vírgulas (,) como separadores ou “delimitadores”. Isso geralmente acontece quando o inglês não é o primeiro ou o único idioma do seu computador. Se seus arquivos estiverem separados por ponto e vírgula, clique em Importar conjunto de dados e encontre seu arquivo de dados, mas agora escolha Ponto e vírgula no delimitador do menu suspenso.</p>
+<p>Nota: se você não salvou o conjunto de dados clicando com o botão direito do mouse no link e selecionando “Salvar link como…”, mas clicou com o botão esquerdo do mouse no link, seu navegador pode ter acabado abrindo o conjunto de dados. Você pode salvar o conjunto de dados pressionando Ctrl + S. Observe, no entanto, que seu navegador pode acabar salvando o conjunto de dados como um arquivo .txt. É importante alterar a extensão do seu arquivo nos argumentos para o comando read_csv abaixo.</p>
+</div>
+<div id="ajustando-seu-diretório-de-trabalho" class="section level2 unlisted unnumbered">
+<h2>Ajustando seu diretório de trabalho</h2>
+<p>Depois de importar seus dados com Import Dataset, verifique a janela do console. Você verá o comando para abrir o Visualizador (View()) e, uma linha acima, verá o comando que lê os dados. Copie o comando que lê os dados do console para o seu script. No meu caso, fica assim:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="introdução-ao-r.html#cb8-1"></a><span class="co">#tomslee_airbnb_belgium_1454_2017_07_14 &lt;- read.csv(&quot;c:/Dropbox/work/teaching/R/data/tomslee_airbnb_belgium_1454_2017-07-14.csv&quot;) </span></span>
+<span id="cb8-2"><a href="introdução-ao-r.html#cb8-2"></a><span class="co"># Mude .csv para .txt se necessario</span></span>
+<span id="cb8-3"><a href="introdução-ao-r.html#cb8-3"></a></span>
+<span id="cb8-4"><a href="introdução-ao-r.html#cb8-4"></a>airbnb&lt;-<span class="kw">read.csv</span>(<span class="dt">file=</span><span class="st">&quot;http://users.telenet.be/samuelfranssens/tutorial_data/tomslee_airbnb_belgium_1454_2017-07-14.csv&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;,&quot;</span>, <span class="dt">head=</span><span class="ot">TRUE</span>)</span></code></pre></div>
+<p>Esta linha tem a seguinte leitura (da direita para a esquerda): a funcao read_csv deve ler o arquivo tomslee_airbnb_belgium_1454_2017-07-14.csv no diretorio c: / Dropbox / work / teaching / R / data / (voce vera um diretorio diferente aqui ) Em seguida, R deve atribuir (<span class="math inline">\(&lt;-\)</span>) esses dados a um objeto chamado tomslee_airbnb_belgium_1454_2017_07_14.</p>
+<p>Antes de explicar cada um desses conceitos, vamos simplificar esta linha de código:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="introdução-ao-r.html#cb9-1"></a><span class="co">#setwd(&quot;c:/Dropbox/work/teaching/R/data/&quot;) # Ajusta o diretorio de trabalho para onde o R precisa apontar para o arquivo .csv</span></span>
+<span id="cb9-2"><a href="introdução-ao-r.html#cb9-2"></a><span class="co">#airbnb &lt;- read_csv(&quot;tomslee_airbnb_belgium_1454_2017-07-14.csv&quot;) </span></span>
+<span id="cb9-3"><a href="introdução-ao-r.html#cb9-3"></a><span class="co"># read_csv agora nao precisa mais de um diretorio e somente precisa de um nome de arquivo</span></span>
+<span id="cb9-4"><a href="introdução-ao-r.html#cb9-4"></a><span class="co"># Atribuimos os dados a um objeto com um nome mais simples: airbnb em vez de tomslee_airbnb_belgium_1454_2017_07_14</span></span></code></pre></div>
+<p>O comando setwd informa ao R onde está o seu diretório de trabalho. Seu diretório de trabalho é uma pasta no seu computador onde o R procurará dados, onde as plotagens serão salvas etc. Defina seu diretório de trabalho na pasta em que os dados foram armazenados. Agora, o arquivo read_csv não requer mais um diretório.</p>
+<p>Você só precisa definir seu diretório de trabalho uma vez, na parte superior do seu script. Você pode verificar se está definido corretamente executando getwd(). Observe que em um computador com Windows, os caminhos de arquivo possuem barras invertidas que separam as pastas (“C:  folder  data”).</p>
+<p>No entanto, o caminho do arquivo digitado no R deve usar barras (“C: / folder / data”).</p>
+<p>Salve este script no diretório de trabalho (no meu caso: c: / Dropbox / trabalho / ensino / R / dados /)). No futuro, você pode simplesmente executar essas linhas de código para importar seus dados em vez de clicar em Importar conjunto de dados (a execução de linhas de código é muito mais rápida do que apontar e clicar - uma das vantagens do uso do R).</p>
+<p>Não se esqueça de carregar o pacote tidyverse na parte superior do seu script (mesmo antes de definir o diretório de trabalho) com a biblioteca (tidyverse).</p>
+</div>
+<div id="atribuindo-dados-a-objetos" class="section level2 unlisted unnumbered">
+<h2>Atribuindo dados a objetos</h2>
+<p>Observe a seta <span class="math inline">\(&lt;-\)</span> no meio da linha que importou o arquivo .csv:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="introdução-ao-r.html#cb10-1"></a><span class="co">#airbnb &lt;- read_csv(&quot;tomslee_airbnb_belgium_1454_2017-07-14.csv&quot;)</span></span></code></pre></div>
+<p><span class="math inline">\(&lt;-\)</span> é o operador de atribuição. Nesse caso, atribuímos o conjunto de dados (ou seja, os dados que lemos do arquivo .csv) a um objeto chamado airbnb. Um objeto é uma estrutura de dados. Todos os objetos que você criar serão exibidos no painel Ambiente (a janela superior direita). O R Studio fornece um atalho para escrever <span class="math inline">\(&lt;-\)</span>: Alt + - (no Windows). É uma boa ideia aprender esse atalho de cor.</p>
+<p>Quando você importa dados para o R, ele se torna um objeto chamado quadro de dados. Um quadro de dados é como uma tabela ou uma planilha do Excel. Tem duas dimensões: linhas e colunas. Geralmente, as linhas representam suas observações, as colunas representam as diferentes variáveis. Quando seus dados consistem em apenas uma dimensão (por exemplo, uma sequência de números ou palavras), eles são armazenados em um segundo tipo de objeto chamado vetor. Mais tarde, aprenderemos como criar vetores.</p>
+</div>
+<div id="importando-arquivos-do-excel" class="section level2 unlisted unnumbered">
+<h2>Importando arquivos do Excel</h2>
+<p>O R funciona melhor com arquivos .csv (valores separados por vírgula). No entanto, os dados geralmente são armazenados como um arquivo do Excel (você pode baixar o conjunto de dados do Airbnb como um arquivo do Excel aqui). O R também pode lidar com isso, mas você precisará carregar primeiro um pacote chamado readxl (este pacote faz parte do pacote tidyverse, mas não é carregado com a biblioteca (tidyverse) porque não é um pacote tidyverse principal):</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="introdução-ao-r.html#cb11-1"></a><span class="kw">library</span>(readxl) <span class="co"># carrega o pacote</span></span>
+<span id="cb11-2"><a href="introdução-ao-r.html#cb11-2"></a></span>
+<span id="cb11-3"><a href="introdução-ao-r.html#cb11-3"></a><span class="co">#airbnb.excel &lt;- read_excel (path = &quot;tomslee_airbnb_belgium_1454_2017-07-14.xlsx&quot;, sheet = &quot;Sheet1&quot;)</span></span>
+<span id="cb11-4"><a href="introdução-ao-r.html#cb11-4"></a><span class="co"># verifique se o arquivo do Excel está salvo no seu diretório de trabalho</span></span>
+<span id="cb11-5"><a href="introdução-ao-r.html#cb11-5"></a></span>
+<span id="cb11-6"><a href="introdução-ao-r.html#cb11-6"></a><span class="co"># você também pode deixar de fora o path = &amp; sheet =</span></span>
+<span id="cb11-7"><a href="introdução-ao-r.html#cb11-7"></a><span class="co"># então o comando se torna: read_excel (&quot;tomslee_airbnb_belgium_1454_2017-07-14.xlsx&quot;, &quot;Sheet1&quot;)</span></span></code></pre></div>
+<p>read_excel é uma função do pacote readxl. São necessários dois argumentos: o primeiro é o nome do arquivo e o segundo é o nome da planilha do Excel que você deseja ler.</p>
+</div>
+<div id="lendo-os-dados-do-airbnb" class="section level2 unlisted unnumbered">
+<h2>Lendo os dados do Airbnb</h2>
+<p>Nosso conjunto de dados contém informações sobre quartos na Bélgica listados no airbnb.com. Sabemos para cada sala (identificada por room_id): quem é o hóspede (host_id), que tipo de sala é (room_type), onde está localizada (country, city, neighborhood e até a latitude e longitude exata), como muitas críticas que recebeu (), como as pessoas estavam satisfeitas (overall_satisfaction), preço (price) e características dos quartos (accommodates, bedrooms, bathrooms, minstay).</p>
+<p>Uma etapa realmente importante é verificar se seus dados foram importados corretamente. É uma boa prática sempre inspecionar seus dados. Você vê algum valor ausente, os números e os nomes fazem sentido? Se você começar imediatamente com a análise, corre o risco de ter que refazê-la porque os dados não foram lidos corretamente, ou pior, analisando dados errados sem perceber.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="introdução-ao-r.html#cb12-1"></a>airbnb[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,] <span class="co"># Visualiza o conteudo do conjunto de dados da Airbnb para as dez primeiras linhas</span></span></code></pre></div>
+<pre><code>##     room_id survey_id  host_id   room_type country    city  borough neighborhood reviews
+## 1   5141135      1454 20676997 Shared room      NA Belgium     Gent         Gent       9
+## 2  13128333      1454 46098805 Shared room      NA Belgium  Brussel   Schaarbeek       2
+## 3   8298885      1454 30924336 Shared room      NA Belgium  Brussel       Elsene      12
+## 4  13822088      1454 81440431 Shared room      NA Belgium Oostende  Middelkerke      19
+## 5  18324301      1454 14294054 Shared room      NA Belgium  Brussel   Anderlecht       5
+## 6  12664969      1454 68810179 Shared room      NA Belgium  Brussel   Koekelberg      28
+## 7  15452889      1454 99127166 Shared room      NA Belgium     Gent         Gent       2
+## 8   3911778      1454  3690027 Shared room      NA Belgium  Brussel       Elsene      13
+## 9  14929414      1454 30624501 Shared room      NA Belgium Verviers       Baelen       2
+## 10  8497852      1454 40513093 Shared room      NA Belgium  Brussel    Etterbeek      57
+##    overall_satisfaction accommodates bedrooms bathrooms price minstay
+## 1                   4.5            2        1        NA    59      NA
+## 2                   0.0            2        1        NA    53      NA
+## 3                   4.0            2        1        NA    46      NA
+## 4                   4.5            4        1        NA    56      NA
+## 5                   5.0            2        1        NA    47      NA
+## 6                   5.0            4        1        NA    60      NA
+## 7                   0.0            2        1        NA    41      NA
+## 8                   4.0            2        1        NA    36      NA
+## 9                   0.0            8        1        NA    18      NA
+## 10                  4.5            3        1        NA    38      NA
+##                                                  name              last_modified latitude
+## 1                   Spacious shared apartment in Gent 2017-07-17 03:49:10.237453 51.03420
+## 2                                    appartement cosy 2017-07-17 03:49:09.020871 50.86915
+## 3                              YOU&#39;LL FEEL AT HOME!!! 2017-07-17 03:49:09.014704 50.82829
+## 4        studio douillet pour un sÃ©jour &quot;Low-budget&quot; 2017-07-17 03:49:07.929876 51.19050
+## 5  NICE place..metro..tram. TGV..BUS................. 2017-07-17 03:49:07.918941 50.83971
+## 6                               Chez Toi in Bruxelles 2017-07-17 03:49:06.301487 50.85910
+## 7              a day in the life of a beautifull home 2017-07-17 03:49:04.064557 51.05508
+## 8                                Calm Bruxellois area 2017-07-17 03:49:02.489395 50.81425
+## 9             Ecurie du Bois DorÃ©, dortoir agrÃ©able 2017-07-17 03:49:02.477617 50.63320
+## 10                   Bel appartement cosy Ã  partager 2017-07-17 03:49:01.173568 50.83771
+##    longitude                                           location
+## 1   3.714149 0101000020E6100000D2C43BC093B60D40874F3A9160844940
+## 2   4.384435 0101000020E610000044C02154A9891140321CCF67406F4940
+## 3   4.376590 0101000020E6100000A80018CFA0811140BC404981056A4940
+## 4   2.822373 0101000020E610000042E8A04B38940640AAF1D24D62984940
+## 5   4.333850 0101000020E610000012143FC6DC551140F67AF7C77B6B4940
+## 6   4.336969 0101000020E61000003410CB660E591140BD8BF7E3F66D4940
+## 7   3.746806 0101000020E610000011A7936C75F90D40B265F9BA0C874940
+## 8   4.384256 0101000020E6100000C72AA5677A8911400C73823639684940
+## 9   5.950236 0101000020E61000006CED7DAA0ACD174071766B990C514940
+## 10  4.394056 0101000020E6100000992B836A83931140EE3F321D3A6B4940</code></pre>
+<p>O R nos diz que estamos lidando com uma __tibble_ (essa é apenas outra palavra para quadro de dados) com 17651 linhas ou observações e 20 colunas ou variáveis. Para cada coluna, é fornecido o tipo da variável: int (inteiro), chr (caractere), dbl (duplo), dttm (data e hora). Variáveis inteiras e duplas armazenam números (inteiro para números redondos, duplicam para números com decimais), variáveis de caracteres armazenam letras, variáveis de data e hora armazenam datas e / ou horas.</p>
+<p>O R imprime apenas os dados das dez primeiras linhas e o número máximo de colunas que cabem na tela. Se, no entanto, você deseja inspecionar todo o conjunto de dados, clique duas vezes no objeto airbnb no painel Ambiente (a janela superior direita) para abrir uma aba Visualizador ou executar a Visualização (airbnb). Observe o V maiúsculo no comando Visualizar. O R sempre diferencia maiúsculas de minúsculas!</p>
+<p>Você também pode usar o comando print para solicitar mais (ou menos) linhas e colunas na janela do console:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="introdução-ao-r.html#cb14-1"></a><span class="co"># Imprima 25 linhas (defina como Inf para imprimir todas as linhas) e defina a largura como 100 para ver mais colunas.</span></span>
+<span id="cb14-2"><a href="introdução-ao-r.html#cb14-2"></a><span class="co"># Observe que as colunas que nao cabem na primeira tela com 25 linhas</span></span>
+<span id="cb14-3"><a href="introdução-ao-r.html#cb14-3"></a><span class="co"># sao impressos abaixo das 25 linhas iniciais.</span></span>
+<span id="cb14-4"><a href="introdução-ao-r.html#cb14-4"></a></span>
+<span id="cb14-5"><a href="introdução-ao-r.html#cb14-5"></a><span class="co">#print (airbnb, n = 25, width = 100)</span></span>
+<span id="cb14-6"><a href="introdução-ao-r.html#cb14-6"></a></span>
+<span id="cb14-7"><a href="introdução-ao-r.html#cb14-7"></a>airbnb[<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>,]</span></code></pre></div>
+<pre><code>##     room_id survey_id   host_id   room_type country    city   borough        neighborhood
+## 1   5141135      1454  20676997 Shared room      NA Belgium      Gent                Gent
+## 2  13128333      1454  46098805 Shared room      NA Belgium   Brussel          Schaarbeek
+## 3   8298885      1454  30924336 Shared room      NA Belgium   Brussel              Elsene
+## 4  13822088      1454  81440431 Shared room      NA Belgium  Oostende         Middelkerke
+## 5  18324301      1454  14294054 Shared room      NA Belgium   Brussel          Anderlecht
+## 6  12664969      1454  68810179 Shared room      NA Belgium   Brussel          Koekelberg
+## 7  15452889      1454  99127166 Shared room      NA Belgium      Gent                Gent
+## 8   3911778      1454   3690027 Shared room      NA Belgium   Brussel              Elsene
+## 9  14929414      1454  30624501 Shared room      NA Belgium  Verviers              Baelen
+## 10  8497852      1454  40513093 Shared room      NA Belgium   Brussel           Etterbeek
+## 11 19372053      1454  18715177 Shared room      NA Belgium   Tournai           Brunehaut
+## 12 19855549      1454 128685860 Shared room      NA Belgium   Brussel           Etterbeek
+## 13  6772358      1454  34993608 Shared room      NA Belgium      Gent                Gent
+## 14 13852832      1454  81817614 Shared room      NA Belgium     Arlon               Arlon
+## 15 11581251      1454  49968974 Shared room      NA Belgium  Kortrijk             Waregem
+## 16  3645177      1454  18411614 Shared room      NA Belgium Antwerpen                Boom
+## 17 12032748      1454  63713892 Shared room      NA Belgium  Verviers          BÃ¼llingen
+## 18 12034268      1454  63713892 Shared room      NA Belgium  Verviers          BÃ¼llingen
+## 19   427739      1454   1328011 Shared room      NA Belgium      Gent                Gent
+## 20 14194882      1454  86071645 Shared room      NA Belgium   Brussel Sint-Jans-Molenbeek
+## 21 19298546      1454 107330233 Shared room      NA Belgium    Leuven           Rotselaar
+## 22 12133666      1454  62134289 Shared room      NA Belgium    Brugge             Jabbeke
+## 23  4419833      1454  22943117 Shared room      NA Belgium       Ath                 Ath
+## 24 15573750      1454  20497610 Shared room      NA Belgium    Leuven              Leuven
+## 25  1334575      1454   3508041 Shared room      NA Belgium  Tongeren              Voeren
+##    reviews overall_satisfaction accommodates bedrooms bathrooms price minstay
+## 1        9                  4.5            2        1        NA    59      NA
+## 2        2                  0.0            2        1        NA    53      NA
+## 3       12                  4.0            2        1        NA    46      NA
+## 4       19                  4.5            4        1        NA    56      NA
+## 5        5                  5.0            2        1        NA    47      NA
+## 6       28                  5.0            4        1        NA    60      NA
+## 7        2                  0.0            2        1        NA    41      NA
+## 8       13                  4.0            2        1        NA    36      NA
+## 9        2                  0.0            8        1        NA    18      NA
+## 10      57                  4.5            3        1        NA    38      NA
+## 11       1                  0.0            4        1        NA    14      NA
+## 12       0                  0.0            2        1        NA    37      NA
+## 13     143                  5.0            2        1        NA    28      NA
+## 14       0                  0.0            1        1        NA   177      NA
+## 15       1                  0.0            4        1        NA   147      NA
+## 16       3                  4.5            2        1        NA   177      NA
+## 17       0                  0.0            2        1        NA   129      NA
+## 18       0                  0.0            2        1        NA   140      NA
+## 19       9                  5.0            2        1        NA   141      NA
+## 20       0                  0.0            5        1        NA   136      NA
+## 21       1                  0.0            2        1        NA   132      NA
+## 22       0                  0.0            1        1        NA   117      NA
+## 23       0                  0.0            6        1        NA   106      NA
+## 24       3                  5.0            1        1        NA   116      NA
+## 25      13                  4.5            2        1        NA   106      NA
+##                                                  name              last_modified latitude
+## 1                   Spacious shared apartment in Gent 2017-07-17 03:49:10.237453 51.03420
+## 2                                    appartement cosy 2017-07-17 03:49:09.020871 50.86915
+## 3                              YOU&#39;LL FEEL AT HOME!!! 2017-07-17 03:49:09.014704 50.82829
+## 4        studio douillet pour un sÃ©jour &quot;Low-budget&quot; 2017-07-17 03:49:07.929876 51.19050
+## 5  NICE place..metro..tram. TGV..BUS................. 2017-07-17 03:49:07.918941 50.83971
+## 6                               Chez Toi in Bruxelles 2017-07-17 03:49:06.301487 50.85910
+## 7              a day in the life of a beautifull home 2017-07-17 03:49:04.064557 51.05508
+## 8                                Calm Bruxellois area 2017-07-17 03:49:02.489395 50.81425
+## 9             Ecurie du Bois DorÃ©, dortoir agrÃ©able 2017-07-17 03:49:02.477617 50.63320
+## 10                   Bel appartement cosy Ã  partager 2017-07-17 03:49:01.173568 50.83771
+## 11       Chambre 3/4 pers.dans ferme du vieux chateau 2017-07-17 03:49:01.170957 50.51770
+## 12 Cosy &amp; bright living room with comfy sleep options 2017-07-17 03:49:01.162682 50.82749
+## 13                                 Couch-bed in Ghent 2017-07-17 03:49:01.157750 51.03783
+## 14                                           Logement 2017-07-17 03:48:56.542112 49.68641
+## 15                               Terrasappartement 62 2017-07-17 03:48:56.536289 50.87617
+## 16                     PRIVATE ROOM near TOMORROWLAND 2017-07-17 03:48:56.533485 51.09316
+## 17                          Spacious, two-person room 2017-07-17 03:48:55.128993 50.40610
+## 18                          Spacious, two-person room 2017-07-17 03:48:55.126446 50.40801
+## 19                    penthouse room + hammam + sauna 2017-07-17 03:48:55.118066 51.05114
+## 20                                        Appartement 2017-07-17 03:48:55.115298 50.86178
+## 21   House with garden, 15min walk from Rock Werchter 2017-07-17 03:48:55.107495 50.97806
+## 22                                   Oud gemeentehuis 2017-07-17 03:48:53.534073 51.18761
+## 23                        Chambre d&#39;hÃ´tes familiale  2017-07-17 03:48:53.529122 50.62833
+## 24       The Cozy Duplex Shared Room in Leuven center 2017-07-17 03:48:53.526629 50.87826
+## 25 Voerstreek, B&amp;B in natural area, near river, 2p,br 2017-07-17 03:48:53.521226 50.75655
+##    longitude                                           location
+## 1   3.714149 0101000020E6100000D2C43BC093B60D40874F3A9160844940
+## 2   4.384435 0101000020E610000044C02154A9891140321CCF67406F4940
+## 3   4.376590 0101000020E6100000A80018CFA0811140BC404981056A4940
+## 4   2.822373 0101000020E610000042E8A04B38940640AAF1D24D62984940
+## 5   4.333850 0101000020E610000012143FC6DC551140F67AF7C77B6B4940
+## 6   4.336969 0101000020E61000003410CB660E591140BD8BF7E3F66D4940
+## 7   3.746806 0101000020E610000011A7936C75F90D40B265F9BA0C874940
+## 8   4.384256 0101000020E6100000C72AA5677A8911400C73823639684940
+## 9   5.950236 0101000020E61000006CED7DAA0ACD174071766B990C514940
+## 10  4.394056 0101000020E6100000992B836A83931140EE3F321D3A6B4940
+## 11  3.384048 0101000020E6100000F0C000C287120B40E3FC4D2844424940
+## 12  4.384322 0101000020E61000008388D4B48B8911405E66D828EB694940
+## 13  3.714062 0101000020E6100000E4874A2366B60D4062670A9DD7844940
+## 14  5.830874 0101000020E6100000066344A2D05217407DCA3159DCD74840
+## 15  3.401739 0101000020E6100000D238D4EFC2360B40105A0F5F26704940
+## 16  4.380444 0101000020E610000073D6A71C938511405D328E91EC8B4940
+## 17  6.264116 0101000020E6100000BE66B96C740E19408B6B7C26FB334940
+## 18  6.262573 0101000020E61000001C40BFEFDF0C19407138F3AB39344940
+## 19  3.746296 0101000020E6100000BE1589096AF80D404D2D5BEB8B864940
+## 20  4.342785 0101000020E6100000C93CF207035F1140253D0CAD4E6E4940
+## 21  4.692590 0101000020E610000085251E5036C512408EB27E33317D4940
+## 22  3.144082 0101000020E6100000C689AF76142709408733BF9A03984940
+## 23  3.685758 0101000020E610000050C3B7B06E7C0D40FE9C82FC6C504940
+## 24  4.713825 0101000020E6100000D044D8F0F4DA1240172D40DB6A704940
+## 25  5.718163 0101000020E6100000FBC9181F66DF1640B6F5D37FD6604940</code></pre>
+</div>
+<div id="manipulando-dataframes" class="section level2 unlisted unnumbered">
+<h2>Manipulando dataframes</h2>
+<div id="transformando-variáveis" class="section level3 unlisted unnumbered">
+<h3>Transformando variáveis</h3>
+<div id="fatoração" class="section level4 unlisted unnumbered">
+<h4>Fatoração</h4>
+<p>Vamos observar nosso dataset novamente:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="introdução-ao-r.html#cb16-1"></a>airbnb[<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">8</span>]</span></code></pre></div>
+<pre><code>##     room_id survey_id   host_id   room_type country    city   borough        neighborhood
+## 1   5141135      1454  20676997 Shared room      NA Belgium      Gent                Gent
+## 2  13128333      1454  46098805 Shared room      NA Belgium   Brussel          Schaarbeek
+## 3   8298885      1454  30924336 Shared room      NA Belgium   Brussel              Elsene
+## 4  13822088      1454  81440431 Shared room      NA Belgium  Oostende         Middelkerke
+## 5  18324301      1454  14294054 Shared room      NA Belgium   Brussel          Anderlecht
+## 6  12664969      1454  68810179 Shared room      NA Belgium   Brussel          Koekelberg
+## 7  15452889      1454  99127166 Shared room      NA Belgium      Gent                Gent
+## 8   3911778      1454   3690027 Shared room      NA Belgium   Brussel              Elsene
+## 9  14929414      1454  30624501 Shared room      NA Belgium  Verviers              Baelen
+## 10  8497852      1454  40513093 Shared room      NA Belgium   Brussel           Etterbeek
+## 11 19372053      1454  18715177 Shared room      NA Belgium   Tournai           Brunehaut
+## 12 19855549      1454 128685860 Shared room      NA Belgium   Brussel           Etterbeek
+## 13  6772358      1454  34993608 Shared room      NA Belgium      Gent                Gent
+## 14 13852832      1454  81817614 Shared room      NA Belgium     Arlon               Arlon
+## 15 11581251      1454  49968974 Shared room      NA Belgium  Kortrijk             Waregem
+## 16  3645177      1454  18411614 Shared room      NA Belgium Antwerpen                Boom
+## 17 12032748      1454  63713892 Shared room      NA Belgium  Verviers          BÃ¼llingen
+## 18 12034268      1454  63713892 Shared room      NA Belgium  Verviers          BÃ¼llingen
+## 19   427739      1454   1328011 Shared room      NA Belgium      Gent                Gent
+## 20 14194882      1454  86071645 Shared room      NA Belgium   Brussel Sint-Jans-Molenbeek</code></pre>
+<p>Vimos que room_id e host_id são “identificadores” ou rótulos que identificam as observações. São nomes (neste caso, apenas números) para as salas(quartos) e hóspedes específicos. No entanto, vemos que o R os trata como números inteiros, ou seja, como números. Isso significa que poderíamos adicionar os room_id‘s de duas salas diferentes e obter um novo número. No entanto, isso não faria muito sentido, porque os room_id são apenas rótulos.</p>
+<p>Certifique-se de que R trate os identificadores como rótulos, em vez de números, fatorando-os. Observe o operador $. Este operador muito importante nos permite selecionar variáveis específicas de um quadro de dados, neste caso room_id e host_id.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="introdução-ao-r.html#cb18-1"></a>airbnb<span class="op">$</span>room_id_F &lt;-<span class="st"> </span><span class="kw">factor</span>(airbnb<span class="op">$</span>room_id)</span>
+<span id="cb18-2"><a href="introdução-ao-r.html#cb18-2"></a>airbnb<span class="op">$</span>host_id_F &lt;-<span class="st"> </span><span class="kw">factor</span>(airbnb<span class="op">$</span>host_id)</span></code></pre></div>
+<p>Uma variável de fator é semelhante a uma variável de caractere, pois armazena letras. Os fatores são mais úteis para variáveis que podem assumir apenas um número de categorias pré-determinadas. Eles devem, por exemplo, ser usados para variáveis dependentes categóricas - por exemplo, se uma venda foi feita ou não: venda <em>versus</em> não venda. Você pode pensar em fatores como variáveis que armazenam rótulos. Os rótulos reais não são tão importantes (não nos importamos se uma venda é chamada de venda ou sucesso ou algo mais), apenas os usamos para fazer uma distinção entre categorias diferentes. É muito importante fatorar variáveis inteiras que representam variáveis independentes ou dependentes categóricas, porque, se não fatorarmos essas variáveis, elas serão tratadas como contínuas em vez de variáveis categóricas nas análises. Por exemplo, uma variável pode representar uma venda como 1 e uma não-venda como 0. Nesse caso, é importante informar ao R que essa variável deve ser tratada como uma variável categórica em vez de contínua.</p>
+<p>As variáveis de caractere são diferentes das variáveis de fator, pois não são apenas rótulos para categorias. Um exemplo de variável de caractere seria uma variável que armazena as respostas dos entrevistados para uma pergunta em aberto. Aqui, o conteúdo real é importante (nós nos importamos se alguém descreve sua estadia no Airbnb como muito boa ou excelente ou outra coisa).</p>
+<p>No conjunto de dados do airbnb, os room_id não são rigorosamente determinados de antemão, mas definitivamente são rótulos e não devem ser tratados como números. Por isso, pedimos para o R convertê-los em fatores. Vamos dar uma olhada no conjunto de dados do airbnb novamente para verificar se o tipo dessas variáveis mudou após fatorar:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="introdução-ao-r.html#cb19-1"></a><span class="kw">str</span>(airbnb)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:	17651 obs. of  22 variables:
+##  $ room_id             : int  5141135 13128333 8298885 13822088 18324301 12664969 15452889 3911778 14929414 8497852 ...
+##  $ survey_id           : int  1454 1454 1454 1454 1454 1454 1454 1454 1454 1454 ...
+##  $ host_id             : int  20676997 46098805 30924336 81440431 14294054 68810179 99127166 3690027 30624501 40513093 ...
+##  $ room_type           : chr  &quot;Shared room&quot; &quot;Shared room&quot; &quot;Shared room&quot; &quot;Shared room&quot; ...
+##  $ country             : logi  NA NA NA NA NA NA ...
+##  $ city                : chr  &quot;Belgium&quot; &quot;Belgium&quot; &quot;Belgium&quot; &quot;Belgium&quot; ...
+##  $ borough             : chr  &quot;Gent&quot; &quot;Brussel&quot; &quot;Brussel&quot; &quot;Oostende&quot; ...
+##  $ neighborhood        : chr  &quot;Gent&quot; &quot;Schaarbeek&quot; &quot;Elsene&quot; &quot;Middelkerke&quot; ...
+##  $ reviews             : int  9 2 12 19 5 28 2 13 2 57 ...
+##  $ overall_satisfaction: num  4.5 0 4 4.5 5 5 0 4 0 4.5 ...
+##  $ accommodates        : int  2 2 2 4 2 4 2 2 8 3 ...
+##  $ bedrooms            : num  1 1 1 1 1 1 1 1 1 1 ...
+##  $ bathrooms           : logi  NA NA NA NA NA NA ...
+##  $ price               : num  59 53 46 56 47 60 41 36 18 38 ...
+##  $ minstay             : logi  NA NA NA NA NA NA ...
+##  $ name                : chr  &quot;Spacious shared apartment in Gent&quot; &quot;appartement cosy&quot; &quot;YOU&#39;LL FEEL AT HOME!!!&quot; &quot;studio douillet pour un sÃ©jour \&quot;Low-budget\&quot;&quot; ...
+##  $ last_modified       : chr  &quot;2017-07-17 03:49:10.237453&quot; &quot;2017-07-17 03:49:09.020871&quot; &quot;2017-07-17 03:49:09.014704&quot; &quot;2017-07-17 03:49:07.929876&quot; ...
+##  $ latitude            : num  51 50.9 50.8 51.2 50.8 ...
+##  $ longitude           : num  3.71 4.38 4.38 2.82 4.33 ...
+##  $ location            : chr  &quot;0101000020E6100000D2C43BC093B60D40874F3A9160844940&quot; &quot;0101000020E610000044C02154A9891140321CCF67406F4940&quot; &quot;0101000020E6100000A80018CFA0811140BC404981056A4940&quot; &quot;0101000020E610000042E8A04B38940640AAF1D24D62984940&quot; ...
+##  $ room_id_F           : Factor w/ 17651 levels &quot;2352&quot;,&quot;2354&quot;,..: 3018 9403 5877 10201 15058 9008 11815 2187 11309 6053 ...
+##  $ host_id_F           : Factor w/ 13258 levels &quot;2582&quot;,&quot;6253&quot;,..: 4409 8169 6071 10679 3314 9992 11493 848 6016 7488 ...</code></pre>
+<p>Vemos que o tipo de room_id e host_id agora é fct (fator).</p>
+</div>
+</div>
+<div id="transformações-numéricas" class="section level3 unlisted unnumbered">
+<h3>Transformações numéricas</h3>
+<p>Vamos dar uma olhada nas classificações das acomodações:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="introdução-ao-r.html#cb21-1"></a><span class="co"># Uso a funcao head para garantir que o R mostre apenas as primeiras classificacoes.</span></span>
+<span id="cb21-2"><a href="introdução-ao-r.html#cb21-2"></a><span class="co"># Caso contrario, teremos uma lista muito longa de classificacoes..</span></span>
+<span id="cb21-3"><a href="introdução-ao-r.html#cb21-3"></a><span class="kw">head</span>(airbnb<span class="op">$</span>overall_satisfaction)</span></code></pre></div>
+<pre><code>## [1] 4.5 0.0 4.0 4.5 5.0 5.0</code></pre>
+<p>Vemos que as classificações estão em uma escala de 0 a 5. Se preferirmos ter classificações em uma escala de 0 a 100, poderíamos simplesmente multiplicar as classificações por 20:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="introdução-ao-r.html#cb23-1"></a>airbnb<span class="op">$</span>overall_satisfaction_<span class="dv">100</span> &lt;-<span class="st"> </span>airbnb<span class="op">$</span>overall_satisfaction <span class="op">*</span><span class="st"> </span><span class="dv">20</span> </span>
+<span id="cb23-2"><a href="introdução-ao-r.html#cb23-2"></a><span class="co"># Perceba que criamos uma nova variavel overall_satisfaction_100.</span></span>
+<span id="cb23-3"><a href="introdução-ao-r.html#cb23-3"></a><span class="co"># A variavel original overall_satisfaction continua inalterada.</span></span>
+<span id="cb23-4"><a href="introdução-ao-r.html#cb23-4"></a></span>
+<span id="cb23-5"><a href="introdução-ao-r.html#cb23-5"></a></span>
+<span id="cb23-6"><a href="introdução-ao-r.html#cb23-6"></a><span class="co"># Você tambem pode inspecionar todo o conjunto de dados com o Visualizador</span></span>
+<span id="cb23-7"><a href="introdução-ao-r.html#cb23-7"></a><span class="co"># e veja se ha uma nova coluna a direita.</span></span>
+<span id="cb23-8"><a href="introdução-ao-r.html#cb23-8"></a><span class="kw">head</span>(airbnb<span class="op">$</span>overall_satisfaction_<span class="dv">100</span>) </span></code></pre></div>
+<pre><code>## [1]  90   0  80  90 100 100</code></pre>
+</div>
+<div id="transformando-variáveis-com-a-função-mutate" class="section level3 unlisted unnumbered">
+<h3>Transformando variáveis com a função mutate</h3>
+<p>Também podemos transformar variáveis com a função mutate:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="introdução-ao-r.html#cb25-1"></a><span class="kw">library</span>(dplyr)<span class="co">#pacote da funcao mutate</span></span>
+<span id="cb25-2"><a href="introdução-ao-r.html#cb25-2"></a>airbnb &lt;-<span class="st"> </span><span class="kw">mutate</span>(airbnb, </span>
+<span id="cb25-3"><a href="introdução-ao-r.html#cb25-3"></a>                 <span class="dt">room_id_F =</span> <span class="kw">factor</span>(room_id), <span class="dt">host_id_F =</span> <span class="kw">factor</span>(host_id),</span>
+<span id="cb25-4"><a href="introdução-ao-r.html#cb25-4"></a>                 <span class="dt">overall_satisfaction_100 =</span> overall_satisfaction <span class="op">*</span><span class="st"> </span><span class="dv">20</span>)</span></code></pre></div>
+<p>Isso instrui R a pegar o conjunto de dados do airbnb, criar uma nova variável room_id_F que deve ser a fatoração de room_id, uma nova variável host_id_F que deve ser a fatoração de host_id e uma nova variável overall_satisfaction_100 que deve ser a satisfação geral vezes 20. O conjunto de dados com esses mutações (transformações) devem ser atribuídas ao objeto airbnb. Observe que não precisamos usar o operador $ aqui, porque a função mutate sabe desde seu primeiro argumento (airbnb) onde procurar determinadas variáveis e, portanto, não precisamos especificá-lo posteriormente com airbnb $. Uma vantagem do uso da função mutate é que ela mantém bem todas as transformações desejadas dentro de um comando. Outra grande vantagem do uso do mutate será discutida na seção sobre o <a href="https://bookdown.org/content/1340/pipe.html#pipe">operador pipe.</a></p>
+</div>
+<div id="incluindo-ou-excluindo-e-renomeando-variáveis-colunas" class="section level3 unlisted unnumbered">
+<h3>Incluindo ou excluindo e renomeando variáveis (colunas)</h3>
+<p>Se olharmos para os dados, também podemos ver que country é NA, o que significa que não está disponível ou está ausente. city é sempre a Bélgica (o que está errado porque a Bélgica é um país, não uma cidade) e o borought contém as informações da cidade. Vamos corrigir esses erros removendo a variável country de nosso conjunto de dados e renomeando city e borought. Também excluiremos o survey_id porque essa variável é constante nas observações e não a usaremos no restante da análise:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="introdução-ao-r.html#cb26-1"></a>airbnb &lt;-<span class="st"> </span><span class="kw">select</span>(airbnb, <span class="op">-</span>country, <span class="op">-</span>survey_id) </span>
+<span id="cb26-2"><a href="introdução-ao-r.html#cb26-2"></a><span class="co"># Diga R para remover country &amp; survey_id do quadro de dados do airbnb incluindo um sinal de menos antes dessas variáveis.</span></span>
+<span id="cb26-3"><a href="introdução-ao-r.html#cb26-3"></a><span class="co"># Atribua novamente esse novo quadro de dados ao objeto airbnb.</span></span>
+<span id="cb26-4"><a href="introdução-ao-r.html#cb26-4"></a><span class="kw">str</span>(airbnb) <span class="co"># Agora você verá que o country e o survey_id se foram.</span></span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:	17651 obs. of  21 variables:
+##  $ room_id                 : int  5141135 13128333 8298885 13822088 18324301 12664969 15452889 3911778 14929414 8497852 ...
+##  $ host_id                 : int  20676997 46098805 30924336 81440431 14294054 68810179 99127166 3690027 30624501 40513093 ...
+##  $ room_type               : chr  &quot;Shared room&quot; &quot;Shared room&quot; &quot;Shared room&quot; &quot;Shared room&quot; ...
+##  $ city                    : chr  &quot;Belgium&quot; &quot;Belgium&quot; &quot;Belgium&quot; &quot;Belgium&quot; ...
+##  $ borough                 : chr  &quot;Gent&quot; &quot;Brussel&quot; &quot;Brussel&quot; &quot;Oostende&quot; ...
+##  $ neighborhood            : chr  &quot;Gent&quot; &quot;Schaarbeek&quot; &quot;Elsene&quot; &quot;Middelkerke&quot; ...
+##  $ reviews                 : int  9 2 12 19 5 28 2 13 2 57 ...
+##  $ overall_satisfaction    : num  4.5 0 4 4.5 5 5 0 4 0 4.5 ...
+##  $ accommodates            : int  2 2 2 4 2 4 2 2 8 3 ...
+##  $ bedrooms                : num  1 1 1 1 1 1 1 1 1 1 ...
+##  $ bathrooms               : logi  NA NA NA NA NA NA ...
+##  $ price                   : num  59 53 46 56 47 60 41 36 18 38 ...
+##  $ minstay                 : logi  NA NA NA NA NA NA ...
+##  $ name                    : chr  &quot;Spacious shared apartment in Gent&quot; &quot;appartement cosy&quot; &quot;YOU&#39;LL FEEL AT HOME!!!&quot; &quot;studio douillet pour un sÃ©jour \&quot;Low-budget\&quot;&quot; ...
+##  $ last_modified           : chr  &quot;2017-07-17 03:49:10.237453&quot; &quot;2017-07-17 03:49:09.020871&quot; &quot;2017-07-17 03:49:09.014704&quot; &quot;2017-07-17 03:49:07.929876&quot; ...
+##  $ latitude                : num  51 50.9 50.8 51.2 50.8 ...
+##  $ longitude               : num  3.71 4.38 4.38 2.82 4.33 ...
+##  $ location                : chr  &quot;0101000020E6100000D2C43BC093B60D40874F3A9160844940&quot; &quot;0101000020E610000044C02154A9891140321CCF67406F4940&quot; &quot;0101000020E6100000A80018CFA0811140BC404981056A4940&quot; &quot;0101000020E610000042E8A04B38940640AAF1D24D62984940&quot; ...
+##  $ room_id_F               : Factor w/ 17651 levels &quot;2352&quot;,&quot;2354&quot;,..: 3018 9403 5877 10201 15058 9008 11815 2187 11309 6053 ...
+##  $ host_id_F               : Factor w/ 13258 levels &quot;2582&quot;,&quot;6253&quot;,..: 4409 8169 6071 10679 3314 9992 11493 848 6016 7488 ...
+##  $ overall_satisfaction_100: num  90 0 80 90 100 100 0 80 0 90 ...</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="introdução-ao-r.html#cb28-1"></a>airbnb &lt;-<span class="st"> </span><span class="kw">rename</span>(airbnb, <span class="dt">country =</span> city, <span class="dt">city =</span> borough) </span>
+<span id="cb28-2"><a href="introdução-ao-r.html#cb28-2"></a><span class="co"># Diga ao R para renomear algumas variáveis do quadro de dados do airbnb e reatribuir esse novo quadro de dados ao objeto do airbnb.</span></span>
+<span id="cb28-3"><a href="introdução-ao-r.html#cb28-3"></a><span class="co"># Nota: a sintaxe é um pouco contra-intuitiva: novo nome de variável (country) = nome da variável antiga (city)!</span></span>
+<span id="cb28-4"><a href="introdução-ao-r.html#cb28-4"></a><span class="kw">str</span>(airbnb) <span class="co"># country = Bélgica agora e cidade se refere a cidades</span></span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:	17651 obs. of  21 variables:
+##  $ room_id                 : int  5141135 13128333 8298885 13822088 18324301 12664969 15452889 3911778 14929414 8497852 ...
+##  $ host_id                 : int  20676997 46098805 30924336 81440431 14294054 68810179 99127166 3690027 30624501 40513093 ...
+##  $ room_type               : chr  &quot;Shared room&quot; &quot;Shared room&quot; &quot;Shared room&quot; &quot;Shared room&quot; ...
+##  $ country                 : chr  &quot;Belgium&quot; &quot;Belgium&quot; &quot;Belgium&quot; &quot;Belgium&quot; ...
+##  $ city                    : chr  &quot;Gent&quot; &quot;Brussel&quot; &quot;Brussel&quot; &quot;Oostende&quot; ...
+##  $ neighborhood            : chr  &quot;Gent&quot; &quot;Schaarbeek&quot; &quot;Elsene&quot; &quot;Middelkerke&quot; ...
+##  $ reviews                 : int  9 2 12 19 5 28 2 13 2 57 ...
+##  $ overall_satisfaction    : num  4.5 0 4 4.5 5 5 0 4 0 4.5 ...
+##  $ accommodates            : int  2 2 2 4 2 4 2 2 8 3 ...
+##  $ bedrooms                : num  1 1 1 1 1 1 1 1 1 1 ...
+##  $ bathrooms               : logi  NA NA NA NA NA NA ...
+##  $ price                   : num  59 53 46 56 47 60 41 36 18 38 ...
+##  $ minstay                 : logi  NA NA NA NA NA NA ...
+##  $ name                    : chr  &quot;Spacious shared apartment in Gent&quot; &quot;appartement cosy&quot; &quot;YOU&#39;LL FEEL AT HOME!!!&quot; &quot;studio douillet pour un sÃ©jour \&quot;Low-budget\&quot;&quot; ...
+##  $ last_modified           : chr  &quot;2017-07-17 03:49:10.237453&quot; &quot;2017-07-17 03:49:09.020871&quot; &quot;2017-07-17 03:49:09.014704&quot; &quot;2017-07-17 03:49:07.929876&quot; ...
+##  $ latitude                : num  51 50.9 50.8 51.2 50.8 ...
+##  $ longitude               : num  3.71 4.38 4.38 2.82 4.33 ...
+##  $ location                : chr  &quot;0101000020E6100000D2C43BC093B60D40874F3A9160844940&quot; &quot;0101000020E610000044C02154A9891140321CCF67406F4940&quot; &quot;0101000020E6100000A80018CFA0811140BC404981056A4940&quot; &quot;0101000020E610000042E8A04B38940640AAF1D24D62984940&quot; ...
+##  $ room_id_F               : Factor w/ 17651 levels &quot;2352&quot;,&quot;2354&quot;,..: 3018 9403 5877 10201 15058 9008 11815 2187 11309 6053 ...
+##  $ host_id_F               : Factor w/ 13258 levels &quot;2582&quot;,&quot;6253&quot;,..: 4409 8169 6071 10679 3314 9992 11493 848 6016 7488 ...
+##  $ overall_satisfaction_100: num  90 0 80 90 100 100 0 80 0 90 ...</code></pre>
+</div>
+<div id="incluindo-ou-excluindo-observações-linhas" class="section level3 unlisted unnumbered">
+<h3>Incluindo ou excluindo observações (linhas)</h3>
+<div id="criando-um-vetor-com-c" class="section level4 unlisted unnumbered">
+<h4>Criando um vetor com c()</h4>
+<p><a href="https://bookdown.org/content/1340/graphs.html#graphs">Mais adiante</a>, faremos um gráfico dos preços do Airbnb nas dez maiores cidades da Bélgica (em termos de população): Bruxelas, Antuérpia, Gent, Charleroi, Liège, Bruges, Namur, Lovaina, Mons e Aalst.</p>
+<p>Para isso, precisamos criar um objeto de dados que tenha apenas dados para as dez maiores cidades. Para fazer isso, primeiro precisamos de um vetor com os nomes das dez maiores cidades, para que, na próxima seção, possamos dizer ao R para incluir apenas os dados dessas cidades:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="introdução-ao-r.html#cb30-1"></a>topten &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Brussel&quot;</span>,<span class="st">&quot;Antwerpen&quot;</span>,<span class="st">&quot;Gent&quot;</span>,<span class="st">&quot;Charleroi&quot;</span>,<span class="st">&quot;Liege&quot;</span>,<span class="st">&quot;Brugge&quot;</span>,<span class="st">&quot;Namur&quot;</span>,<span class="st">&quot;Leuven&quot;</span>,<span class="st">&quot;Mons&quot;</span>,<span class="st">&quot;Aalst&quot;</span>) <span class="co"># Cria um vetor com as 10 maiores cidades</span></span>
+<span id="cb30-2"><a href="introdução-ao-r.html#cb30-2"></a>topten <span class="co"># Mostra esse vetor.</span></span></code></pre></div>
+<pre><code>##  [1] &quot;Brussel&quot;   &quot;Antwerpen&quot; &quot;Gent&quot;      &quot;Charleroi&quot; &quot;Liege&quot;     &quot;Brugge&quot;    &quot;Namur&quot;    
+##  [8] &quot;Leuven&quot;    &quot;Mons&quot;      &quot;Aalst&quot;</code></pre>
+<p><a href="https://bookdown.org/content/1340/airbnbdata.html#assignment">Lembre-se</a> de que um vetor é uma estrutura de dados unidimensional (diferente de um quadro de dados que possui duas dimensões, isto é, colunas e linhas). Usamos o operador ) para criar um vetor que chamamos de topten. ) é uma abreviação de concatenar, que significa juntar as coisas. O vetor topten é um vetor de strings (palavras). Deve haver aspas entre as strings. Um vetor de números, no entanto, não requer aspas:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="introdução-ao-r.html#cb32-1"></a>number_vector &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>)</span>
+<span id="cb32-2"><a href="introdução-ao-r.html#cb32-2"></a>number_vector</span></code></pre></div>
+<pre><code>## [1] 0 2 4 6</code></pre>
+<p>Qualquer vetor que você criará aparecerá como um objeto no painel Ambiente (janela superior direita).</p>
+<div id="incluindo-ou-excluindo-observações-com-a-função-filter" class="section level5 unlisted unnumbered">
+<h5>Incluindo ou excluindo observações com a função filter</h5>
+<p>Para armazenar apenas os dados das dez maiores cidades, precisamos do operador %in% do pacote Hmisc:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="introdução-ao-r.html#cb34-1"></a><span class="co">#install.packages(Hmisc)</span></span>
+<span id="cb34-2"><a href="introdução-ao-r.html#cb34-2"></a><span class="kw">library</span>(Hmisc)</span></code></pre></div>
+<pre><code>## Loading required package: lattice</code></pre>
+<pre><code>## Loading required package: survival</code></pre>
+<pre><code>## Loading required package: Formula</code></pre>
+<pre><code>## 
+## Attaching package: &#39;Hmisc&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     src, summarize</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     format.pval, units</code></pre>
+<p>Agora podemos usar a função de filtro para instruir o R a reter os dados apenas das dez maiores cidades:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="introdução-ao-r.html#cb41-1"></a>airbnb.topten &lt;-<span class="st"> </span><span class="kw">filter</span>(airbnb, city <span class="op">%in%</span><span class="st"> </span>topten)</span>
+<span id="cb41-2"><a href="introdução-ao-r.html#cb41-2"></a><span class="co"># Filtre o quadro de dados do airbnb para manter apenas as cidades no vetor topten.</span></span>
+<span id="cb41-3"><a href="introdução-ao-r.html#cb41-3"></a><span class="co"># Armazene o conjunto de dados filtrado em um objeto chamado airbnb.topten.</span></span>
+<span id="cb41-4"><a href="introdução-ao-r.html#cb41-4"></a></span>
+<span id="cb41-5"><a href="introdução-ao-r.html#cb41-5"></a><span class="co"># Entao, estamos criando um novo conjunto de dados airbnb.topten, que eh um subconjunto do conjunto de dados airbnb.</span></span>
+<span id="cb41-6"><a href="introdução-ao-r.html#cb41-6"></a><span class="co"># Verifique o painel Ambiente para ver se o conjunto de dados airbnb.topten tem menos observacoes que o conjunto de dados airbnb,</span></span>
+<span id="cb41-7"><a href="introdução-ao-r.html#cb41-7"></a><span class="co"># porque soh possui dados para as dez maiores cidades.</span></span></code></pre></div>
+</div>
+</div>
+</div>
+</div>
+<div id="o-operador-pipe" class="section level2 unlisted unnumbered">
+<h2>O operador pipe</h2>
+<div id="uma-maneira-de-escrever-o-código" class="section level3 unlisted unnumbered">
+<h3>Uma maneira de escrever o código</h3>
+<p>Até agora, aprendemos (entre outras coisas) como ler um arquivo .csv e atribuí-lo a um objeto, como transformar variáveis com a função mutate, como remover variáveis (colunas) do nosso conjunto de dados com a função select, como renomear variáveis com a função rename e como remover observações (linhas) do nosso conjunto de dados com a função de filter:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="introdução-ao-r.html#cb42-1"></a><span class="co">#airbnb &lt;- read_csv(&quot;tomslee_airbnb_belgium_1454_2017-07-14.csv&quot;)</span></span>
+<span id="cb42-2"><a href="introdução-ao-r.html#cb42-2"></a><span class="co">#airbnb &lt;- mutate(airbnb, room_id_F = factor(room_id), host_id_F = factor(host_id), overall_satisfaction_100 = overall_satisfaction * 20)</span></span>
+<span id="cb42-3"><a href="introdução-ao-r.html#cb42-3"></a><span class="co">#airbnb &lt;- select(airbnb, -country, -survey_id)</span></span>
+<span id="cb42-4"><a href="introdução-ao-r.html#cb42-4"></a><span class="co">#airbnb &lt;- rename(airbnb, country = city, city = borough)</span></span>
+<span id="cb42-5"><a href="introdução-ao-r.html#cb42-5"></a><span class="co">#airbnb &lt;- filter(airbnb, city %in% c(&quot;Brussel&quot;,&quot;Antwerpen&quot;,&quot;Gent&quot;,&quot;Charleroi&quot;,&quot;Liege&quot;,&quot;Brugge&quot;,&quot;Namur&quot;,&quot;Leuven&quot;,&quot;Mons&quot;,&quot;Aalst&quot;)) </span></span></code></pre></div>
+<p>Ao ler este código, vemos que em cada linha substituímos o objeto airbnb. Não há nada de fundamentalmente errado com essa maneira de escrever, mas estamos repetindo elementos do código porque as últimas quatro linhas consistem em uma atribuição (airbnb <span class="math inline">\(&lt;-\)</span>) e em funções (mutate, select, rename, filter) que têm o mesmo primeiro argumento (o objeto airbnb criado na linha anterior).</p>
+<div id="uma-maneira-melhor-de-escrever-seus-códigos" class="section level4 unlisted unnumbered">
+<h4>Uma maneira melhor de escrever seus códigos</h4>
+<p>Existe uma maneira mais elegante de escrever código. Envolve um operador chamado <em>pipe</em> (<span class="math inline">\(\%&gt;\%\)</span>). Ele nos permite reescrever nossa sequência usual de operações:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="introdução-ao-r.html#cb43-1"></a><span class="co">#airbnb &lt;- read_csv(&quot;tomslee_airbnb_belgium_1454_2017-07-14.csv&quot;)</span></span>
+<span id="cb43-2"><a href="introdução-ao-r.html#cb43-2"></a><span class="co">#airbnb &lt;- mutate(airbnb, room_id_F = factor(room_id), host_id_F = factor(host_id), overall_satisfaction_100 = overall_satisfaction * 20)</span></span>
+<span id="cb43-3"><a href="introdução-ao-r.html#cb43-3"></a><span class="co">#airbnb &lt;- select(airbnb, -country, -survey_id)</span></span>
+<span id="cb43-4"><a href="introdução-ao-r.html#cb43-4"></a><span class="co">#airbnb &lt;- rename(airbnb, country = city, city = borough)</span></span>
+<span id="cb43-5"><a href="introdução-ao-r.html#cb43-5"></a><span class="co">#airbnb &lt;- filter(airbnb, city %in% c(&quot;Brussel&quot;,&quot;Antwerpen&quot;,&quot;Gent&quot;,&quot;Charleroi&quot;,&quot;Liege&quot;,&quot;Brugge&quot;,&quot;Namur&quot;,&quot;Leuven&quot;,&quot;Mons&quot;,&quot;Aalst&quot;)) </span></span></code></pre></div>
+<p>como:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="introdução-ao-r.html#cb44-1"></a>airbnb &lt;-<span class="st"> </span>airbnb <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb44-2"><a href="introdução-ao-r.html#cb44-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">room_id_F =</span> <span class="kw">factor</span>(room_id), </span>
+<span id="cb44-3"><a href="introdução-ao-r.html#cb44-3"></a>         <span class="dt">host_id_F =</span> <span class="kw">factor</span>(host_id), </span>
+<span id="cb44-4"><a href="introdução-ao-r.html#cb44-4"></a>         <span class="dt">overall_satisfaction_100 =</span> overall_satisfaction <span class="op">*</span><span class="st"> </span><span class="dv">20</span>) <span class="co">#%&gt;% </span></span>
+<span id="cb44-5"><a href="introdução-ao-r.html#cb44-5"></a>  <span class="co">#select(-country, -survey_id) %&gt;% </span></span>
+<span id="cb44-6"><a href="introdução-ao-r.html#cb44-6"></a>  <span class="co">#rename(country = city, city = borough) %&gt;% </span></span>
+<span id="cb44-7"><a href="introdução-ao-r.html#cb44-7"></a>  <span class="co">#filter(city %in% c(&quot;Brussel&quot;,&quot;Antwerpen&quot;,&quot;Gent&quot;,&quot;Charleroi&quot;,&quot;Liege&quot;,&quot;Brugge&quot;,&quot;Namur&quot;,&quot;Leuven&quot;,&quot;Mons&quot;,&quot;Aalst&quot;)) </span></span></code></pre></div>
+<p>Isso pode ser lido de maneira natural: “leia o arquivo csv, depois faça a mutação, selecione, renomeie e depois filtre”. Começamos lendo um arquivo .csv. Em vez de armazená-lo em um objeto intermediário, fornecemos como o primeiro argumento para a função mutate usando o <em>operador pipe</em>: %<span class="math inline">\(&gt;\)</span>%. É uma boa idéia aprender o atalho para %<span class="math inline">\(&gt;\)</span>% de cór: <em>Ctrl <span class="math inline">\(+\)</span> Shift <span class="math inline">\(+\)</span> M</em>.</p>
+<p>A função mutate usa os mesmos argumentos acima (crie room_id_F, que deve ser uma fatoração de room_id, etc), mas agora não o fazemos precisamos fornecer o primeiro argumento (em qual conjunto de dados queremos que o mutate funcione). O primeiro argumento seria o quadro de dados resultante da leitura do arquivo .csv na linha anterior, mas isso é automaticamente transmitido como primeiro argumento a ser alterado pelo operador pipe. O operador pipe obtém a saída do que está no lado esquerdo do tubo e fornece isso como o primeiro argumento para o que está no lado direito do pipe (ou seja, a próxima linha de código).</p>
+<p>Depois de criar novas variáveis com mutate, descartamos algumas variáveis com select. Novamente, a função select usa os mesmos argumentos acima (soltar país e survey_id), mas não fornecemos o primeiro argumento (de qual conjunto de dados devemos retirar variáveis), porque ele já é fornecido pelo pipe na linha anterior. Continuamos da mesma maneira e renomeamos algumas variáveis com rename e descartamos algumas observações com o filter.</p>
+<p>A escrita de código com o operador de pipe explora a estrutura semelhante de mutate, select, rename, filter, que são as funções mais importantes para manipulação de dados. O primeiro argumento para todas essas funções é o quadro de dados no qual ela deve operar. Agora, esse primeiro argumento pode ser deixado de fora, porque é fornecido pelo operador pipe. No restante deste tutorial, escreveremos código usando o operador de pipe, pois melhora consideravelmente a legibilidade do nosso código.</p>
+</div>
+</div>
+</div>
+<div id="agrupando-e-resumindo" class="section level2 unlisted unnumbered">
+<h2>Agrupando e resumindo</h2>
+<p>Vamos trabalhar no conjunto de dados completo novamente. Até agora, seu script deve ficar assim:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="introdução-ao-r.html#cb45-1"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb45-2"><a href="introdução-ao-r.html#cb45-2"></a><span class="co">#setwd(&quot;c:/Dropbox/work/teaching/R/data/&quot;) # Direciona seu diretorio de trabalho </span></span>
+<span id="cb45-3"><a href="introdução-ao-r.html#cb45-3"></a></span>
+<span id="cb45-4"><a href="introdução-ao-r.html#cb45-4"></a>airbnb &lt;-<span class="st"> </span>airbnb <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb45-5"><a href="introdução-ao-r.html#cb45-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">room_id =</span> <span class="kw">factor</span>(room_id), <span class="dt">host_id =</span> <span class="kw">factor</span>(host_id)) <span class="co">#%&gt;% # Nao criamos uma nova variavel room_id_F, mas substituimos room_id com sua fatoracao. O mesmo para host_id.</span></span>
+<span id="cb45-6"><a href="introdução-ao-r.html#cb45-6"></a>  <span class="co">#select(-country, -survey_id) %&gt;% # dropa country e survey_id</span></span>
+<span id="cb45-7"><a href="introdução-ao-r.html#cb45-7"></a>  <span class="co">#rename(country = city, city = borough) # renomeia city e borough</span></span>
+<span id="cb45-8"><a href="introdução-ao-r.html#cb45-8"></a></span>
+<span id="cb45-9"><a href="introdução-ao-r.html#cb45-9"></a><span class="co"># Deixamos de lado a transformacao da overall_satisfaction</span></span>
+<span id="cb45-10"><a href="introdução-ao-r.html#cb45-10"></a><span class="co"># e deixamos de fora o comando filter para garantir que nao retenhamos apenas os dados das dez cidades mais populosas</span></span></code></pre></div>
+<div id="tabelas-de-frequência" class="section level3 unlisted unnumbered">
+<h3>Tabelas de frequência</h3>
+<p>Cada observação em nosso conjunto de dados é uma sala ou quarto; portanto, sabemos que nossos dados contêm informações sobre 17651 quartos. Digamos que queremos saber quantos quartos existem por cidade:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="introdução-ao-r.html#cb46-1"></a>airbnb<span class="op">%&gt;%</span></span>
+<span id="cb46-2"><a href="introdução-ao-r.html#cb46-2"></a><span class="st"> </span><span class="kw">group_by</span>(city)<span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Use a funcao group_by para agrupar o quadro de dados do airbnb (fornecido pelo pipe na linha anterior) por cidade</span></span>
+<span id="cb46-3"><a href="introdução-ao-r.html#cb46-3"></a><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">nr_per_city =</span> <span class="kw">n</span>()) <span class="co"># Resuma este objeto agrupado (fornecido pelo pipe na linha anterior): peca ao R para criar uma nova variavel nr_per_city que possua o numero de observacoes em cada grupo (cidade)</span></span></code></pre></div>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 43 x 2
+##    city        nr_per_city
+##    &lt;chr&gt;             &lt;int&gt;
+##  1 Aalst                74
+##  2 Antwerpen          1610
+##  3 Arlon                46
+##  4 Ath                  47
+##  5 Bastogne            145
+##  6 Brugge             1094
+##  7 Brussel            6715
+##  8 Charleroi           118
+##  9 Dendermonde          45
+## 10 Diksmuide            27
+## # ... with 33 more rows</code></pre>
+<p>Dizemos ao R para pegar o objeto airbnb, agrupá-lo por cidade e resumi-lo (summarise). O resumo que queremos é o número de observações por grupo. Nesse caso, as cidades formam os grupos. Os grupos sempre serão a primeira coluna em nossa saída. Obtemos o número de observações por grupo com a função n(). Esses números são armazenados em uma nova coluna denominada nr_per_city.</p>
+<p>Como você pode ver, essas frequências são classificadas em ordem alfabética por cidade. Em vez disso, podemos classificá-los pelo número de quartos por cidade:</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="introdução-ao-r.html#cb49-1"></a>airbnb <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb49-2"><a href="introdução-ao-r.html#cb49-2"></a><span class="st">  </span><span class="kw">group_by</span>(city) <span class="op">%&gt;%</span></span>
+<span id="cb49-3"><a href="introdução-ao-r.html#cb49-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">nr_per_city =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></span>
+<span id="cb49-4"><a href="introdução-ao-r.html#cb49-4"></a><span class="st">  </span><span class="kw">arrange</span>(nr_per_city) <span class="co"># Usa a funcao arrange para classificar em uma coluna selecionada</span></span></code></pre></div>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 43 x 2
+##    city         nr_per_city
+##    &lt;chr&gt;              &lt;int&gt;
+##  1 Tielt                 24
+##  2 Diksmuide             27
+##  3 Moeskroen             28
+##  4 Roeselare             41
+##  5 Eeklo                 43
+##  6 Dendermonde           45
+##  7 Arlon                 46
+##  8 Ath                   47
+##  9 Waremme               51
+## 10 Sint-Niklaas          52
+## # ... with 33 more rows</code></pre>
+<p>Mostra a cidade com o menor número de quartos no topo. Para exibir a cidade com mais quartos no topo, classifique em ordem decrescente:</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="introdução-ao-r.html#cb52-1"></a>airbnb <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb52-2"><a href="introdução-ao-r.html#cb52-2"></a><span class="st">  </span><span class="kw">group_by</span>(city) <span class="op">%&gt;%</span></span>
+<span id="cb52-3"><a href="introdução-ao-r.html#cb52-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">nr_per_city =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span></span>
+<span id="cb52-4"><a href="introdução-ao-r.html#cb52-4"></a><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(nr_per_city)) <span class="co"># Classifica por ordem descendente</span></span></code></pre></div>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 43 x 2
+##    city            nr_per_city
+##    &lt;chr&gt;                 &lt;int&gt;
+##  1 Brussel                6715
+##  2 Antwerpen              1610
+##  3 Gent                   1206
+##  4 Brugge                 1094
+##  5 LiÃ¨ge                  667
+##  6 Verviers                631
+##  7 Oostende                527
+##  8 Nivelles                505
+##  9 Halle-Vilvoorde         471
+## 10 Leuven                  434
+## # ... with 33 more rows</code></pre>
+<p>Você verá que a capital Bruxelas tem mais quartos em oferta, seguidos por Antwerpen e Gent. Observe que isso é muito parecido com trabalhar com a Tabela Dinâmica no Excel. Você poderia ter feito tudo isso no Excel, mas isso tem várias desvantagens, especialmente ao trabalhar com grandes conjuntos de dados como o nosso: você não tem registro do que clicou, de como classificou os dados e do que pode ter copiado ou excluído. No Excel, é mais fácil cometer erros acidentais sem perceber do que no R. No R, você tem seu script, para poder voltar e verificar todas as etapas de sua análise.</p>
+<p>Nota: você também poderia ter feito isso sem o operador pipe:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="introdução-ao-r.html#cb55-1"></a>airbnb.grouped &lt;-<span class="st"> </span><span class="kw">group_by</span>(airbnb, city)</span>
+<span id="cb55-2"><a href="introdução-ao-r.html#cb55-2"></a>airbnb.grouped.summary &lt;-<span class="st"> </span><span class="kw">summarise</span>(airbnb.grouped, <span class="dt">nr_per_city =</span> <span class="kw">n</span>())</span></code></pre></div>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="introdução-ao-r.html#cb57-1"></a><span class="kw">arrange</span>(airbnb.grouped.summary, <span class="kw">desc</span>(nr_per_city))</span></code></pre></div>
+<pre><code>## # A tibble: 43 x 2
+##    city            nr_per_city
+##    &lt;chr&gt;                 &lt;int&gt;
+##  1 Brussel                6715
+##  2 Antwerpen              1610
+##  3 Gent                   1206
+##  4 Brugge                 1094
+##  5 LiÃ¨ge                  667
+##  6 Verviers                631
+##  7 Oostende                527
+##  8 Nivelles                505
+##  9 Halle-Vilvoorde         471
+## 10 Leuven                  434
+## # ... with 33 more rows</code></pre>
+<p>Mas espero que você concorde que o código que usa o operador de pipe é mais fácil de ler. Além disso, sem o operador pipe, você acabará criando muitos objetos desnecessários, como airbnb.grouped e airbnb.grouped.summary.</p>
+</div>
+<div id="estatísticas-descritivas" class="section level3 unlisted unnumbered">
+<h3>Estatísticas Descritivas</h3>
+<p>Digamos que, além das frequências por cidade, também desejemos o preço médio por cidade. Queremos que isso seja classificado em ordem decrescente pelo preço médio. Além disso, agora queremos armazenar as frequências e médias em um objeto (na seção anterior, não armazenamos a tabela de frequências em um objeto):</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="introdução-ao-r.html#cb59-1"></a>airbnb.summary &lt;-<span class="st"> </span>airbnb <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Armazena este resumo em um objeto chamado airbnb.summary.</span></span>
+<span id="cb59-2"><a href="introdução-ao-r.html#cb59-2"></a><span class="st">  </span><span class="kw">group_by</span>(city) <span class="op">%&gt;%</span></span>
+<span id="cb59-3"><a href="introdução-ao-r.html#cb59-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">nr_per_city =</span> <span class="kw">n</span>(), <span class="dt">average_price =</span> <span class="kw">mean</span>(price)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Aqui informamos ao R para criar outra variavel chamada average_price que nos fornece a media dos precos por grupo (city)</span></span>
+<span id="cb59-4"><a href="introdução-ao-r.html#cb59-4"></a><span class="st">  </span></span>
+<span id="cb59-5"><a href="introdução-ao-r.html#cb59-5"></a><span class="kw">arrange</span>(<span class="kw">desc</span>(average_price)) <span class="co"># Agora organiza por average_price e mostra o maior preco praticado dentre os demais</span></span></code></pre></div>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="introdução-ao-r.html#cb61-1"></a><span class="co"># Veja o painel de Ambiente para visualizar se ha agora um novo objeto chamado airbnb.summary.</span></span>
+<span id="cb61-2"><a href="introdução-ao-r.html#cb61-2"></a></span>
+<span id="cb61-3"><a href="introdução-ao-r.html#cb61-3"></a><span class="co"># Ao inves de apenas rodar airbnb.summary, </span></span>
+<span id="cb61-4"><a href="introdução-ao-r.html#cb61-4"></a><span class="co"># Eu o envolvi em um comando de print e defini n como Inf para ver todas as linhas.</span></span>
+<span id="cb61-5"><a href="introdução-ao-r.html#cb61-5"></a></span>
+<span id="cb61-6"><a href="introdução-ao-r.html#cb61-6"></a><span class="kw">print</span>(airbnb.summary, <span class="dt">n =</span> <span class="ot">Inf</span>) </span></code></pre></div>
+<pre><code>## # A tibble: 43 x 3
+##    city              nr_per_city average_price
+##    &lt;chr&gt;                   &lt;int&gt;         &lt;dbl&gt;
+##  1 Bastogne                  145         181. 
+##  2 Philippeville              85         162. 
+##  3 Verviers                  631         159. 
+##  4 Ieper                     143         151. 
+##  5 Waremme                    51         150. 
+##  6 Dinant                    286         144. 
+##  7 Oudenaarde                110         142. 
+##  8 NeufchÃ¢teau              160         141. 
+##  9 Ath                        47         134. 
+## 10 Tielt                      24         129. 
+## 11 Tongeren                  173         127. 
+## 12 Brugge                   1094         126. 
+## 13 Huy                        99         125. 
+## 14 Marche-en-Famenne         266         124. 
+## 15 Veurne                    350         119. 
+## 16 Eeklo                      43         115. 
+## 17 Diksmuide                  27         114. 
+## 18 Moeskroen                  28         113. 
+## 19 Mechelen                  190         112. 
+## 20 Namur                     286         111. 
+## 21 Thuin                      81         107. 
+## 22 Kortrijk                  107         103. 
+## 23 Oostende                  527         102. 
+## 24 Hasselt                   151          99.6
+## 25 Maaseik                    93          98.1
+## 26 Antwerpen                1610          95.7
+## 27 Aalst                      74          94.9
+## 28 Nivelles                  505          94.1
+## 29 Gent                     1206          90.5
+## 30 Sint-Niklaas               52          86.7
+## 31 Virton                     56          86.5
+## 32 Tournai                    97          86.4
+## 33 Halle-Vilvoorde           471          85.4
+## 34 Dendermonde                45          81.4
+## 35 Mons                      129          79.3
+## 36 LiÃ¨ge                    667          79.1
+## 37 Turnhout                  130          78.1
+## 38 Soignies                   58          77.7
+## 39 Charleroi                 118          76.9
+## 40 Arlon                      46          76.0
+## 41 Leuven                    434          75.7
+## 42 Brussel                  6715          75.1
+## 43 Roeselare                  41          74.9</code></pre>
+<p>Talvez surpreendentemente, as três principais cidades mais caras são Bastogne, Philippeville e Verviers. Talvez o preço médio dessas cidades seja alto por causa de discrepâncias.</p>
+<p>Vamos calcular algumas estatísticas mais descritivas para ver se nosso palpite está correto:</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="introdução-ao-r.html#cb63-1"></a>airbnb <span class="op">%&gt;%</span></span>
+<span id="cb63-2"><a href="introdução-ao-r.html#cb63-2"></a><span class="st">  </span><span class="kw">group_by</span>(city) <span class="op">%&gt;%</span></span>
+<span id="cb63-3"><a href="introdução-ao-r.html#cb63-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">nr_per_city =</span> <span class="kw">n</span>(), </span>
+<span id="cb63-4"><a href="introdução-ao-r.html#cb63-4"></a>            <span class="dt">average_price =</span> <span class="kw">mean</span>(price),</span>
+<span id="cb63-5"><a href="introdução-ao-r.html#cb63-5"></a>            <span class="dt">median_price =</span> <span class="kw">median</span>(price), <span class="co"># calcula a mediana dos precos por grupo (city) </span></span>
+<span id="cb63-6"><a href="introdução-ao-r.html#cb63-6"></a>            <span class="dt">max_price =</span> <span class="kw">max</span>(price)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># calcula o preco maximo por grupo (city)</span></span>
+<span id="cb63-7"><a href="introdução-ao-r.html#cb63-7"></a><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(median_price),</span>
+<span id="cb63-8"><a href="introdução-ao-r.html#cb63-8"></a>          <span class="kw">desc</span>(max_price)) <span class="co"># ordena em descendente pela mediana de preco entao pelo preco maximo</span></span></code></pre></div>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 43 x 5
+##    city              nr_per_city average_price median_price max_price
+##    &lt;chr&gt;                   &lt;int&gt;         &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt;
+##  1 Tielt                      24          129.          112       318
+##  2 Ieper                     143          151.          111       695
+##  3 Verviers                  631          159.          105      1769
+##  4 Brugge                   1094          126.          105      1414
+##  5 Bastogne                  145          181.          100      1650
+##  6 Veurne                    350          119.          100       943
+##  7 Marche-en-Famenne         266          124.          100       472
+##  8 Dinant                    286          144.           95      1284
+##  9 Tongeren                  173          127.           95       990
+## 10 NeufchÃ¢teau              160          141.           95       872
+## # ... with 33 more rows</code></pre>
+<p>Vemos que duas das três cidades com o preço médio mais alto (Verviers e Bastogne) também estão entre as cinco principais cidades com as medianas de preços; portanto, o seu preço médio alto não se deve apenas a alguns quartos com preços extremamente altos (embora tenham o preço mais alto, quartos nessas cidades são muito caros).</p>
+</div>
+<div id="exportando-summaries-dos-dados" class="section level3 unlisted unnumbered">
+<h3>Exportando (summaries) dos dados</h3>
+<p>Às vezes, você pode querer exportar dados ou um resumo dos dados. Vamos salvar nossos dados ou resumo em um arquivo .csv (no Excel, podemos convertê-lo em um arquivo do Excel, se quisermos):</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="introdução-ao-r.html#cb66-1"></a><span class="co"># o primeiro argumento eh o objeto que voce deseja armazenar, o segundo eh o nome que voce deseja atribuir ao arquivo (nao esqueca a extensao .csv)</span></span>
+<span id="cb66-2"><a href="introdução-ao-r.html#cb66-2"></a><span class="co"># use write_csv2 quando voce tiver um computador belga (AZERTY), caso contrário, os números decimais não serão armazenados como números</span></span>
+<span id="cb66-3"><a href="introdução-ao-r.html#cb66-3"></a></span>
+<span id="cb66-4"><a href="introdução-ao-r.html#cb66-4"></a><span class="co"># armazenamento de dados</span></span>
+<span id="cb66-5"><a href="introdução-ao-r.html#cb66-5"></a><span class="kw">write_excel_csv</span>(airbnb, <span class="st">&quot;airbnb.csv&quot;</span>)</span>
+<span id="cb66-6"><a href="introdução-ao-r.html#cb66-6"></a><span class="kw">write_excel_csv2</span>(airbnb, <span class="st">&quot;airbnb.csv&quot;</span>)</span>
+<span id="cb66-7"><a href="introdução-ao-r.html#cb66-7"></a></span>
+<span id="cb66-8"><a href="introdução-ao-r.html#cb66-8"></a><span class="co"># armazenamento de summary</span></span>
+<span id="cb66-9"><a href="introdução-ao-r.html#cb66-9"></a><span class="kw">write_excel_csv</span>(airbnb.summary, <span class="st">&quot;airbnb_summary.csv&quot;</span>)</span>
+<span id="cb66-10"><a href="introdução-ao-r.html#cb66-10"></a><span class="kw">write_excel_csv2</span>(airbnb.summary, <span class="st">&quot;airbnb_summary.csv&quot;</span>)</span></code></pre></div>
+<p>O arquivo será salvo no seu diretório de trabalho.</p>
+</div>
+<div id="gráficos" class="section level3 unlisted unnumbered">
+<h3>Gráficos</h3>
+<p>Faremos gráficos dos dados das dez cidades mais populosas da Bélgica. Se você possui o conjunto de dados completo do Airbnb em sua memória (verifique o painel Ambiente), basta filtrá-lo:</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="introdução-ao-r.html#cb67-1"></a>airbnb.topten &lt;-<span class="st"> </span>airbnb <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb67-2"><a href="introdução-ao-r.html#cb67-2"></a><span class="st">  </span><span class="kw">filter</span>(city <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Brussel&quot;</span>,<span class="st">&quot;Antwerpen&quot;</span>,<span class="st">&quot;Gent&quot;</span>,<span class="st">&quot;Charleroi&quot;</span>,<span class="st">&quot;Liege&quot;</span>,<span class="st">&quot;Brugge&quot;</span>,<span class="st">&quot;Namur&quot;</span>,<span class="st">&quot;Leuven&quot;</span>,<span class="st">&quot;Mons&quot;</span>,<span class="st">&quot;Aalst&quot;</span>)) <span class="co"># lembre-se de que voce tera que carregar o pacote Hmisc para usar o operador %in%.</span></span></code></pre></div>
+<p>Se você acabou de iniciar uma nova sessão R, também pode reler o arquivo .csv executando o código na seção da seção anterior.</p>
+</div>
+<div id="diagrama-de-dispersão-scatterplot" class="section level3 unlisted unnumbered">
+<h3>Diagrama de dispersão (scatterplot)</h3>
+<p>Vamos criar um <em>scatterplot</em> dos preços por cidade:</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="introdução-ao-r.html#cb68-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> airbnb.topten, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> city, <span class="dt">y =</span> price)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb68-2"><a href="introdução-ao-r.html#cb68-2"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<p>Se tudo correr bem, uma plotagem deve aparecer no canto inferior direito da tela. As figuras são feitas com o comando ggplot. Na primeira linha, você diz ao ggplot quais dados devem ser usados para criar um gráfico e quais variáveis devem aparecer no eixo X e no eixo Y. Dizemos para colocar cidade no eixo X e preço no eixo Y. A especificação do eixo X e do eixo Y sempre deve vir como argumentos para uma função aes, que por sua vez é fornecida como um argumento para a função mapping (mapeamento). Na segunda linha, você diz ao ggplot para desenhar pontos (geom_point).</p>
+<p>Ao criar um gráfico, lembre-se de sempre adicionar um <span class="math inline">\(+\)</span> no final de cada linha de código que compõe o gráfico, exceto o último (adicionar o <span class="math inline">\(+\)</span> no início de uma linha não funcionará).</p>
+<p>O gráfico não é muito informativo porque muitos pontos são desenhados um sobre o outro.</p>
+</div>
+<div id="jitter" class="section level3 unlisted unnumbered">
+<h3>Jitter</h3>
+<p>Vamos adicionar o gráfico do tipo jitter aos nossos pontos:</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="introdução-ao-r.html#cb69-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> airbnb.topten, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> city, <span class="dt">y =</span> price)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb69-2"><a href="introdução-ao-r.html#cb69-2"></a><span class="st">  </span><span class="kw">geom_jitter</span>() <span class="co"># O mesmo codigo de antes mas agora mudamos geom_point para geom_jitter.</span></span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<p>Em vez de solicitar pontos com geom_point(), agora solicitamos pontos com jitter adicionado com geom_jitter(). Jitter é um valor aleatório que é adicionado a cada coordenada X e Y, de modo que os pontos de dados não sejam desenhados um sobre o outro. Observe que fazemos isso apenas para tornar o gráfico mais informativo (compare-o com o gráfico de dispersão anterior, onde muitos pontos de dados são desenhados um sobre o outro); não altera os valores reais em nosso conjunto de dados.</p>
+</div>
+<div id="histograma" class="section level3 unlisted unnumbered">
+<h3>Histograma</h3>
+<p>Ainda não está claro. Parece que a distribuição do preço está correta. Isso significa que a distribuição do preço não é normal. Uma distribuição normal tem dois recursos principais.</p>
+<p>Uma primeira característica é que existem mais valores próximos à média do que valores distantes da média.</p>
+<p>Em outras palavras, valores extremos não ocorrem com muita frequência.</p>
+<p>Uma segunda característica é que a distribuição é simétrica. Em outras palavras, o número de valores abaixo da média é igual ao número de valores acima da média. Em uma distribuição distorcida, existem valores extremos em apenas um lado da distribuição. No caso de inclinação à direita, isso significa que existem valores extremos no lado direito da distribuição.</p>
+<p>No nosso caso, isso significa que existem algumas listagens do Airbnb com preços muito altos. Isso aumenta a média da distribuição, de modo que as listagens não sejam mais normalmente distribuídas em torno da média.</p>
+<p>Vamos desenhar um histograma dos preços:</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="introdução-ao-r.html#cb70-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> airbnb.topten, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> price)) <span class="op">+</span><span class="st"> </span><span class="co"># Observe que nao temos mais uma cidade x =. O preco deve estar no eixo X e as frequencias dos precos devem estar no eixo Y</span></span>
+<span id="cb70-2"><a href="introdução-ao-r.html#cb70-2"></a><span class="st">  </span><span class="kw">geom_histogram</span>() <span class="co"># Eixo Y = frequencia dos valores no eixo X</span></span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="sobre-este-tutorial.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="a-caucus-race-and-a-long-tale.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rhozon/rparamkt/edit/master/02-tears.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/rhozon/rparamkt/blob/master/02-tears.Rmd",
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

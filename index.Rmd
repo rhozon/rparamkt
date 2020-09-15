@@ -81,8 +81,12 @@ Em seguida, faça o download do R Studio em [https://www.rstudio.com/products/rs
 
 ## Obtendo familiaridade com o \faRProject Studio {.unlisted .unnumbered}
 
+
+
 ### Console vs. script {.unlisted .unnumbered}
 
+
+![](https://bookdown.org/content/1340/images/rstudio.png)
 
 Ao abrir o R Studio, você verá uma janela como a acima. Você pode digitar o código diretamente no console (janela inferior esquerda) - basta digitar seu código após o prompt ($>$) e pressionar enter no final da linha para executar o código. Você também pode escrever seu código no arquivo de script (a janela superior esquerda). Se você não ver uma janela com um arquivo de script, abra uma clicando em Arquivo, Novo arquivo, R Script. Para executar uma linha de código a partir do seu script, pressione Ctrl + R ou Ctrl + Enter no Windows e Cmd + Enter no Mac ou use o botão 'Executar' no canto superior direito da janela do script.
 
@@ -99,3 +103,49 @@ Ao escrever um script, é muito importante adicionar comentários para descrever
 # Aprendendo a importar e explorar dados e criar graficos investigando as acomodacoes do Airbnb na Belgica
 # Escrito por Samuel Franssens 28/01/2018
 ```
+
+
+## Pacotes {.unlisted .unnumbered}
+
+As próximas linhas de código geralmente carregam os pacotes que você usará em sua análise ou visualização. 
+
+O R carrega automaticamente várias funções para executar operações básicas, mas os pacotes fornecem funcionalidade extra. Eles geralmente consistem em várias funções que podem lidar com tarefas específicas. Por exemplo, um pacote poderia fornecer funções para fazer análises de cluster ou para fazer biplots. Para instalar um pacote, digite install.packages ("nome do pacote") (e pressione enter ao trabalhar no console ou pressione Ctrl + Enter, Ctrl + R, Cmd + Enter ou o botão 'Executar' ao trabalhar em um script).
+
+Você só precisa instalar pacotes uma vez; depois, basta carregá-los usando a biblioteca (nome do pacote). Aqui, usaremos o popular pacote tidyverse que fornece muitas funções úteis e intuitivas
+
+ ( [https://www.tidyverse.org/](https://www.tidyverse.org/) ).
+ 
+O pacote tidyverse é na verdade uma coleção de outros pacotes; portanto, durante a instalação ou o carregamento, você verá que vários pacotes são instalados ou carregados. Instale e carregue o pacote tidyverse executando as seguintes linhas de código:
+
+```{r}
+#install.packages(tidyverse) # instala o pacote tidyverse
+library(tidyverse) # carrega o pacote tidyverse
+
+```
+
+Observe que há aspas ao instalar um pacote, mas não ao carregá-lo.
+
+A instalação de um pacote normalmente produz muita saída no console. Você pode verificar se instalou um pacote com êxito, carregando o pacote. Se você tentar carregar um pacote que não foi instalado com sucesso, você receberá o seguinte erro:
+
+```{r}
+#library(marketing) # Estou tentando instalar o pacote inexistente 'marketing'
+## Error in library(marketing): there is no package called 'marketing'
+```
+
+Nesse caso, tente reinstalar o pacote.
+
+Quando você tenta usar uma função de um determinado pacote que ainda não foi carregado, você pode receber o seguinte erro:
+
+```{r}
+# agnes eh uma funcao do pacote cluster para rodar analise de cluster.
+#agnes(dist(data), metric = "euclidean", method = "ward")
+
+## Error in agnes(dist(data), metric = "euclidean", method = "ward"): could not find function "agnes"
+```
+
+
+O R nos dirá que não pode encontrar a função solicitada (neste caso, agnes, uma função do pacote de cluster para análises de cluster). Geralmente, isso ocorre porque você ainda não carregou (ou instalou) o pacote ao qual a função pertence.
+
+Após instalar e carregar o pacote tidyverse, você poderá usar as funções incluídas no pacote tidyverse. Como você usará o pacote tidyverse com tanta frequência, é melhor sempre carregá-lo no início do seu script.
+
+
