@@ -15,8 +15,6 @@ Analisaremos os dados de uma pesquisa na qual 60 consumidores foram convidados a
 library(tidyverse)
 library(readxl)
 
-
-
 url<-"http://users.telenet.be/samuelfranssens/tutorial_data/toothpaste.xlsx"
 toothpaste <- tempfile()
 download.file(url, toothpaste, mode="wb")

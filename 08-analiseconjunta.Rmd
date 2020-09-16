@@ -1,0 +1,346 @@
+
+# Análise Conjunta {.unlisted .unnumbered}
+
+Neste capítulo, você aprenderá como realizar uma análise conjunta. A análise conjunta começa a partir de uma pesquisa na qual as pessoas avaliam ou escolhem entre produtos (por exemplo, carros) que diferem em vários atributos (por exemplo, segurança, eficiência de combustível, conforto etc.). A partir dessas classificações ou escolhas, a análise determina o valor que as pessoas atribuem aos diferentes atributos do produto (por exemplo, quanto peso as pessoas atribuem à segurança ao escolher entre carros). Essas informações podem ser usadas no desenvolvimento de produtos.
+
+## Dados {.unlisted .unnumbered}
+ 
+###  Importação {.unlisted .unnumbered}
+
+Analisaremos os dados de uma pesquisa em que 15 consumidores foram convidados a avaliar dez sorvetes. Cada sorvete tinha um 'perfil' diferente, ou seja, uma combinação diferente de níveis de quatro atributos: sabor (framboesa, chocolate, morango, manga, baunilha), embalagem (waffle caseiro, casquinha, caneca), leve (com pouca gordura ou não) e orgânico (orgânico ou não). Todos os 15 entrevistados classificaram os dez perfis, fornecendo uma pontuação entre 1 e 10.
+
+Usamos os dados fornecidos pelo [www.xlstat.com](https://bookdown.org/content/1340/www.xlstat.com), descritos em seu [tutorial](https://help.xlstat.com/customer/en/portal/articles/2062346-conjoint-analysis-in-excel-tutorial?b_id=9283) sobre como fazer análises conjuntas no Excel. Faça o download dos dados [aqui.](http://users.telenet.be/samuelfranssens/tutorial_data/icecream.xlsx)
+
+
+
+
+```{r}
+library(tidyverse)
+library(readxl)
+
+
+url<-"http://users.telenet.be/samuelfranssens/tutorial_data/icecream.xlsx"
+icecream <- tempfile()
+download.file(url, icecream, mode="wb")
+icecream<-read_excel(path = icecream, sheet = 1)
+```
+
+
+###  Manipulação {.unlisted .unnumbered}
+
+
+```{r}
+icecream[1:10,]
+
+```
+
+
+Quando inspecionamos os dados, vemos que temos uma coluna para cada entrevistado. Essa é uma maneira incomum de armazenar dados (normalmente temos uma linha por respondente), então vamos reestruturar nosso conjunto de dados com a função de coleta (como fizemos [https://bookdown.org/content/1340/rmanova.html#rmanova](aqui)):
+
+```{r}
+icecream <- icecream %>% 
+  gather(respondent, rating, starts_with("Individual")) %>% # o entrevistado acompanha o respondente, a classificacao armazena as classificacoes do entrevistado e queremos empilhar todas as variaveis que comecam com Individual
+  rename("profile" = "Observations") %>% # renomeia Observations para profile
+  mutate(profile = factor(profile), respondent = factor(respondent),  # fatorar identificadores
+         Flavor = factor(Flavor), Packaging = factor(Packaging), Light = factor(Light), Organic = factor(Organic)) # fatorar os atributos do sorvete
+
+# Amplo conjunto de dados: uma linha por unidade de observacao (aqui: perfil) e varias colunas para as diferentes observacoes (aqui: respondentes)
+# Conjunto de dados longo: uma linha por observacao (aqui: combinacao de perfil x respondente)
+
+# Converter de grande para longo significa que estamos empilhando varias colunas umas sobre as outras. Para isso, precisamos de uma variavel extra para acompanhar qual coluna estamos lidando.
+# A funcao de coleta converte conjuntos de dados de amplos para longos.
+# O primeiro argumento (respondente) nos dira com qual coluna estamos lidando. Essa eh a variavel que armazenara os nomes das colunas que estamos empilhando.
+# O segundo argumento (classificacao) armazenara as colunas reais empilhadas umas sobre as outras.
+# Os argumentos a seguir (todas as variaveis com nomes que comecam com Individual) sao as colunas que queremos empilhar.
+
+icecream[1:10,]
+
+```
+
+
+É melhor usar o Visualizador aqui (clique duas vezes no icecream} objeto no painel Ambiente ou digite View(icecream))} para ver que existem dez linhas (10 perfis) por respondente agora.
+
+As demais variáveis são:
+
+- profile é um identificador para os diferentes sorvetes
+- Flavor, Packaging, Light, Organic são os quatro atributos que compõem o perfil de um sorvete
+
+###  Recapitulando: importação e manipulação {.unlisted .unnumbered}
+
+Aqui está o que fizemos até agora, em uma sequência ordenada de operações canalizadas (faça o download dos dados [http://users.telenet.be/samuelfranssens/tutorial_data/icecream.xlsx](aqui):)
+
+```{r}
+#library(tidyverse)
+#library(readxl)
+
+#icecream <- read_excel("icecream.xlsx") %>% 
+ # gather(respondent, rating, starts_with("Individual")) %>% # o entrevistado acompanha o respondente, a classificacao armazena as classificacoes do entrevistado e queremos empilhar todas as variaveis que comecam com Individual
+#  rename("profile" = "Observations") %>% 
+#  mutate(profile = factor(profile), respondent = factor(respondent),
+ #        Flavor = factor(Flavor), Packaging = factor(Packaging), Light = factor(Light), Organic = factor(Organic))
+```
+
+
+## Design de experimentos {.unlisted .unnumbered}
+
+
+Quando inspecionamos nosso conjunto de dados, vemos que o flavor possui 5 níveis (framboesa, chocolate, morango, manga, baunilha), packaging possui 3 níveis (waffle caseiro, cone, cerveja), a Light possui 2 níveis (baixo teor de gordura versus não), e Organic} tem 2 níveis (orgânico vs. não). O objetivo de uma análise conjunta é estimar até que ponto cada nível de atributo afeta a classificação do sorvete.
+
+Para fazer isso, o fabricante de sorvete poderia criar 5×3×2x2 = 60 sorvetes diferentes e peça às pessoas para avaliarem tudo isso. Isso fornecerá ao fabricante uma boa estimativa da importância de cada atributo e de todas as possíveis interações. No entanto, classificar 60 sorvetes é difícil para os participantes e um estudo tão grande seria caro para o fabricante financiar. Na prática, os pesquisadores nessa situação solicitarão que as pessoas classifiquem um subconjunto desses 60 sorvetes. Nesta seção, discutiremos como selecionar um subconjunto (por exemplo, 10 sorvetes) de todas as combinações possíveis de nível de atributo (ou seja, 60 sorvetes) que ainda nos permitirão obter boas estimativas dos efeitos mais importantes.
+
+No conjunto de dados, já temos as classificações para dez perfis, portanto a decisão de quais sorvetes para teste já foi tomada. No entanto, vamos desconsiderar o fato de já termos os dados e considerar as decisões que precisam ser tomadas antes da coleta de dados. Em outras palavras, vamos discutir como passamos de um fatorial completo (todas as 60 combinações) para um design fracionário (menos de 60 combinações).
+
+A função doe (projeto de experimentos) do pacote radiant} nos ajudará a decidir sobre os projetos de estudo. Radiant é um [pacote do R para business analytics.](https://radiant-rstats.github.io/docs/index.html)
+
+A discussão a seguir da função doe é baseada na discussão da Radiant sobre essa função.
+
+```{r}
+#install.packages("radiant")
+library(radiant)
+```
+
+Para usar a doe, precisamos inserir as informações sobre nossos atributos e seus níveis de uma maneira específica:
+
+```{r}
+# attribute1, attribute2, etc. sao vetores com um elemento no qual fornecemos primeiro o nome do atributo seguido por um ponto e virgula e depois fornecemos todos os niveis dos atributos separados por ponto e virgula
+attribute1 <- "Flavor; Raspberry; Chocolate; Strawberry; Mango; Vanilla"
+attribute2 <- "Package; Homemade waffle; Cone; Pint"
+attribute3 <- "Light; Low fat; No low fat"
+attribute4 <- "Organic; Organic; Not organic"
+
+# agora combine esses diferentes atributos em um vetor com c()
+attributes <- c(attribute1, attribute2, attribute3, attribute4)
+```
+
+Agora podemos pedir possíveis projetos experimentais:
+
+```{r}
+summary(doe(attributes, seed = 123)) # Seed: fixa o gerador de numeros aleatorios
+
+```
+
+Observe a saída no cabeçalho Design efficiency. Mostra 52 linhas. As linhas representam projetos experimentais com diferentes números de Trials ou diferentes números de sorvetes (ou seja, combinações de nível de atributo) que seriam testados. Uma palavra melhor para julgamento é perfil. Para cada projeto experimental, ele mostra a D-efficiency do projeto - uma medida de como poderemos estimar com clareza os efeitos do interesse após a execução do experimento (pontuações mais altas são melhores) - e se o projeto está ou não equilibrado - se cada nível está incluído no mesmo número de tentativas ou perfis. Idealmente, procuramos projetos balanceados com alta D-efficiency (acima de 0,80 é considerado razoável). Temos dois candidatos, um delineamento experimental com 60 perfis, que é apenas o delineamento fatorial completo ou um delineamento com 30 perfis. Vamos dar uma olhada no design com 30 perfis:
+
+```{r}
+summary(doe(attributes, seed = 123, trials = 30))
+
+```
+
+
+Em Projeto fatorial parcial (ou projeto fatorial fracionário), encontramos os perfis que poderíamos executar em um experimento com 30 em vez de 60 perfis. Sob correlações parciais do projeto fatorial, vemos que dois atributos estão correlacionados, a saber, Light e Organic ($r = -0,105$). Esse sempre será o caso em projetos fatoriais fracionários. Isso significa que algumas combinações de níveis de atributo serão mais prevalentes que outras. Somente em um planejamento fatorial completo todos os atributos serão não correlacionados ou ortogonais.
+
+Um design possível com apenas 10 perfis seria desequilibrado e teria a seguinte aparência:
+
+```{r}
+summary(doe(attributes, seed = 123, trials = 10))
+
+```
+
+
+Comparado ao design com 30 perfis, agora existem mais e mais fortes correlações entre os atributos.
+
+Observe que os perfis não são exatamente iguais aos da experiência usada para coletar os dados do sorvete. Isso ocorre porque, para projetos desequilibrados, existe alguma aleatoriedade na definição das combinações reais de nível de atributo. É também por isso que definimos seed = 123. seed é usado para consertar o gerador de números aleatórios do R. Configurá-lo para um número fixo (123 ou 456 ou qualquer outra coisa) garantirá que o R gere sempre a mesma saída. Sem definir a seed, doe com trials = 10 não daria o mesmo design fracionário toda vez que você a executar.
+
+Observe também que o pacote radiant} instala um suplemento que você pode acessar por meio de suplementos (encontre este botão à direita da linha abaixo de "Arquivo" etc.) -> Iniciar radiant (navegador). Isso abrirá um aplicativo no seu navegador que permitirá executar as etapas acima em uma interface visual intuitiva. Para obter ajuda, confira a discussão da Radiant} sobre o módulo Design de experiências [aqui](https://radiant-rstats.github.io/docs/design/doe.html)
+
+
+## Um respondente {.unlisted .unnumbered}
+###  Estimar valores de peça e pesos de importância {.unlisted .unnumbered}
+
+
+Embora alguns softwares exijam que você primeiro crie variáveis fictícias representando os níveis de atributo e execute uma regressão, o Radiant} não exige que você faça isso. Você pode simplesmente usar os atributos (cada um com vários níveis) como variáveis. Primeiro, faremos uma análise conjunta dos dados de um respondente (indivíduo 1):
+
+```{r}
+respondent1 <- icecream %>% filter(respondent == "Individual 1")
+
+# salve a analise conjunta em um objeto, porque a usaremos como entrada para summary(), plot(), and predict()
+
+conjoint_respondent1 <- conjoint(respondent1, rvar = "rating", evar = c("Flavor","Packaging","Light","Organic")) 
+
+summary(conjoint_respondent1)
+
+```
+
+
+A saída fornece valores de peça, pesos de importância e coeficientes de regressão. Os valores das partes e os coeficientes de regressão fornecem as mesmas informações: comparado ao nível de referência (o primeiro nível de um atributo; você verá que os valores das partes são sempre zero para este nível), quanto aumenta cada nível de atributo ou diminuir a classificação de um sorvete? Podemos traçar estes resultados:
+
+```{r}
+plot(conjoint_respondent1)
+```
+
+
+E então vemos facilmente que essa pessoa desfrutaria de um sorvete com baixo teor de gordura, orgânico, manga ou morango em um cone ou em um waffle caseiro.
+
+Observe que os resultados da regressão conjunta são simplesmente os resultados de uma [regressão linear múltipla:](https://bookdown.org/content/1340/linear-regression.html#regression_without)
+
+```{r}
+# Execute essa regressao se estiver interessado em aprender qual preditor eh significativo ou qual eh o R quadrado do modelo geral.
+
+summary(lm(rating ~ Flavor + Packaging + Light + Organic, data = respondent1))
+
+```
+
+Finalmente, os pesos de importância nos dizem com que intensidade cada atributo determina a classificação de um sorvete. Para esse respondente, sabor é o atributo mais importante e luz é o atributo menos importante. A classificação deste respondente é determinada em 59,6% por sabor e em 9,2% por luz.
+
+
+### Profiles: utilitários previstos {.unlisted .unnumbered}
+
+
+Prever as classificações (utilitários) dos diferentes sorvetes é muito fácil em R. Primeiro, verifique se temos um conjunto de dados com os diferentes perfis que foram testados:
+
+```{r}
+profiles <- icecream %>% 
+  filter(respondent == "Individual 1") %>% 
+  select(Flavor,Packaging,Light,Organic)
+
+profiles
+
+```
+
+Em seguida, pedimos à função predict para prever as classificações dos perfis com base na função de regressão:
+
+```{r}
+predict(conjoint_respondent1, profiles) # prever as classificacoes para os perfis com base na analise conjunta
+```
+
+A classificação prevista é mais alta para sorvetes orgânicos com pouca gordura e manga em um waffle caseiro. Mas essas são previsões para sorvetes que o entrevistado realmente classificou. Se quiséssemos saber qual sorvete o entrevistado mais gostava, poderíamos apenas olhar para as classificações observadas (em vez das previstas). É mais interessante obter previsões para sorvetes que o entrevistado não avaliou. Para isso, precisamos dos perfis para todos os sorvetes possíveis. Podemos criar esses perfis com a função expand.grid}. A função expand.grid} usa dois ou mais vetores e cria todas as combinações possíveis de elementos desses vetores:
+
+```{r}
+Flavor <- c("Raspberry","Chocolate","Mango","Strawberry","Vanilla")
+Organic <- c("Organic","Not organic")
+
+expand.grid(Flavor, Organic)
+
+```
+
+Vamos fazer isso para todos os nossos níveis de atributo:
+
+```{r}
+# existe uma maneira mais facil de obter niveis de atributo do que criar os vetores manualmente:
+
+levels(icecream$Flavor) # certifique-se de que o sabor seja fatorado primeiro!
+
+## [1] "Chocolate"  "Mango"      "Raspberry"  "Strawberry" "Vanilla"
+# agora crie todos os profiles
+
+profiles.all <- expand.grid(levels(icecream$Flavor),levels(icecream$Packaging),levels(icecream$Light),levels(icecream$Organic)) %>% 
+  rename("Flavor" = "Var1", "Packaging" = "Var2", "Light" = "Var3", "Organic" = "Var4") # rename the variables created by expand.grid (don't forget this, otherwise predict won't know where to look for each attribute)
+
+# prever as classificações de todos os perfis
+
+predict(conjoint_respondent1, profiles.all) %>% 
+  arrange(desc(Prediction)) # mostrar os sorvetes com a classificação mais alta prevista no topo
+
+```
+
+Mesma conclusão que a da seção anterior: essa pessoa desfrutaria de um sorvete com baixo teor de gordura, orgânico, manga ou morango em um cone ou um waffle caseiro.
+
+## Muitos respondentes {.unlisted .unnumbered}
+
+###  Estimar valores de peça e pesos de importância {.unlisted .unnumbered}
+
+Agora, vamos realizar a análise conjunta no conjunto de dados completo para ter uma idéia de quais sorvetes os 15 entrevistados, em média, gostaram mais e qual a importância de cada atributo:
+
+```{r}
+conjoint_allrespondents <- conjoint(icecream, rvar = "rating", evar = c("Flavor","Packaging","Light","Organic")) # como antes, mas com um conjunto de dados diferente.
+
+summary(conjoint_allrespondents) 
+
+```
+
+O sabor é de longe o atributo mais importante. Vamos traçar estes resultados:
+
+```{r}
+plot(conjoint_allrespondents)
+```
+
+A partir disso, prevemos que, em média, as pessoas mais gostariam de um sorvete de manga orgânico, sem pouca gordura, em um cone.
+
+Os pesos de importância nos dizem com que intensidade cada atributo determina a classificação média de um sorvete. O sabor é o atributo mais importante e a embalagem é o atributo menos importante. A classificação deste respondente é determinada para 59,7% por sabor e para 9,6% por embalagem.
+
+###  Profiles: utilitários previstos {.unlisted .unnumbered}
+
+Vamos prever as classificações de todos os sorvetes possíveis:
+
+```{r}
+predict(conjoint_allrespondents, profiles.all) %>% # verifique as secoes anteriores para profiles.all
+
+  arrange(desc(Prediction)) # mostrar os sorvetes com a classificacao mais alta prevista no topo
+ 
+```
+
+
+Mesmas conclusões de antes: prevemos que, em média, as pessoas mais gostariam de um sorvete de manga orgânico, sem pouca gordura, em um cone.
+
+
+## Simulação de Mercado {.unlisted .unnumbered}
+
+
+Digamos que criamos um pequeno número de sorvetes e queremos estimar a participação de mercado de cada um desses sorvetes. Digamos que selecionamos os quatro perfis a seguir:
+
+```{r}
+# use slice() para selecionar as linhas 
+
+market_profiles <- profiles.all %>% 
+  slice(c(4, 16, 23, 38)) # de profiles.all, selecione as linhas 4, 16, 23, 38 como quatro profiles
+
+market_profiles
+
+#Já sabemos como estimar qual sorvete será mais apreciado:
+
+conjoint_allrespondents <- conjoint(icecream, rvar = "rating", evar = c("Flavor","Packaging","Light","Organic"))
+
+predict(conjoint_allrespondents, market_profiles) %>%
+  arrange(desc(Prediction))
+ 
+```
+
+O sorvete de morango com baixo teor de gordura e não orgânico em um cone tem a classificação mais alta prevista entre todos os entrevistados. Mas isso não nos diz qual será a participação de mercado de cada um dos quatro perfis. Para isso, precisamos saber, para cada participante, qual perfil ele escolheria. Em outras palavras, precisamos prever as classificações para cada indivíduo separadamente:
+
+```{r}
+# mesmo modelo de antes, mas agora adicione por = "respondent"
+conjoint_perrespondent <- conjoint(icecream, rvar = "rating", evar = c("Flavor","Packaging","Light","Organic"), by = "respondent")
+
+predict(conjoint_perrespondent, market_profiles) %>% 
+  arrange(respondent, desc(Prediction)) # classificar por respondente e depois por classificacao prevista
+
+```
+
+Vamos reter para cada indivíduo apenas seu perfil mais bem classificado. Podemos fazer isso agrupando por entrevistado e adicionando uma variável denominada ranking que nos dirá o ranking de perfis, com base na classificação prevista, para cada entrevistado:
+
+```{r}
+highest_rated <- predict(conjoint_perrespondent, market_profiles) %>% 
+  group_by(respondent) %>% 
+  mutate(ranking = rank(Prediction))
+
+# dando uma olhada
+highest_rated %>% 
+  arrange(respondent, ranking)
+  
+
+# precisamos reter apenas o sorvete mais bem classificado
+
+highest_rated <- highest_rated %>% 
+  arrange(respondent, ranking) %>% 
+  filter(ranking == 4)
+
+highest_rated
+
+```
+
+
+
+Agora podemos estimar a participação de mercado:
+
+```{r}
+market_share <- highest_rated %>% 
+  group_by(Flavor, Packaging, Light, Organic) %>% 
+  summarise(count = n()) %>% 
+  arrange(desc(count))
+
+market_share
+
+```
+
+
+Vimos que o sorvete de morango, cone, baixo teor de gordura e não orgânico é preferido por 7 em cada 15 participantes, o framboesa, waffle caseiro, sem baixo teor de gordura e sorvete não orgânico é favorecido por 4 em cada 15 participantes e assim por diante .

@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Análise Conjunta | R para Estudantes de Marketing</title>
+  <meta name="description" content="Análise Conjunta | R para Estudantes de Marketing" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Análise Conjunta | R para Estudantes de Marketing" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Análise Conjunta | R para Estudantes de Marketing" />
+  
+  
+  
+
+<meta name="author" content="KU Leuven Marketing department (tradução: Rodrigo Hermont Ozon)" />
+
+
+<meta name="date" content="2020-09-16" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="análise-de-cluster-para-segmentação.html"/>
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">R para Estudantes de Marketing</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Sobre o autor desta tradução</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#resumo"><i class="fa fa-check"></i>Resumo</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#download-e-instalação-do-r-e-do-rstudio"><i class="fa fa-check"></i>Download e instalação do R e do RStudio</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#obtendo-familiaridade-com-o-studio"><i class="fa fa-check"></i>Obtendo familiaridade com o Studio</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#console-vs.-script"><i class="fa fa-check"></i>Console vs. script</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#comentários"><i class="fa fa-check"></i>Comentários</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#pacotes"><i class="fa fa-check"></i>Pacotes</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html"><i class="fa fa-check"></i>Introdução ao R</a><ul>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#importando-dados"><i class="fa fa-check"></i>Importando dados</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#importando-arquivos-.csv"><i class="fa fa-check"></i>Importando arquivos .csv</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#ajustando-seu-diretório-de-trabalho"><i class="fa fa-check"></i>Ajustando seu diretório de trabalho</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#atribuindo-dados-a-objetos"><i class="fa fa-check"></i>Atribuindo dados a objetos</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#importando-arquivos-do-excel"><i class="fa fa-check"></i>Importando arquivos do Excel</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#lendo-os-dados-do-airbnb"><i class="fa fa-check"></i>Lendo os dados do Airbnb</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#manipulando-dataframes"><i class="fa fa-check"></i>Manipulando dataframes</a><ul>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#transformando-variáveis"><i class="fa fa-check"></i>Transformando variáveis</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#transformações-numéricas"><i class="fa fa-check"></i>Transformações numéricas</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#transformando-variáveis-com-a-função-mutate"><i class="fa fa-check"></i>Transformando variáveis com a função mutate</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#incluindo-ou-excluindo-e-renomeando-variáveis-colunas"><i class="fa fa-check"></i>Incluindo ou excluindo e renomeando variáveis (colunas)</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#incluindo-ou-excluindo-observações-linhas"><i class="fa fa-check"></i>Incluindo ou excluindo observações (linhas)</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#o-operador-pipe"><i class="fa fa-check"></i>O operador pipe</a><ul>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#uma-maneira-de-escrever-o-código"><i class="fa fa-check"></i>Uma maneira de escrever o código</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#agrupando-e-resumindo"><i class="fa fa-check"></i>Agrupando e resumindo</a><ul>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#tabelas-de-frequência"><i class="fa fa-check"></i>Tabelas de frequência</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#estatísticas-descritivas"><i class="fa fa-check"></i>Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#exportando-summaries-dos-dados"><i class="fa fa-check"></i>Exportando (summaries) dos dados</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#gráficos"><i class="fa fa-check"></i>Gráficos</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#diagrama-de-dispersão-scatterplot"><i class="fa fa-check"></i>Diagrama de dispersão (scatterplot)</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#jitter"><i class="fa fa-check"></i>Jitter</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#histograma"><i class="fa fa-check"></i>Histograma</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#transformação-logarítmica"><i class="fa fa-check"></i>Transformação logarítmica</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#plotando-a-mediana"><i class="fa fa-check"></i>Plotando a mediana</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#plotando-a-média"><i class="fa fa-check"></i>Plotando a média</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#salvando-imagens"><i class="fa fa-check"></i>Salvando imagens</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html"><i class="fa fa-check"></i>Análise básica de dados: analisando dados secundários</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#dados"><i class="fa fa-check"></i>Dados</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#importação"><i class="fa fa-check"></i>Importação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#manipulação"><i class="fa fa-check"></i>Manipulação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#mesclando-datasets"><i class="fa fa-check"></i>Mesclando datasets</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#recapitulando-importação-e-manipulação"><i class="fa fa-check"></i>Recapitulando: importação e manipulação</a></li>
+<li><a href="análise-básica-de-dados-analisando-dados-secundários.html#amostras-independentes-teste-t">Amostras independentes: teste <span class="math inline">\(t\)</span></a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#anova-univariada"><i class="fa fa-check"></i>ANOVA univariada</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#suposição-de-normalidade-de-resíduos"><i class="fa fa-check"></i>Suposição de normalidade de resíduos</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#suposição-homogeneidade-de-variâncias"><i class="fa fa-check"></i>Suposição: homogeneidade de variâncias</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#anova"><i class="fa fa-check"></i>ANOVA</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#teste-de-tuckey-de-diferença-significativa-verdadeira"><i class="fa fa-check"></i>Teste de Tuckey de diferença significativa verdadeira</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#regressão-linear-simples"><i class="fa fa-check"></i>Regressão Linear Simples</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#correlação"><i class="fa fa-check"></i>Correlação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#regressão-linear-múltipla-com-interação"><i class="fa fa-check"></i>Regressão linear múltipla, com interação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#premissas"><i class="fa fa-check"></i>Premissas</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#normalidade-de-resíduos"><i class="fa fa-check"></i>Normalidade de resíduos</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#homocedasticidade-de-resíduos"><i class="fa fa-check"></i>Homocedasticidade de resíduos</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#multicolinearidade"><i class="fa fa-check"></i>Multicolinearidade</a></li>
+<li><a href="análise-básica-de-dados-analisando-dados-secundários.html#teste-chi2">Teste <span class="math inline">\(\chi^{2}\)</span></a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#medindo-o-ajuste-de-uma-regressão-logística-porcentagem-classificada-corretamente"><i class="fa fa-check"></i>Medindo o ajuste de uma regressão logística: porcentagem classificada corretamente</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-experimentos.html"><a href="análise-básica-de-dados-experimentos.html"><i class="fa fa-check"></i>Análise Básica de Dados: Experimentos</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#dados"><i class="fa fa-check"></i>Dados</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#importação"><i class="fa fa-check"></i>Importação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#manipulação"><i class="fa fa-check"></i>Manipulação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-experimentos.html"><a href="análise-básica-de-dados-experimentos.html#fatorar-algumas-variáveis"><i class="fa fa-check"></i>Fatorar algumas variáveis</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-experimentos.html"><a href="análise-básica-de-dados-experimentos.html#calcular-a-consistência-interna-e-a-média-de-perguntas-que-medem-o-mesmo-conceito"><i class="fa fa-check"></i>Calcular a consistência interna e a média de perguntas que medem o mesmo conceito</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-experimentos.html"><a href="análise-básica-de-dados-experimentos.html#recapitulando-importando-e-manipulando"><i class="fa fa-check"></i>Recapitulando: importando e manipulando</a></li>
+</ul></li>
+<li><a href="análise-básica-de-dados-experimentos.html#teste-t">Teste <span class="math inline">\(t\)</span></a><ul>
+<li><a href="análise-básica-de-dados-experimentos.html#teste-t-para-amostras-independentes">Teste <span class="math inline">\(t\)</span> para amostras independentes</a></li>
+<li><a href="análise-básica-de-dados-experimentos.html#teste-t-para-amostras-dependentes">Teste <span class="math inline">\(t\)</span> para amostras dependentes</a></li>
+<li><a href="análise-básica-de-dados-experimentos.html#teste-t-para-amostra-única">Teste <span class="math inline">\(t\)</span> para amostra única</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-experimentos.html"><a href="análise-básica-de-dados-experimentos.html#anova-bivariada"><i class="fa fa-check"></i>ANOVA Bivariada</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-experimentos.html"><a href="análise-básica-de-dados-experimentos.html#seguindo-com-contrastes"><i class="fa fa-check"></i>Seguindo com contrastes</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-experimentos.html"><a href="análise-básica-de-dados-experimentos.html#análise-de-moderação-interação-entre-variáveis-independentes-contínuas-e-categóricas"><i class="fa fa-check"></i>Análise de moderação: interação entre variáveis independentes contínuas e categóricas</a><ul>
+<li><a href="análise-básica-de-dados-experimentos.html#análise-spotlight">Análise <em>spotlight</em></a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-experimentos.html"><a href="análise-básica-de-dados-experimentos.html#análise-ancova"><i class="fa fa-check"></i>Análise ANCOVA</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-experimentos.html"><a href="análise-básica-de-dados-experimentos.html#medidas-repetidas-anova"><i class="fa fa-check"></i>Medidas repetidas ANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><i class="fa fa-check"></i>Análise de componentes principais para mapas perceptivos (office dataset)</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#dados"><i class="fa fa-check"></i>Dados</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#importação"><i class="fa fa-check"></i>Importação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#manipulação"><i class="fa fa-check"></i>Manipulação</a></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#recapitulação-importação-e-manipulação"><i class="fa fa-check"></i>Recapitulação: importação e manipulação</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#quantos-fatores-devemos-considerar"><i class="fa fa-check"></i>Quantos fatores devemos considerar ?</a></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#análise-de-componentes-principais"><i class="fa fa-check"></i>Análise de Componentes Principais</a><ul>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cargas-fatoriais"><i class="fa fa-check"></i>Cargas fatoriais</a></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#plotando-as-cargas-fatoriais"><i class="fa fa-check"></i>Plotando as cargas fatoriais</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html"><i class="fa fa-check"></i>Análise de componentes principais para mapas perceptivos (toothpaste dataset)</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#dados"><i class="fa fa-check"></i>Dados</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#importação"><i class="fa fa-check"></i>Importação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#manipulação"><i class="fa fa-check"></i>Manipulação</a></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#recapitulação-importação-e-manipulação"><i class="fa fa-check"></i>Recapitulação: importação e manipulação</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#quantos-fatores-devemos-considerar"><i class="fa fa-check"></i>Quantos fatores devemos considerar ?</a></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#análise-de-componentes-principais"><i class="fa fa-check"></i>Análise de Componentes Principais</a><ul>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cargas-fatoriais"><i class="fa fa-check"></i>Cargas fatoriais</a></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#gráfico-das-cargas-fatoriais"><i class="fa fa-check"></i>Gráfico das cargas fatoriais</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-de-cluster-para-segmentação.html"><a href="análise-de-cluster-para-segmentação.html"><i class="fa fa-check"></i>Análise de cluster para segmentação</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#dados"><i class="fa fa-check"></i>Dados</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#importação"><i class="fa fa-check"></i>Importação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#manipulação"><i class="fa fa-check"></i>Manipulação</a></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#recapitulação-importação-e-manipulação"><i class="fa fa-check"></i>Recapitulação: importação e manipulação</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-de-cluster-para-segmentação.html"><a href="análise-de-cluster-para-segmentação.html#análise-de-cluster"><i class="fa fa-check"></i>Análise de Cluster</a><ul>
+<li class="chapter" data-level="" data-path="análise-de-cluster-para-segmentação.html"><a href="análise-de-cluster-para-segmentação.html#padronizar-ou-não"><i class="fa fa-check"></i>Padronizar ou não ?</a></li>
+<li class="chapter" data-level="" data-path="análise-de-cluster-para-segmentação.html"><a href="análise-de-cluster-para-segmentação.html#cluster-hierárquico"><i class="fa fa-check"></i>Cluster hierárquico</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-de-cluster-para-segmentação.html"><a href="análise-de-cluster-para-segmentação.html#cluster-não-hierárquico"><i class="fa fa-check"></i>Cluster não-hierárquico</a></li>
+<li class="chapter" data-level="" data-path="análise-de-cluster-para-segmentação.html"><a href="análise-de-cluster-para-segmentação.html#lda-canônico"><i class="fa fa-check"></i>LDA Canônico</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-conjunta.html"><a href="análise-conjunta.html"><i class="fa fa-check"></i>Análise Conjunta</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#dados"><i class="fa fa-check"></i>Dados</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#importação"><i class="fa fa-check"></i>Importação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#manipulação"><i class="fa fa-check"></i>Manipulação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#recapitulando-importação-e-manipulação"><i class="fa fa-check"></i>Recapitulando: importação e manipulação</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-conjunta.html"><a href="análise-conjunta.html#design-de-experimentos"><i class="fa fa-check"></i>Design de experimentos</a></li>
+<li class="chapter" data-level="" data-path="análise-conjunta.html"><a href="análise-conjunta.html#um-respondente"><i class="fa fa-check"></i>Um respondente</a><ul>
+<li class="chapter" data-level="" data-path="análise-conjunta.html"><a href="análise-conjunta.html#estimar-valores-de-peça-e-pesos-de-importância"><i class="fa fa-check"></i>Estimar valores de peça e pesos de importância</a></li>
+<li class="chapter" data-level="" data-path="análise-conjunta.html"><a href="análise-conjunta.html#profiles-utilitários-previstos"><i class="fa fa-check"></i>Profiles: utilitários previstos</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-conjunta.html"><a href="análise-conjunta.html#muitos-respondentes"><i class="fa fa-check"></i>Muitos respondentes</a><ul>
+<li class="chapter" data-level="" data-path="análise-conjunta.html"><a href="análise-conjunta.html#estimar-valores-de-peça-e-pesos-de-importância-1"><i class="fa fa-check"></i>Estimar valores de peça e pesos de importância</a></li>
+<li class="chapter" data-level="" data-path="análise-conjunta.html"><a href="análise-conjunta.html#profiles-utilitários-previstos-1"><i class="fa fa-check"></i>Profiles: utilitários previstos</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-conjunta.html"><a href="análise-conjunta.html#simulação-de-mercado"><i class="fa fa-check"></i>Simulação de Mercado</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R para Estudantes de Marketing</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="análise-conjunta" class="section level1 unlisted unnumbered">
+<h1>Análise Conjunta</h1>
+<p>Neste capítulo, você aprenderá como realizar uma análise conjunta. A análise conjunta começa a partir de uma pesquisa na qual as pessoas avaliam ou escolhem entre produtos (por exemplo, carros) que diferem em vários atributos (por exemplo, segurança, eficiência de combustível, conforto etc.). A partir dessas classificações ou escolhas, a análise determina o valor que as pessoas atribuem aos diferentes atributos do produto (por exemplo, quanto peso as pessoas atribuem à segurança ao escolher entre carros). Essas informações podem ser usadas no desenvolvimento de produtos.</p>
+<div id="dados" class="section level2 unlisted unnumbered">
+<h2>Dados</h2>
+<div id="importação" class="section level3 unlisted unnumbered">
+<h3>Importação</h3>
+<p>Analisaremos os dados de uma pesquisa em que 15 consumidores foram convidados a avaliar dez sorvetes. Cada sorvete tinha um ‘perfil’ diferente, ou seja, uma combinação diferente de níveis de quatro atributos: sabor (framboesa, chocolate, morango, manga, baunilha), embalagem (waffle caseiro, casquinha, caneca), leve (com pouca gordura ou não) e orgânico (orgânico ou não). Todos os 15 entrevistados classificaram os dez perfis, fornecendo uma pontuação entre 1 e 10.</p>
+<p>Usamos os dados fornecidos pelo <a href="https://bookdown.org/content/1340/www.xlstat.com">www.xlstat.com</a>, descritos em seu <a href="https://help.xlstat.com/customer/en/portal/articles/2062346-conjoint-analysis-in-excel-tutorial?b_id=9283">tutorial</a> sobre como fazer análises conjuntas no Excel. Faça o download dos dados <a href="http://users.telenet.be/samuelfranssens/tutorial_data/icecream.xlsx">aqui.</a></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="análise-conjunta.html#cb1-1"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
+<pre><code>## -- Attaching packages -------------------------------------------------- tidyverse 1.3.0 --</code></pre>
+<pre><code>## v ggplot2 3.3.2     v purrr   0.3.4
+## v tibble  3.0.3     v dplyr   1.0.0
+## v tidyr   1.1.2     v stringr 1.4.0
+## v readr   1.3.1     v forcats 0.5.0</code></pre>
+<pre><code>## -- Conflicts ----------------------------------------------------- tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="análise-conjunta.html#cb5-1"></a><span class="kw">library</span>(readxl)</span>
+<span id="cb5-2"><a href="análise-conjunta.html#cb5-2"></a></span>
+<span id="cb5-3"><a href="análise-conjunta.html#cb5-3"></a></span>
+<span id="cb5-4"><a href="análise-conjunta.html#cb5-4"></a>url&lt;-<span class="st">&quot;http://users.telenet.be/samuelfranssens/tutorial_data/icecream.xlsx&quot;</span></span>
+<span id="cb5-5"><a href="análise-conjunta.html#cb5-5"></a>icecream &lt;-<span class="st"> </span><span class="kw">tempfile</span>()</span>
+<span id="cb5-6"><a href="análise-conjunta.html#cb5-6"></a><span class="kw">download.file</span>(url, icecream, <span class="dt">mode=</span><span class="st">&quot;wb&quot;</span>)</span>
+<span id="cb5-7"><a href="análise-conjunta.html#cb5-7"></a>icecream&lt;-<span class="kw">read_excel</span>(<span class="dt">path =</span> icecream, <span class="dt">sheet =</span> <span class="dv">1</span>)</span></code></pre></div>
+</div>
+<div id="manipulação" class="section level3 unlisted unnumbered">
+<h3>Manipulação</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="análise-conjunta.html#cb6-1"></a>icecream[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,]</span></code></pre></div>
+<pre><code>## # A tibble: 10 x 20
+##    Observations Flavor Packaging Light Organic `Individual 1` `Individual 2`
+##    &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;            &lt;dbl&gt;          &lt;dbl&gt;
+##  1 Profile 1    Raspb~ Homemade~ No l~ Not or~              1              6
+##  2 Profile 2    Choco~ Cone      No l~ Organic              4              7
+##  3 Profile 3    Raspb~ Pint      Low ~ Organic              2              1
+##  4 Profile 4    Straw~ Pint      No l~ Organic              7              5
+##  5 Profile 5    Straw~ Cone      Low ~ Not or~              9              8
+##  6 Profile 6    Choco~ Homemade~ No l~ Not or~              3              2
+##  7 Profile 7    Vanil~ Pint      Low ~ Not or~              5              9
+##  8 Profile 8    Mango  Homemade~ Low ~ Organic             10             10
+##  9 Profile 9    Mango  Pint      No l~ Not or~              6              4
+## 10 Profile 10   Vanil~ Homemade~ No l~ Organic              8              3
+## # ... with 13 more variables: `Individual 3` &lt;dbl&gt;, `Individual 4` &lt;dbl&gt;,
+## #   `Individual 5` &lt;dbl&gt;, `Individual 6` &lt;dbl&gt;, `Individual 7` &lt;dbl&gt;,
+## #   `Individual 8` &lt;dbl&gt;, `Individual 9` &lt;dbl&gt;, `Individual 10` &lt;dbl&gt;,
+## #   `Individual 11` &lt;dbl&gt;, `Individual 12` &lt;dbl&gt;, `Individual 13` &lt;dbl&gt;,
+## #   `Individual 14` &lt;dbl&gt;, `Individual 15` &lt;dbl&gt;</code></pre>
+<p>Quando inspecionamos os dados, vemos que temos uma coluna para cada entrevistado. Essa é uma maneira incomum de armazenar dados (normalmente temos uma linha por respondente), então vamos reestruturar nosso conjunto de dados com a função de coleta (como fizemos <a href="aqui">https://bookdown.org/content/1340/rmanova.html#rmanova</a>):</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="análise-conjunta.html#cb8-1"></a>icecream &lt;-<span class="st"> </span>icecream <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb8-2"><a href="análise-conjunta.html#cb8-2"></a><span class="st">  </span><span class="kw">gather</span>(respondent, rating, <span class="kw">starts_with</span>(<span class="st">&quot;Individual&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># o entrevistado acompanha o respondente, a classificacao armazena as classificacoes do entrevistado e queremos empilhar todas as variaveis que comecam com Individual</span></span>
+<span id="cb8-3"><a href="análise-conjunta.html#cb8-3"></a><span class="st">  </span><span class="kw">rename</span>(<span class="st">&quot;profile&quot;</span> =<span class="st"> &quot;Observations&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># renomeia Observations para profile</span></span>
+<span id="cb8-4"><a href="análise-conjunta.html#cb8-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">profile =</span> <span class="kw">factor</span>(profile), <span class="dt">respondent =</span> <span class="kw">factor</span>(respondent),  <span class="co"># fatorar identificadores</span></span>
+<span id="cb8-5"><a href="análise-conjunta.html#cb8-5"></a>         <span class="dt">Flavor =</span> <span class="kw">factor</span>(Flavor), <span class="dt">Packaging =</span> <span class="kw">factor</span>(Packaging), <span class="dt">Light =</span> <span class="kw">factor</span>(Light), <span class="dt">Organic =</span> <span class="kw">factor</span>(Organic)) <span class="co"># fatorar os atributos do sorvete</span></span>
+<span id="cb8-6"><a href="análise-conjunta.html#cb8-6"></a></span>
+<span id="cb8-7"><a href="análise-conjunta.html#cb8-7"></a><span class="co"># Amplo conjunto de dados: uma linha por unidade de observacao (aqui: perfil) e varias colunas para as diferentes observacoes (aqui: respondentes)</span></span>
+<span id="cb8-8"><a href="análise-conjunta.html#cb8-8"></a><span class="co"># Conjunto de dados longo: uma linha por observacao (aqui: combinacao de perfil x respondente)</span></span>
+<span id="cb8-9"><a href="análise-conjunta.html#cb8-9"></a></span>
+<span id="cb8-10"><a href="análise-conjunta.html#cb8-10"></a><span class="co"># Converter de grande para longo significa que estamos empilhando varias colunas umas sobre as outras. Para isso, precisamos de uma variavel extra para acompanhar qual coluna estamos lidando.</span></span>
+<span id="cb8-11"><a href="análise-conjunta.html#cb8-11"></a><span class="co"># A funcao de coleta converte conjuntos de dados de amplos para longos.</span></span>
+<span id="cb8-12"><a href="análise-conjunta.html#cb8-12"></a><span class="co"># O primeiro argumento (respondente) nos dira com qual coluna estamos lidando. Essa eh a variavel que armazenara os nomes das colunas que estamos empilhando.</span></span>
+<span id="cb8-13"><a href="análise-conjunta.html#cb8-13"></a><span class="co"># O segundo argumento (classificacao) armazenara as colunas reais empilhadas umas sobre as outras.</span></span>
+<span id="cb8-14"><a href="análise-conjunta.html#cb8-14"></a><span class="co"># Os argumentos a seguir (todas as variaveis com nomes que comecam com Individual) sao as colunas que queremos empilhar.</span></span>
+<span id="cb8-15"><a href="análise-conjunta.html#cb8-15"></a></span>
+<span id="cb8-16"><a href="análise-conjunta.html#cb8-16"></a>icecream[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,]</span></code></pre></div>
+<pre><code>## # A tibble: 10 x 7
+##    profile    Flavor     Packaging       Light     Organic    respondent  rating
+##    &lt;fct&gt;      &lt;fct&gt;      &lt;fct&gt;           &lt;fct&gt;     &lt;fct&gt;      &lt;fct&gt;        &lt;dbl&gt;
+##  1 Profile 1  Raspberry  Homemade waffle No low f~ Not organ~ Individual~      1
+##  2 Profile 2  Chocolate  Cone            No low f~ Organic    Individual~      4
+##  3 Profile 3  Raspberry  Pint            Low fat   Organic    Individual~      2
+##  4 Profile 4  Strawberry Pint            No low f~ Organic    Individual~      7
+##  5 Profile 5  Strawberry Cone            Low fat   Not organ~ Individual~      9
+##  6 Profile 6  Chocolate  Homemade waffle No low f~ Not organ~ Individual~      3
+##  7 Profile 7  Vanilla    Pint            Low fat   Not organ~ Individual~      5
+##  8 Profile 8  Mango      Homemade waffle Low fat   Organic    Individual~     10
+##  9 Profile 9  Mango      Pint            No low f~ Not organ~ Individual~      6
+## 10 Profile 10 Vanilla    Homemade waffle No low f~ Organic    Individual~      8</code></pre>
+<p>É melhor usar o Visualizador aqui (clique duas vezes no icecream} objeto no painel Ambiente ou digite View(icecream))} para ver que existem dez linhas (10 perfis) por respondente agora.</p>
+<p>As demais variáveis são:</p>
+<ul>
+<li>profile é um identificador para os diferentes sorvetes</li>
+<li>Flavor, Packaging, Light, Organic são os quatro atributos que compõem o perfil de um sorvete</li>
+</ul>
+</div>
+<div id="recapitulando-importação-e-manipulação" class="section level3 unlisted unnumbered">
+<h3>Recapitulando: importação e manipulação</h3>
+<p>Aqui está o que fizemos até agora, em uma sequência ordenada de operações canalizadas (faça o download dos dados <a href="aqui">http://users.telenet.be/samuelfranssens/tutorial_data/icecream.xlsx</a>:)</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="análise-conjunta.html#cb10-1"></a><span class="co">#library(tidyverse)</span></span>
+<span id="cb10-2"><a href="análise-conjunta.html#cb10-2"></a><span class="co">#library(readxl)</span></span>
+<span id="cb10-3"><a href="análise-conjunta.html#cb10-3"></a></span>
+<span id="cb10-4"><a href="análise-conjunta.html#cb10-4"></a><span class="co">#icecream &lt;- read_excel(&quot;icecream.xlsx&quot;) %&gt;% </span></span>
+<span id="cb10-5"><a href="análise-conjunta.html#cb10-5"></a> <span class="co"># gather(respondent, rating, starts_with(&quot;Individual&quot;)) %&gt;% # o entrevistado acompanha o respondente, a classificacao armazena as classificacoes do entrevistado e queremos empilhar todas as variaveis que comecam com Individual</span></span>
+<span id="cb10-6"><a href="análise-conjunta.html#cb10-6"></a><span class="co">#  rename(&quot;profile&quot; = &quot;Observations&quot;) %&gt;% </span></span>
+<span id="cb10-7"><a href="análise-conjunta.html#cb10-7"></a><span class="co">#  mutate(profile = factor(profile), respondent = factor(respondent),</span></span>
+<span id="cb10-8"><a href="análise-conjunta.html#cb10-8"></a> <span class="co">#        Flavor = factor(Flavor), Packaging = factor(Packaging), Light = factor(Light), Organic = factor(Organic))</span></span></code></pre></div>
+</div>
+</div>
+<div id="design-de-experimentos" class="section level2 unlisted unnumbered">
+<h2>Design de experimentos</h2>
+<p>Quando inspecionamos nosso conjunto de dados, vemos que o flavor possui 5 níveis (framboesa, chocolate, morango, manga, baunilha), packaging possui 3 níveis (waffle caseiro, cone, cerveja), a Light possui 2 níveis (baixo teor de gordura versus não), e Organic} tem 2 níveis (orgânico vs. não). O objetivo de uma análise conjunta é estimar até que ponto cada nível de atributo afeta a classificação do sorvete.</p>
+<p>Para fazer isso, o fabricante de sorvete poderia criar 5×3×2x2 = 60 sorvetes diferentes e peça às pessoas para avaliarem tudo isso. Isso fornecerá ao fabricante uma boa estimativa da importância de cada atributo e de todas as possíveis interações. No entanto, classificar 60 sorvetes é difícil para os participantes e um estudo tão grande seria caro para o fabricante financiar. Na prática, os pesquisadores nessa situação solicitarão que as pessoas classifiquem um subconjunto desses 60 sorvetes. Nesta seção, discutiremos como selecionar um subconjunto (por exemplo, 10 sorvetes) de todas as combinações possíveis de nível de atributo (ou seja, 60 sorvetes) que ainda nos permitirão obter boas estimativas dos efeitos mais importantes.</p>
+<p>No conjunto de dados, já temos as classificações para dez perfis, portanto a decisão de quais sorvetes para teste já foi tomada. No entanto, vamos desconsiderar o fato de já termos os dados e considerar as decisões que precisam ser tomadas antes da coleta de dados. Em outras palavras, vamos discutir como passamos de um fatorial completo (todas as 60 combinações) para um design fracionário (menos de 60 combinações).</p>
+<p>A função doe (projeto de experimentos) do pacote radiant} nos ajudará a decidir sobre os projetos de estudo. Radiant é um <a href="https://radiant-rstats.github.io/docs/index.html">pacote do R para business analytics.</a></p>
+<p>A discussão a seguir da função doe é baseada na discussão da Radiant sobre essa função.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="análise-conjunta.html#cb11-1"></a><span class="co">#install.packages(&quot;radiant&quot;)</span></span>
+<span id="cb11-2"><a href="análise-conjunta.html#cb11-2"></a><span class="kw">library</span>(radiant)</span></code></pre></div>
+<pre><code>## Loading required package: radiant.data</code></pre>
+<pre><code>## Loading required package: magrittr</code></pre>
+<pre><code>## 
+## Attaching package: &#39;magrittr&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     set_names</code></pre>
+<pre><code>## The following object is masked from &#39;package:tidyr&#39;:
+## 
+##     extract</code></pre>
+<pre><code>## Loading required package: lubridate</code></pre>
+<pre><code>## 
+## Attaching package: &#39;lubridate&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     date, intersect, setdiff, union</code></pre>
+<pre><code>## 
+## Attaching package: &#39;radiant.data&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:lubridate&#39;:
+## 
+##     month, wday</code></pre>
+<pre><code>## The following object is masked from &#39;package:forcats&#39;:
+## 
+##     as_factor</code></pre>
+<pre><code>## The following objects are masked from &#39;package:purrr&#39;:
+## 
+##     is_double, is_empty, is_numeric</code></pre>
+<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     diamonds</code></pre>
+<pre><code>## The following object is masked from &#39;package:base&#39;:
+## 
+##     date</code></pre>
+<pre><code>## Loading required package: radiant.design</code></pre>
+<pre><code>## Loading required package: mvtnorm</code></pre>
+<pre><code>## Loading required package: radiant.basics</code></pre>
+<pre><code>## Loading required package: radiant.model</code></pre>
+<pre><code>## Loading required package: radiant.multivariate</code></pre>
+<p>Para usar a doe, precisamos inserir as informações sobre nossos atributos e seus níveis de uma maneira específica:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="análise-conjunta.html#cb31-1"></a><span class="co"># attribute1, attribute2, etc. sao vetores com um elemento no qual fornecemos primeiro o nome do atributo seguido por um ponto e virgula e depois fornecemos todos os niveis dos atributos separados por ponto e virgula</span></span>
+<span id="cb31-2"><a href="análise-conjunta.html#cb31-2"></a>attribute1 &lt;-<span class="st"> &quot;Flavor; Raspberry; Chocolate; Strawberry; Mango; Vanilla&quot;</span></span>
+<span id="cb31-3"><a href="análise-conjunta.html#cb31-3"></a>attribute2 &lt;-<span class="st"> &quot;Package; Homemade waffle; Cone; Pint&quot;</span></span>
+<span id="cb31-4"><a href="análise-conjunta.html#cb31-4"></a>attribute3 &lt;-<span class="st"> &quot;Light; Low fat; No low fat&quot;</span></span>
+<span id="cb31-5"><a href="análise-conjunta.html#cb31-5"></a>attribute4 &lt;-<span class="st"> &quot;Organic; Organic; Not organic&quot;</span></span>
+<span id="cb31-6"><a href="análise-conjunta.html#cb31-6"></a></span>
+<span id="cb31-7"><a href="análise-conjunta.html#cb31-7"></a><span class="co"># agora combine esses diferentes atributos em um vetor com c()</span></span>
+<span id="cb31-8"><a href="análise-conjunta.html#cb31-8"></a>attributes &lt;-<span class="st"> </span><span class="kw">c</span>(attribute1, attribute2, attribute3, attribute4)</span></code></pre></div>
+<p>Agora podemos pedir possíveis projetos experimentais:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="análise-conjunta.html#cb32-1"></a><span class="kw">summary</span>(<span class="kw">doe</span>(attributes, <span class="dt">seed =</span> <span class="dv">123</span>)) <span class="co"># Seed: fixa o gerador de numeros aleatorios</span></span></code></pre></div>
+<pre><code>## Experimental design
+## # trials for partial factorial: 60 
+## # trials for full factorial   : 60 
+## Random seed                   : 123 
+## 
+## Attributes and levels:
+## Flavor: Raspberry, Chocolate, Strawberry, Mango, Vanilla 
+## Package: Homemade_waffle, Cone, Pint 
+## Light: Low_fat, No_low_fat 
+## Organic: Organic, Not_organic 
+## 
+## Design efficiency:
+##  Trials D-efficiency Balanced
+##       9        0.105    FALSE
+##      10        0.389    FALSE
+##      11        0.411    FALSE
+##      12        0.614    FALSE
+##      13        0.542    FALSE
+##      14        0.479    FALSE
+##      15        0.762    FALSE
+##      16        0.738    FALSE
+##      17        0.748    FALSE
+##      18        0.756    FALSE
+##      19        0.644    FALSE
+##      20        0.895    FALSE
+##      21        0.848    FALSE
+##      22        0.833    FALSE
+##      23        0.790    FALSE
+##      24        0.827    FALSE
+##      25        0.787    FALSE
+##      26        0.768    FALSE
+##      27        0.759    FALSE
+##      28        0.736    FALSE
+##      29        0.702    FALSE
+##      30        0.984     TRUE
+##      31        0.952    FALSE
+##      32        0.933    FALSE
+##      33        0.928    FALSE
+##      34        0.900    FALSE
+##      35        0.871    FALSE
+##      36        0.893    FALSE
+##      37        0.866    FALSE
+##      38        0.843    FALSE
+##      39        0.836    FALSE
+##      40        0.922    FALSE
+##      41        0.899    FALSE
+##      42        0.904    FALSE
+##      43        0.882    FALSE
+##      44        0.861    FALSE
+##      45        0.949    FALSE
+##      46        0.919    FALSE
+##      47        0.912    FALSE
+##      48        0.911    FALSE
+##      49        0.891    FALSE
+##      50        0.959    FALSE
+##      51        0.939    FALSE
+##      52        0.944    FALSE
+##      53        0.925    FALSE
+##      54        0.924    FALSE
+##      55        0.906    FALSE
+##      56        0.902    FALSE
+##      57        0.884    FALSE
+##      58        0.872    FALSE
+##      59        0.855    FALSE
+##      60        1.000     TRUE
+## 
+## Partial factorial design correlations:
+## ** Note: Variables are assumed to be ordinal **
+##         Flavor Package Light Organic
+## Flavor       1       0     0       0
+## Package      0       1     0       0
+## Light        0       0     1       0
+## Organic      0       0     0       1
+## 
+## Partial factorial design:
+##  trial     Flavor         Package      Light     Organic
+##      1  Raspberry Homemade_waffle    Low_fat     Organic
+##      2  Raspberry Homemade_waffle    Low_fat Not_organic
+##      3  Raspberry Homemade_waffle No_low_fat     Organic
+##      4  Raspberry Homemade_waffle No_low_fat Not_organic
+##      5  Raspberry            Cone    Low_fat     Organic
+##      6  Raspberry            Cone    Low_fat Not_organic
+##      7  Raspberry            Cone No_low_fat     Organic
+##      8  Raspberry            Cone No_low_fat Not_organic
+##      9  Raspberry            Pint    Low_fat     Organic
+##     10  Raspberry            Pint    Low_fat Not_organic
+##     11  Raspberry            Pint No_low_fat     Organic
+##     12  Raspberry            Pint No_low_fat Not_organic
+##     13  Chocolate Homemade_waffle    Low_fat     Organic
+##     14  Chocolate Homemade_waffle    Low_fat Not_organic
+##     15  Chocolate Homemade_waffle No_low_fat     Organic
+##     16  Chocolate Homemade_waffle No_low_fat Not_organic
+##     17  Chocolate            Cone    Low_fat     Organic
+##     18  Chocolate            Cone    Low_fat Not_organic
+##     19  Chocolate            Cone No_low_fat     Organic
+##     20  Chocolate            Cone No_low_fat Not_organic
+##     21  Chocolate            Pint    Low_fat     Organic
+##     22  Chocolate            Pint    Low_fat Not_organic
+##     23  Chocolate            Pint No_low_fat     Organic
+##     24  Chocolate            Pint No_low_fat Not_organic
+##     25 Strawberry Homemade_waffle    Low_fat     Organic
+##     26 Strawberry Homemade_waffle    Low_fat Not_organic
+##     27 Strawberry Homemade_waffle No_low_fat     Organic
+##     28 Strawberry Homemade_waffle No_low_fat Not_organic
+##     29 Strawberry            Cone    Low_fat     Organic
+##     30 Strawberry            Cone    Low_fat Not_organic
+##     31 Strawberry            Cone No_low_fat     Organic
+##     32 Strawberry            Cone No_low_fat Not_organic
+##     33 Strawberry            Pint    Low_fat     Organic
+##     34 Strawberry            Pint    Low_fat Not_organic
+##     35 Strawberry            Pint No_low_fat     Organic
+##     36 Strawberry            Pint No_low_fat Not_organic
+##     37      Mango Homemade_waffle    Low_fat     Organic
+##     38      Mango Homemade_waffle    Low_fat Not_organic
+##     39      Mango Homemade_waffle No_low_fat     Organic
+##     40      Mango Homemade_waffle No_low_fat Not_organic
+##     41      Mango            Cone    Low_fat     Organic
+##     42      Mango            Cone    Low_fat Not_organic
+##     43      Mango            Cone No_low_fat     Organic
+##     44      Mango            Cone No_low_fat Not_organic
+##     45      Mango            Pint    Low_fat     Organic
+##     46      Mango            Pint    Low_fat Not_organic
+##     47      Mango            Pint No_low_fat     Organic
+##     48      Mango            Pint No_low_fat Not_organic
+##     49    Vanilla Homemade_waffle    Low_fat     Organic
+##     50    Vanilla Homemade_waffle    Low_fat Not_organic
+##     51    Vanilla Homemade_waffle No_low_fat     Organic
+##     52    Vanilla Homemade_waffle No_low_fat Not_organic
+##     53    Vanilla            Cone    Low_fat     Organic
+##     54    Vanilla            Cone    Low_fat Not_organic
+##     55    Vanilla            Cone No_low_fat     Organic
+##     56    Vanilla            Cone No_low_fat Not_organic
+##     57    Vanilla            Pint    Low_fat     Organic
+##     58    Vanilla            Pint    Low_fat Not_organic
+##     59    Vanilla            Pint No_low_fat     Organic
+##     60    Vanilla            Pint No_low_fat Not_organic
+## 
+## Estimable effects from partial factorial design:
+## 
+##   Flavor|Chocolate
+##   Flavor|Strawberry
+##   Flavor|Mango
+##   Flavor|Vanilla
+##   Package|Cone
+##   Package|Pint
+##   Light|No_low_fat
+##   Organic|Not_organic
+##   Flavor|Chocolate:Package|Cone
+##   Flavor|Strawberry:Package|Cone
+##   Flavor|Mango:Package|Cone
+##   Flavor|Vanilla:Package|Cone
+##   Flavor|Chocolate:Package|Pint
+##   Flavor|Strawberry:Package|Pint
+##   Flavor|Mango:Package|Pint
+##   Flavor|Vanilla:Package|Pint
+##   Flavor|Chocolate:Light|No_low_fat
+##   Flavor|Strawberry:Light|No_low_fat
+##   Flavor|Mango:Light|No_low_fat
+##   Flavor|Vanilla:Light|No_low_fat
+##   Package|Cone:Light|No_low_fat
+##   Package|Pint:Light|No_low_fat
+##   Flavor|Chocolate:Organic|Not_organic
+##   Flavor|Strawberry:Organic|Not_organic
+##   Flavor|Mango:Organic|Not_organic
+##   Flavor|Vanilla:Organic|Not_organic
+##   Package|Cone:Organic|Not_organic
+##   Package|Pint:Organic|Not_organic
+##   Light|No_low_fat:Organic|Not_organic
+##   Flavor|Chocolate:Package|Cone:Light|No_low_fat
+##   Flavor|Strawberry:Package|Cone:Light|No_low_fat
+##   Flavor|Mango:Package|Cone:Light|No_low_fat
+##   Flavor|Vanilla:Package|Cone:Light|No_low_fat
+##   Flavor|Chocolate:Package|Pint:Light|No_low_fat
+##   Flavor|Strawberry:Package|Pint:Light|No_low_fat
+##   Flavor|Mango:Package|Pint:Light|No_low_fat
+##   Flavor|Vanilla:Package|Pint:Light|No_low_fat
+##   Flavor|Chocolate:Package|Cone:Organic|Not_organic
+##   Flavor|Strawberry:Package|Cone:Organic|Not_organic
+##   Flavor|Mango:Package|Cone:Organic|Not_organic
+##   Flavor|Vanilla:Package|Cone:Organic|Not_organic
+##   Flavor|Chocolate:Package|Pint:Organic|Not_organic
+##   Flavor|Strawberry:Package|Pint:Organic|Not_organic
+##   Flavor|Mango:Package|Pint:Organic|Not_organic
+##   Flavor|Vanilla:Package|Pint:Organic|Not_organic
+##   Flavor|Chocolate:Light|No_low_fat:Organic|Not_organic
+##   Flavor|Strawberry:Light|No_low_fat:Organic|Not_organic
+##   Flavor|Mango:Light|No_low_fat:Organic|Not_organic
+##   Flavor|Vanilla:Light|No_low_fat:Organic|Not_organic
+##   Package|Cone:Light|No_low_fat:Organic|Not_organic
+##   Package|Pint:Light|No_low_fat:Organic|Not_organic
+##   Flavor|Chocolate:Package|Cone:Light|No_low_fat:Organic|Not_organic
+##   Flavor|Strawberry:Package|Cone:Light|No_low_fat:Organic|Not_organic
+##   Flavor|Mango:Package|Cone:Light|No_low_fat:Organic|Not_organic
+##   Flavor|Vanilla:Package|Cone:Light|No_low_fat:Organic|Not_organic
+##   Flavor|Chocolate:Package|Pint:Light|No_low_fat:Organic|Not_organic
+##   Flavor|Strawberry:Package|Pint:Light|No_low_fat:Organic|Not_organic
+##   Flavor|Mango:Package|Pint:Light|No_low_fat:Organic|Not_organic
+##   Flavor|Vanilla:Package|Pint:Light|No_low_fat:Organic|Not_organic 
+## 
+## Full factorial design:
+##  trial     Flavor         Package      Light     Organic
+##      1  Raspberry Homemade_waffle    Low_fat     Organic
+##      2  Raspberry Homemade_waffle    Low_fat Not_organic
+##      3  Raspberry Homemade_waffle No_low_fat     Organic
+##      4  Raspberry Homemade_waffle No_low_fat Not_organic
+##      5  Raspberry            Cone    Low_fat     Organic
+##      6  Raspberry            Cone    Low_fat Not_organic
+##      7  Raspberry            Cone No_low_fat     Organic
+##      8  Raspberry            Cone No_low_fat Not_organic
+##      9  Raspberry            Pint    Low_fat     Organic
+##     10  Raspberry            Pint    Low_fat Not_organic
+##     11  Raspberry            Pint No_low_fat     Organic
+##     12  Raspberry            Pint No_low_fat Not_organic
+##     13  Chocolate Homemade_waffle    Low_fat     Organic
+##     14  Chocolate Homemade_waffle    Low_fat Not_organic
+##     15  Chocolate Homemade_waffle No_low_fat     Organic
+##     16  Chocolate Homemade_waffle No_low_fat Not_organic
+##     17  Chocolate            Cone    Low_fat     Organic
+##     18  Chocolate            Cone    Low_fat Not_organic
+##     19  Chocolate            Cone No_low_fat     Organic
+##     20  Chocolate            Cone No_low_fat Not_organic
+##     21  Chocolate            Pint    Low_fat     Organic
+##     22  Chocolate            Pint    Low_fat Not_organic
+##     23  Chocolate            Pint No_low_fat     Organic
+##     24  Chocolate            Pint No_low_fat Not_organic
+##     25 Strawberry Homemade_waffle    Low_fat     Organic
+##     26 Strawberry Homemade_waffle    Low_fat Not_organic
+##     27 Strawberry Homemade_waffle No_low_fat     Organic
+##     28 Strawberry Homemade_waffle No_low_fat Not_organic
+##     29 Strawberry            Cone    Low_fat     Organic
+##     30 Strawberry            Cone    Low_fat Not_organic
+##     31 Strawberry            Cone No_low_fat     Organic
+##     32 Strawberry            Cone No_low_fat Not_organic
+##     33 Strawberry            Pint    Low_fat     Organic
+##     34 Strawberry            Pint    Low_fat Not_organic
+##     35 Strawberry            Pint No_low_fat     Organic
+##     36 Strawberry            Pint No_low_fat Not_organic
+##     37      Mango Homemade_waffle    Low_fat     Organic
+##     38      Mango Homemade_waffle    Low_fat Not_organic
+##     39      Mango Homemade_waffle No_low_fat     Organic
+##     40      Mango Homemade_waffle No_low_fat Not_organic
+##     41      Mango            Cone    Low_fat     Organic
+##     42      Mango            Cone    Low_fat Not_organic
+##     43      Mango            Cone No_low_fat     Organic
+##     44      Mango            Cone No_low_fat Not_organic
+##     45      Mango            Pint    Low_fat     Organic
+##     46      Mango            Pint    Low_fat Not_organic
+##     47      Mango            Pint No_low_fat     Organic
+##     48      Mango            Pint No_low_fat Not_organic
+##     49    Vanilla Homemade_waffle    Low_fat     Organic
+##     50    Vanilla Homemade_waffle    Low_fat Not_organic
+##     51    Vanilla Homemade_waffle No_low_fat     Organic
+##     52    Vanilla Homemade_waffle No_low_fat Not_organic
+##     53    Vanilla            Cone    Low_fat     Organic
+##     54    Vanilla            Cone    Low_fat Not_organic
+##     55    Vanilla            Cone No_low_fat     Organic
+##     56    Vanilla            Cone No_low_fat Not_organic
+##     57    Vanilla            Pint    Low_fat     Organic
+##     58    Vanilla            Pint    Low_fat Not_organic
+##     59    Vanilla            Pint No_low_fat     Organic
+##     60    Vanilla            Pint No_low_fat Not_organic</code></pre>
+<p>Observe a saída no cabeçalho Design efficiency. Mostra 52 linhas. As linhas representam projetos experimentais com diferentes números de Trials ou diferentes números de sorvetes (ou seja, combinações de nível de atributo) que seriam testados. Uma palavra melhor para julgamento é perfil. Para cada projeto experimental, ele mostra a D-efficiency do projeto - uma medida de como poderemos estimar com clareza os efeitos do interesse após a execução do experimento (pontuações mais altas são melhores) - e se o projeto está ou não equilibrado - se cada nível está incluído no mesmo número de tentativas ou perfis. Idealmente, procuramos projetos balanceados com alta D-efficiency (acima de 0,80 é considerado razoável). Temos dois candidatos, um delineamento experimental com 60 perfis, que é apenas o delineamento fatorial completo ou um delineamento com 30 perfis. Vamos dar uma olhada no design com 30 perfis:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="análise-conjunta.html#cb34-1"></a><span class="kw">summary</span>(<span class="kw">doe</span>(attributes, <span class="dt">seed =</span> <span class="dv">123</span>, <span class="dt">trials =</span> <span class="dv">30</span>))</span></code></pre></div>
+<pre><code>## Experimental design
+## # trials for partial factorial: 30 
+## # trials for full factorial   : 60 
+## Random seed                   : 123 
+## 
+## Attributes and levels:
+## Flavor: Raspberry, Chocolate, Strawberry, Mango, Vanilla 
+## Package: Homemade_waffle, Cone, Pint 
+## Light: Low_fat, No_low_fat 
+## Organic: Organic, Not_organic 
+## 
+## Design efficiency:
+##  Trials D-efficiency Balanced
+##      30        0.984     TRUE
+## 
+## Partial factorial design correlations:
+## ** Note: Variables are assumed to be ordinal **
+##         Flavor Package  Light Organic
+## Flavor       1       0  0.000   0.000
+## Package      0       1  0.000   0.000
+## Light        0       0  1.000  -0.105
+## Organic      0       0 -0.105   1.000
+## 
+## Partial factorial design:
+##  trial     Flavor         Package      Light     Organic
+##      1  Raspberry Homemade_waffle    Low_fat     Organic
+##      4  Raspberry Homemade_waffle No_low_fat Not_organic
+##      6  Raspberry            Cone    Low_fat Not_organic
+##      7  Raspberry            Cone No_low_fat     Organic
+##     10  Raspberry            Pint    Low_fat Not_organic
+##     11  Raspberry            Pint No_low_fat     Organic
+##     13  Chocolate Homemade_waffle    Low_fat     Organic
+##     14  Chocolate Homemade_waffle    Low_fat Not_organic
+##     19  Chocolate            Cone No_low_fat     Organic
+##     20  Chocolate            Cone No_low_fat Not_organic
+##     22  Chocolate            Pint    Low_fat Not_organic
+##     23  Chocolate            Pint No_low_fat     Organic
+##     26 Strawberry Homemade_waffle    Low_fat Not_organic
+##     28 Strawberry Homemade_waffle No_low_fat Not_organic
+##     29 Strawberry            Cone    Low_fat     Organic
+##     32 Strawberry            Cone No_low_fat Not_organic
+##     33 Strawberry            Pint    Low_fat     Organic
+##     35 Strawberry            Pint No_low_fat     Organic
+##     39      Mango Homemade_waffle No_low_fat     Organic
+##     40      Mango Homemade_waffle No_low_fat Not_organic
+##     41      Mango            Cone    Low_fat     Organic
+##     42      Mango            Cone    Low_fat Not_organic
+##     46      Mango            Pint    Low_fat Not_organic
+##     47      Mango            Pint No_low_fat     Organic
+##     49    Vanilla Homemade_waffle    Low_fat     Organic
+##     51    Vanilla Homemade_waffle No_low_fat     Organic
+##     53    Vanilla            Cone    Low_fat     Organic
+##     56    Vanilla            Cone No_low_fat Not_organic
+##     58    Vanilla            Pint    Low_fat Not_organic
+##     60    Vanilla            Pint No_low_fat Not_organic
+## 
+## Estimable effects from partial factorial design:
+## 
+##   Flavor|Chocolate
+##   Flavor|Strawberry
+##   Flavor|Mango
+##   Flavor|Vanilla
+##   Package|Cone
+##   Package|Pint
+##   Light|No_low_fat
+##   Organic|Not_organic
+##   Flavor|Chocolate:Package|Cone
+##   Flavor|Strawberry:Package|Cone
+##   Flavor|Mango:Package|Cone
+##   Flavor|Vanilla:Package|Cone
+##   Flavor|Chocolate:Package|Pint
+##   Flavor|Strawberry:Package|Pint
+##   Flavor|Mango:Package|Pint
+##   Flavor|Vanilla:Package|Pint
+##   Flavor|Chocolate:Light|No_low_fat
+##   Flavor|Strawberry:Light|No_low_fat
+##   Flavor|Mango:Light|No_low_fat
+##   Flavor|Vanilla:Light|No_low_fat
+##   Package|Cone:Light|No_low_fat
+##   Package|Pint:Light|No_low_fat
+##   Flavor|Chocolate:Organic|Not_organic
+##   Flavor|Strawberry:Organic|Not_organic
+##   Flavor|Mango:Organic|Not_organic
+##   Flavor|Vanilla:Organic|Not_organic
+##   Package|Cone:Organic|Not_organic
+##   Light|No_low_fat:Organic|Not_organic
+##   Flavor|Strawberry:Package|Pint:Light|No_low_fat 
+## 
+## Full factorial design:
+##  trial     Flavor         Package      Light     Organic
+##      1  Raspberry Homemade_waffle    Low_fat     Organic
+##      2  Raspberry Homemade_waffle    Low_fat Not_organic
+##      3  Raspberry Homemade_waffle No_low_fat     Organic
+##      4  Raspberry Homemade_waffle No_low_fat Not_organic
+##      5  Raspberry            Cone    Low_fat     Organic
+##      6  Raspberry            Cone    Low_fat Not_organic
+##      7  Raspberry            Cone No_low_fat     Organic
+##      8  Raspberry            Cone No_low_fat Not_organic
+##      9  Raspberry            Pint    Low_fat     Organic
+##     10  Raspberry            Pint    Low_fat Not_organic
+##     11  Raspberry            Pint No_low_fat     Organic
+##     12  Raspberry            Pint No_low_fat Not_organic
+##     13  Chocolate Homemade_waffle    Low_fat     Organic
+##     14  Chocolate Homemade_waffle    Low_fat Not_organic
+##     15  Chocolate Homemade_waffle No_low_fat     Organic
+##     16  Chocolate Homemade_waffle No_low_fat Not_organic
+##     17  Chocolate            Cone    Low_fat     Organic
+##     18  Chocolate            Cone    Low_fat Not_organic
+##     19  Chocolate            Cone No_low_fat     Organic
+##     20  Chocolate            Cone No_low_fat Not_organic
+##     21  Chocolate            Pint    Low_fat     Organic
+##     22  Chocolate            Pint    Low_fat Not_organic
+##     23  Chocolate            Pint No_low_fat     Organic
+##     24  Chocolate            Pint No_low_fat Not_organic
+##     25 Strawberry Homemade_waffle    Low_fat     Organic
+##     26 Strawberry Homemade_waffle    Low_fat Not_organic
+##     27 Strawberry Homemade_waffle No_low_fat     Organic
+##     28 Strawberry Homemade_waffle No_low_fat Not_organic
+##     29 Strawberry            Cone    Low_fat     Organic
+##     30 Strawberry            Cone    Low_fat Not_organic
+##     31 Strawberry            Cone No_low_fat     Organic
+##     32 Strawberry            Cone No_low_fat Not_organic
+##     33 Strawberry            Pint    Low_fat     Organic
+##     34 Strawberry            Pint    Low_fat Not_organic
+##     35 Strawberry            Pint No_low_fat     Organic
+##     36 Strawberry            Pint No_low_fat Not_organic
+##     37      Mango Homemade_waffle    Low_fat     Organic
+##     38      Mango Homemade_waffle    Low_fat Not_organic
+##     39      Mango Homemade_waffle No_low_fat     Organic
+##     40      Mango Homemade_waffle No_low_fat Not_organic
+##     41      Mango            Cone    Low_fat     Organic
+##     42      Mango            Cone    Low_fat Not_organic
+##     43      Mango            Cone No_low_fat     Organic
+##     44      Mango            Cone No_low_fat Not_organic
+##     45      Mango            Pint    Low_fat     Organic
+##     46      Mango            Pint    Low_fat Not_organic
+##     47      Mango            Pint No_low_fat     Organic
+##     48      Mango            Pint No_low_fat Not_organic
+##     49    Vanilla Homemade_waffle    Low_fat     Organic
+##     50    Vanilla Homemade_waffle    Low_fat Not_organic
+##     51    Vanilla Homemade_waffle No_low_fat     Organic
+##     52    Vanilla Homemade_waffle No_low_fat Not_organic
+##     53    Vanilla            Cone    Low_fat     Organic
+##     54    Vanilla            Cone    Low_fat Not_organic
+##     55    Vanilla            Cone No_low_fat     Organic
+##     56    Vanilla            Cone No_low_fat Not_organic
+##     57    Vanilla            Pint    Low_fat     Organic
+##     58    Vanilla            Pint    Low_fat Not_organic
+##     59    Vanilla            Pint No_low_fat     Organic
+##     60    Vanilla            Pint No_low_fat Not_organic</code></pre>
+<p>Em Projeto fatorial parcial (ou projeto fatorial fracionário), encontramos os perfis que poderíamos executar em um experimento com 30 em vez de 60 perfis. Sob correlações parciais do projeto fatorial, vemos que dois atributos estão correlacionados, a saber, Light e Organic (<span class="math inline">\(r = -0,105\)</span>). Esse sempre será o caso em projetos fatoriais fracionários. Isso significa que algumas combinações de níveis de atributo serão mais prevalentes que outras. Somente em um planejamento fatorial completo todos os atributos serão não correlacionados ou ortogonais.</p>
+<p>Um design possível com apenas 10 perfis seria desequilibrado e teria a seguinte aparência:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="análise-conjunta.html#cb36-1"></a><span class="kw">summary</span>(<span class="kw">doe</span>(attributes, <span class="dt">seed =</span> <span class="dv">123</span>, <span class="dt">trials =</span> <span class="dv">10</span>))</span></code></pre></div>
+<pre><code>## Experimental design
+## # trials for partial factorial: 10 
+## # trials for full factorial   : 60 
+## Random seed                   : 123 
+## 
+## Attributes and levels:
+## Flavor: Raspberry, Chocolate, Strawberry, Mango, Vanilla 
+## Package: Homemade_waffle, Cone, Pint 
+## Light: Low_fat, No_low_fat 
+## Organic: Organic, Not_organic 
+## 
+## Design efficiency:
+##  Trials D-efficiency Balanced
+##      10        0.389    FALSE
+## 
+## Partial factorial design correlations:
+## ** Note: Variables are assumed to be ordinal **
+##         Flavor Package Light Organic
+## Flavor   1.000   0.121 0.000   0.000
+## Package  0.121   1.000 0.000   0.000
+## Light    0.000   0.000 1.000   0.309
+## Organic  0.000   0.000 0.309   1.000
+## 
+## Partial factorial design:
+##  trial     Flavor         Package      Light     Organic
+##      4  Raspberry Homemade_waffle No_low_fat Not_organic
+##      5  Raspberry            Cone    Low_fat     Organic
+##     20  Chocolate            Cone No_low_fat Not_organic
+##     21  Chocolate            Pint    Low_fat     Organic
+##     25 Strawberry Homemade_waffle    Low_fat     Organic
+##     36 Strawberry            Pint No_low_fat Not_organic
+##     39      Mango Homemade_waffle No_low_fat     Organic
+##     46      Mango            Pint    Low_fat Not_organic
+##     50    Vanilla Homemade_waffle    Low_fat Not_organic
+##     59    Vanilla            Pint No_low_fat     Organic
+## 
+## Estimable effects from partial factorial design:
+## 
+##   Flavor|Chocolate
+##   Flavor|Strawberry
+##   Flavor|Mango
+##   Flavor|Vanilla
+##   Package|Cone
+##   Package|Pint
+##   Light|No_low_fat
+##   Organic|Not_organic
+##   Flavor|Chocolate:Package|Cone 
+## 
+## Full factorial design:
+##  trial     Flavor         Package      Light     Organic
+##      1  Raspberry Homemade_waffle    Low_fat     Organic
+##      2  Raspberry Homemade_waffle    Low_fat Not_organic
+##      3  Raspberry Homemade_waffle No_low_fat     Organic
+##      4  Raspberry Homemade_waffle No_low_fat Not_organic
+##      5  Raspberry            Cone    Low_fat     Organic
+##      6  Raspberry            Cone    Low_fat Not_organic
+##      7  Raspberry            Cone No_low_fat     Organic
+##      8  Raspberry            Cone No_low_fat Not_organic
+##      9  Raspberry            Pint    Low_fat     Organic
+##     10  Raspberry            Pint    Low_fat Not_organic
+##     11  Raspberry            Pint No_low_fat     Organic
+##     12  Raspberry            Pint No_low_fat Not_organic
+##     13  Chocolate Homemade_waffle    Low_fat     Organic
+##     14  Chocolate Homemade_waffle    Low_fat Not_organic
+##     15  Chocolate Homemade_waffle No_low_fat     Organic
+##     16  Chocolate Homemade_waffle No_low_fat Not_organic
+##     17  Chocolate            Cone    Low_fat     Organic
+##     18  Chocolate            Cone    Low_fat Not_organic
+##     19  Chocolate            Cone No_low_fat     Organic
+##     20  Chocolate            Cone No_low_fat Not_organic
+##     21  Chocolate            Pint    Low_fat     Organic
+##     22  Chocolate            Pint    Low_fat Not_organic
+##     23  Chocolate            Pint No_low_fat     Organic
+##     24  Chocolate            Pint No_low_fat Not_organic
+##     25 Strawberry Homemade_waffle    Low_fat     Organic
+##     26 Strawberry Homemade_waffle    Low_fat Not_organic
+##     27 Strawberry Homemade_waffle No_low_fat     Organic
+##     28 Strawberry Homemade_waffle No_low_fat Not_organic
+##     29 Strawberry            Cone    Low_fat     Organic
+##     30 Strawberry            Cone    Low_fat Not_organic
+##     31 Strawberry            Cone No_low_fat     Organic
+##     32 Strawberry            Cone No_low_fat Not_organic
+##     33 Strawberry            Pint    Low_fat     Organic
+##     34 Strawberry            Pint    Low_fat Not_organic
+##     35 Strawberry            Pint No_low_fat     Organic
+##     36 Strawberry            Pint No_low_fat Not_organic
+##     37      Mango Homemade_waffle    Low_fat     Organic
+##     38      Mango Homemade_waffle    Low_fat Not_organic
+##     39      Mango Homemade_waffle No_low_fat     Organic
+##     40      Mango Homemade_waffle No_low_fat Not_organic
+##     41      Mango            Cone    Low_fat     Organic
+##     42      Mango            Cone    Low_fat Not_organic
+##     43      Mango            Cone No_low_fat     Organic
+##     44      Mango            Cone No_low_fat Not_organic
+##     45      Mango            Pint    Low_fat     Organic
+##     46      Mango            Pint    Low_fat Not_organic
+##     47      Mango            Pint No_low_fat     Organic
+##     48      Mango            Pint No_low_fat Not_organic
+##     49    Vanilla Homemade_waffle    Low_fat     Organic
+##     50    Vanilla Homemade_waffle    Low_fat Not_organic
+##     51    Vanilla Homemade_waffle No_low_fat     Organic
+##     52    Vanilla Homemade_waffle No_low_fat Not_organic
+##     53    Vanilla            Cone    Low_fat     Organic
+##     54    Vanilla            Cone    Low_fat Not_organic
+##     55    Vanilla            Cone No_low_fat     Organic
+##     56    Vanilla            Cone No_low_fat Not_organic
+##     57    Vanilla            Pint    Low_fat     Organic
+##     58    Vanilla            Pint    Low_fat Not_organic
+##     59    Vanilla            Pint No_low_fat     Organic
+##     60    Vanilla            Pint No_low_fat Not_organic</code></pre>
+<p>Comparado ao design com 30 perfis, agora existem mais e mais fortes correlações entre os atributos.</p>
+<p>Observe que os perfis não são exatamente iguais aos da experiência usada para coletar os dados do sorvete. Isso ocorre porque, para projetos desequilibrados, existe alguma aleatoriedade na definição das combinações reais de nível de atributo. É também por isso que definimos seed = 123. seed é usado para consertar o gerador de números aleatórios do R. Configurá-lo para um número fixo (123 ou 456 ou qualquer outra coisa) garantirá que o R gere sempre a mesma saída. Sem definir a seed, doe com trials = 10 não daria o mesmo design fracionário toda vez que você a executar.</p>
+<p>Observe também que o pacote radiant} instala um suplemento que você pode acessar por meio de suplementos (encontre este botão à direita da linha abaixo de “Arquivo” etc.) -&gt; Iniciar radiant (navegador). Isso abrirá um aplicativo no seu navegador que permitirá executar as etapas acima em uma interface visual intuitiva. Para obter ajuda, confira a discussão da Radiant} sobre o módulo Design de experiências <a href="https://radiant-rstats.github.io/docs/design/doe.html">aqui</a></p>
+</div>
+<div id="um-respondente" class="section level2 unlisted unnumbered">
+<h2>Um respondente</h2>
+<div id="estimar-valores-de-peça-e-pesos-de-importância" class="section level3 unlisted unnumbered">
+<h3>Estimar valores de peça e pesos de importância</h3>
+<p>Embora alguns softwares exijam que você primeiro crie variáveis fictícias representando os níveis de atributo e execute uma regressão, o Radiant} não exige que você faça isso. Você pode simplesmente usar os atributos (cada um com vários níveis) como variáveis. Primeiro, faremos uma análise conjunta dos dados de um respondente (indivíduo 1):</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="análise-conjunta.html#cb38-1"></a>respondent1 &lt;-<span class="st"> </span>icecream <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(respondent <span class="op">==</span><span class="st"> &quot;Individual 1&quot;</span>)</span>
+<span id="cb38-2"><a href="análise-conjunta.html#cb38-2"></a></span>
+<span id="cb38-3"><a href="análise-conjunta.html#cb38-3"></a><span class="co"># salve a analise conjunta em um objeto, porque a usaremos como entrada para summary(), plot(), and predict()</span></span>
+<span id="cb38-4"><a href="análise-conjunta.html#cb38-4"></a></span>
+<span id="cb38-5"><a href="análise-conjunta.html#cb38-5"></a>conjoint_respondent1 &lt;-<span class="st"> </span><span class="kw">conjoint</span>(respondent1, <span class="dt">rvar =</span> <span class="st">&quot;rating&quot;</span>, <span class="dt">evar =</span> <span class="kw">c</span>(<span class="st">&quot;Flavor&quot;</span>,<span class="st">&quot;Packaging&quot;</span>,<span class="st">&quot;Light&quot;</span>,<span class="st">&quot;Organic&quot;</span>)) </span>
+<span id="cb38-6"><a href="análise-conjunta.html#cb38-6"></a></span>
+<span id="cb38-7"><a href="análise-conjunta.html#cb38-7"></a><span class="kw">summary</span>(conjoint_respondent1)</span></code></pre></div>
+<pre><code>## Conjoint analysis
+## Data                 : respondent1 
+## Response variable    : rating 
+## Explanatory variables: Flavor, Packaging, Light, Organic 
+## 
+## Conjoint part-worths:
+##    Attributes          Levels     PW
+##  Flavor       Chocolate        0.000
+##  Flavor       Mango            5.000
+##  Flavor       Raspberry       -1.500
+##  Flavor       Strawberry       5.000
+##  Flavor       Vanilla          3.500
+##  Packaging    Cone             0.000
+##  Packaging    Homemade waffle  0.000
+##  Packaging    Pint            -2.000
+##  Light        Low fat          0.000
+##  Light        No low fat      -1.000
+##  Organic      Not organic      0.000
+##  Organic      Organic          1.400
+##  Base utility ~                3.800
+## 
+## Conjoint importance weights:
+##  Attributes    IW
+##   Flavor    0.596
+##   Packaging 0.183
+##   Light     0.092
+##   Organic   0.128
+## 
+## Conjoint regression results:
+## 
+##                            coefficient
+##  (Intercept)                     3.800
+##  Flavor|Mango                    5.000
+##  Flavor|Raspberry               -1.500
+##  Flavor|Strawberry               5.000
+##  Flavor|Vanilla                  3.500
+##  Packaging|Homemade waffle       0.000
+##  Packaging|Pint                 -2.000
+##  Light|No low fat               -1.000
+##  Organic|Organic                 1.400</code></pre>
+<p>A saída fornece valores de peça, pesos de importância e coeficientes de regressão. Os valores das partes e os coeficientes de regressão fornecem as mesmas informações: comparado ao nível de referência (o primeiro nível de um atributo; você verá que os valores das partes são sempre zero para este nível), quanto aumenta cada nível de atributo ou diminuir a classificação de um sorvete? Podemos traçar estes resultados:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="análise-conjunta.html#cb40-1"></a><span class="kw">plot</span>(conjoint_respondent1)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>E então vemos facilmente que essa pessoa desfrutaria de um sorvete com baixo teor de gordura, orgânico, manga ou morango em um cone ou em um waffle caseiro.</p>
+<p>Observe que os resultados da regressão conjunta são simplesmente os resultados de uma <a href="https://bookdown.org/content/1340/linear-regression.html#regression_without">regressão linear múltipla:</a></p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="análise-conjunta.html#cb41-1"></a><span class="co"># Execute essa regressao se estiver interessado em aprender qual preditor eh significativo ou qual eh o R quadrado do modelo geral.</span></span>
+<span id="cb41-2"><a href="análise-conjunta.html#cb41-2"></a></span>
+<span id="cb41-3"><a href="análise-conjunta.html#cb41-3"></a><span class="kw">summary</span>(<span class="kw">lm</span>(rating <span class="op">~</span><span class="st"> </span>Flavor <span class="op">+</span><span class="st"> </span>Packaging <span class="op">+</span><span class="st"> </span>Light <span class="op">+</span><span class="st"> </span>Organic, <span class="dt">data =</span> respondent1))</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = rating ~ Flavor + Packaging + Light + Organic, data = respondent1)
+## 
+## Residuals:
+##    1    2    3    4    5    6    7    8    9   10 
+## -0.3 -0.2  0.3 -0.2  0.2  0.2 -0.3 -0.2  0.2  0.3 
+## 
+## Coefficients:
+##                            Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)               3.800e+00  8.426e-01   4.510    0.139
+## FlavorMango               5.000e+00  9.747e-01   5.130    0.123
+## FlavorRaspberry          -1.500e+00  9.747e-01  -1.539    0.367
+## FlavorStrawberry          5.000e+00  8.660e-01   5.774    0.109
+## FlavorVanilla             3.500e+00  9.747e-01   3.591    0.173
+## PackagingHomemade waffle  1.570e-15  8.944e-01   0.000    1.000
+## PackagingPint            -2.000e+00  8.660e-01  -2.309    0.260
+## LightNo low fat          -1.000e+00  5.916e-01  -1.690    0.340
+## OrganicOrganic            1.400e+00  4.899e-01   2.858    0.214
+## 
+## Residual standard error: 0.7746 on 1 degrees of freedom
+## Multiple R-squared:  0.9927,	Adjusted R-squared:  0.9345 
+## F-statistic: 17.06 on 8 and 1 DF,  p-value: 0.1852</code></pre>
+<p>Finalmente, os pesos de importância nos dizem com que intensidade cada atributo determina a classificação de um sorvete. Para esse respondente, sabor é o atributo mais importante e luz é o atributo menos importante. A classificação deste respondente é determinada em 59,6% por sabor e em 9,2% por luz.</p>
+</div>
+<div id="profiles-utilitários-previstos" class="section level3 unlisted unnumbered">
+<h3>Profiles: utilitários previstos</h3>
+<p>Prever as classificações (utilitários) dos diferentes sorvetes é muito fácil em R. Primeiro, verifique se temos um conjunto de dados com os diferentes perfis que foram testados:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="análise-conjunta.html#cb43-1"></a>profiles &lt;-<span class="st"> </span>icecream <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb43-2"><a href="análise-conjunta.html#cb43-2"></a><span class="st">  </span><span class="kw">filter</span>(respondent <span class="op">==</span><span class="st"> &quot;Individual 1&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb43-3"><a href="análise-conjunta.html#cb43-3"></a><span class="st">  </span><span class="kw">select</span>(Flavor,Packaging,Light,Organic)</span>
+<span id="cb43-4"><a href="análise-conjunta.html#cb43-4"></a></span>
+<span id="cb43-5"><a href="análise-conjunta.html#cb43-5"></a>profiles</span></code></pre></div>
+<pre><code>## # A tibble: 10 x 4
+##    Flavor     Packaging       Light      Organic    
+##    &lt;fct&gt;      &lt;fct&gt;           &lt;fct&gt;      &lt;fct&gt;      
+##  1 Raspberry  Homemade waffle No low fat Not organic
+##  2 Chocolate  Cone            No low fat Organic    
+##  3 Raspberry  Pint            Low fat    Organic    
+##  4 Strawberry Pint            No low fat Organic    
+##  5 Strawberry Cone            Low fat    Not organic
+##  6 Chocolate  Homemade waffle No low fat Not organic
+##  7 Vanilla    Pint            Low fat    Not organic
+##  8 Mango      Homemade waffle Low fat    Organic    
+##  9 Mango      Pint            No low fat Not organic
+## 10 Vanilla    Homemade waffle No low fat Organic</code></pre>
+<p>Em seguida, pedimos à função predict para prever as classificações dos perfis com base na função de regressão:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="análise-conjunta.html#cb45-1"></a><span class="kw">predict</span>(conjoint_respondent1, profiles) <span class="co"># prever as classificacoes para os perfis com base na analise conjunta</span></span></code></pre></div>
+<pre><code>## Conjoint Analysis
+## Data                 : respondent1 
+## Response variable    : rating 
+## Explanatory variables: Flavor, Packaging, Light, Organic 
+## Prediction dataset   : profiles 
+## 
+##      Flavor       Packaging      Light     Organic Prediction
+##   Raspberry Homemade waffle No low fat Not organic      1.300
+##   Chocolate            Cone No low fat     Organic      4.200
+##   Raspberry            Pint    Low fat     Organic      1.700
+##  Strawberry            Pint No low fat     Organic      7.200
+##  Strawberry            Cone    Low fat Not organic      8.800
+##   Chocolate Homemade waffle No low fat Not organic      2.800
+##     Vanilla            Pint    Low fat Not organic      5.300
+##       Mango Homemade waffle    Low fat     Organic     10.200
+##       Mango            Pint No low fat Not organic      5.800
+##     Vanilla Homemade waffle No low fat     Organic      7.700</code></pre>
+<p>A classificação prevista é mais alta para sorvetes orgânicos com pouca gordura e manga em um waffle caseiro. Mas essas são previsões para sorvetes que o entrevistado realmente classificou. Se quiséssemos saber qual sorvete o entrevistado mais gostava, poderíamos apenas olhar para as classificações observadas (em vez das previstas). É mais interessante obter previsões para sorvetes que o entrevistado não avaliou. Para isso, precisamos dos perfis para todos os sorvetes possíveis. Podemos criar esses perfis com a função expand.grid}. A função expand.grid} usa dois ou mais vetores e cria todas as combinações possíveis de elementos desses vetores:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="análise-conjunta.html#cb47-1"></a>Flavor &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Raspberry&quot;</span>,<span class="st">&quot;Chocolate&quot;</span>,<span class="st">&quot;Mango&quot;</span>,<span class="st">&quot;Strawberry&quot;</span>,<span class="st">&quot;Vanilla&quot;</span>)</span>
+<span id="cb47-2"><a href="análise-conjunta.html#cb47-2"></a>Organic &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Organic&quot;</span>,<span class="st">&quot;Not organic&quot;</span>)</span>
+<span id="cb47-3"><a href="análise-conjunta.html#cb47-3"></a></span>
+<span id="cb47-4"><a href="análise-conjunta.html#cb47-4"></a><span class="kw">expand.grid</span>(Flavor, Organic)</span></code></pre></div>
+<pre><code>##          Var1        Var2
+## 1   Raspberry     Organic
+## 2   Chocolate     Organic
+## 3       Mango     Organic
+## 4  Strawberry     Organic
+## 5     Vanilla     Organic
+## 6   Raspberry Not organic
+## 7   Chocolate Not organic
+## 8       Mango Not organic
+## 9  Strawberry Not organic
+## 10    Vanilla Not organic</code></pre>
+<p>Vamos fazer isso para todos os nossos níveis de atributo:</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="análise-conjunta.html#cb49-1"></a><span class="co"># existe uma maneira mais facil de obter niveis de atributo do que criar os vetores manualmente:</span></span>
+<span id="cb49-2"><a href="análise-conjunta.html#cb49-2"></a></span>
+<span id="cb49-3"><a href="análise-conjunta.html#cb49-3"></a><span class="kw">levels</span>(icecream<span class="op">$</span>Flavor) <span class="co"># certifique-se de que o sabor seja fatorado primeiro!</span></span></code></pre></div>
+<pre><code>## [1] &quot;Chocolate&quot;  &quot;Mango&quot;      &quot;Raspberry&quot;  &quot;Strawberry&quot; &quot;Vanilla&quot;</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="análise-conjunta.html#cb51-1"></a><span class="co">## [1] &quot;Chocolate&quot;  &quot;Mango&quot;      &quot;Raspberry&quot;  &quot;Strawberry&quot; &quot;Vanilla&quot;</span></span>
+<span id="cb51-2"><a href="análise-conjunta.html#cb51-2"></a><span class="co"># agora crie todos os profiles</span></span>
+<span id="cb51-3"><a href="análise-conjunta.html#cb51-3"></a></span>
+<span id="cb51-4"><a href="análise-conjunta.html#cb51-4"></a>profiles.all &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="kw">levels</span>(icecream<span class="op">$</span>Flavor),<span class="kw">levels</span>(icecream<span class="op">$</span>Packaging),<span class="kw">levels</span>(icecream<span class="op">$</span>Light),<span class="kw">levels</span>(icecream<span class="op">$</span>Organic)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb51-5"><a href="análise-conjunta.html#cb51-5"></a><span class="st">  </span><span class="kw">rename</span>(<span class="st">&quot;Flavor&quot;</span> =<span class="st"> &quot;Var1&quot;</span>, <span class="st">&quot;Packaging&quot;</span> =<span class="st"> &quot;Var2&quot;</span>, <span class="st">&quot;Light&quot;</span> =<span class="st"> &quot;Var3&quot;</span>, <span class="st">&quot;Organic&quot;</span> =<span class="st"> &quot;Var4&quot;</span>) <span class="co"># rename the variables created by expand.grid (don&#39;t forget this, otherwise predict won&#39;t know where to look for each attribute)</span></span>
+<span id="cb51-6"><a href="análise-conjunta.html#cb51-6"></a></span>
+<span id="cb51-7"><a href="análise-conjunta.html#cb51-7"></a><span class="co"># prever as classificações de todos os perfis</span></span>
+<span id="cb51-8"><a href="análise-conjunta.html#cb51-8"></a></span>
+<span id="cb51-9"><a href="análise-conjunta.html#cb51-9"></a><span class="kw">predict</span>(conjoint_respondent1, profiles.all) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb51-10"><a href="análise-conjunta.html#cb51-10"></a><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Prediction)) <span class="co"># mostrar os sorvetes com a classificação mais alta prevista no topo</span></span></code></pre></div>
+<pre><code>## Conjoint Analysis
+## Data                 : respondent1 
+## Response variable    : rating 
+## Explanatory variables: Flavor, Packaging, Light, Organic 
+## Prediction dataset   : profiles.all 
+## Rows shown           : 20 of 60 
+## 
+##      Flavor       Packaging      Light     Organic Prediction
+##  Strawberry Homemade waffle    Low fat     Organic     10.200
+##  Strawberry            Cone    Low fat     Organic     10.200
+##       Mango Homemade waffle    Low fat     Organic     10.200
+##       Mango            Cone    Low fat     Organic     10.200
+##  Strawberry Homemade waffle No low fat     Organic      9.200
+##  Strawberry            Cone No low fat     Organic      9.200
+##       Mango Homemade waffle No low fat     Organic      9.200
+##       Mango            Cone No low fat     Organic      9.200
+##  Strawberry Homemade waffle    Low fat Not organic      8.800
+##  Strawberry            Cone    Low fat Not organic      8.800
+##       Mango Homemade waffle    Low fat Not organic      8.800
+##       Mango            Cone    Low fat Not organic      8.800
+##     Vanilla Homemade waffle    Low fat     Organic      8.700
+##     Vanilla            Cone    Low fat     Organic      8.700
+##  Strawberry            Pint    Low fat     Organic      8.200
+##       Mango            Pint    Low fat     Organic      8.200
+##  Strawberry Homemade waffle No low fat Not organic      7.800
+##  Strawberry            Cone No low fat Not organic      7.800
+##       Mango Homemade waffle No low fat Not organic      7.800
+##       Mango            Cone No low fat Not organic      7.800</code></pre>
+<p>Mesma conclusão que a da seção anterior: essa pessoa desfrutaria de um sorvete com baixo teor de gordura, orgânico, manga ou morango em um cone ou um waffle caseiro.</p>
+</div>
+</div>
+<div id="muitos-respondentes" class="section level2 unlisted unnumbered">
+<h2>Muitos respondentes</h2>
+<div id="estimar-valores-de-peça-e-pesos-de-importância-1" class="section level3 unlisted unnumbered">
+<h3>Estimar valores de peça e pesos de importância</h3>
+<p>Agora, vamos realizar a análise conjunta no conjunto de dados completo para ter uma idéia de quais sorvetes os 15 entrevistados, em média, gostaram mais e qual a importância de cada atributo:</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="análise-conjunta.html#cb53-1"></a>conjoint_allrespondents &lt;-<span class="st"> </span><span class="kw">conjoint</span>(icecream, <span class="dt">rvar =</span> <span class="st">&quot;rating&quot;</span>, <span class="dt">evar =</span> <span class="kw">c</span>(<span class="st">&quot;Flavor&quot;</span>,<span class="st">&quot;Packaging&quot;</span>,<span class="st">&quot;Light&quot;</span>,<span class="st">&quot;Organic&quot;</span>)) <span class="co"># como antes, mas com um conjunto de dados diferente.</span></span>
+<span id="cb53-2"><a href="análise-conjunta.html#cb53-2"></a></span>
+<span id="cb53-3"><a href="análise-conjunta.html#cb53-3"></a><span class="kw">summary</span>(conjoint_allrespondents) </span></code></pre></div>
+<pre><code>## Conjoint analysis
+## Data                 : icecream 
+## Response variable    : rating 
+## Explanatory variables: Flavor, Packaging, Light, Organic 
+## 
+## Conjoint part-worths:
+##    Attributes          Levels     PW
+##  Flavor       Chocolate        0.000
+##  Flavor       Mango            1.522
+##  Flavor       Raspberry        0.522
+##  Flavor       Strawberry       0.767
+##  Flavor       Vanilla          1.389
+##  Packaging    Cone             0.000
+##  Packaging    Homemade waffle -0.244
+##  Packaging    Pint            -0.100
+##  Light        Low fat          0.000
+##  Light        No low fat       0.478
+##  Organic      Not organic      0.000
+##  Organic      Organic          0.307
+##  Base utility ~                4.358
+## 
+## Conjoint importance weights:
+##  Attributes    IW
+##   Flavor    0.597
+##   Packaging 0.096
+##   Light     0.187
+##   Organic   0.120
+## 
+## Conjoint regression results:
+## 
+##                            coefficient
+##  (Intercept)                     4.358
+##  Flavor|Mango                    1.522
+##  Flavor|Raspberry                0.522
+##  Flavor|Strawberry               0.767
+##  Flavor|Vanilla                  1.389
+##  Packaging|Homemade waffle      -0.244
+##  Packaging|Pint                 -0.100
+##  Light|No low fat                0.478
+##  Organic|Organic                 0.307</code></pre>
+<p>O sabor é de longe o atributo mais importante. Vamos traçar estes resultados:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="análise-conjunta.html#cb55-1"></a><span class="kw">plot</span>(conjoint_allrespondents)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>A partir disso, prevemos que, em média, as pessoas mais gostariam de um sorvete de manga orgânico, sem pouca gordura, em um cone.</p>
+<p>Os pesos de importância nos dizem com que intensidade cada atributo determina a classificação média de um sorvete. O sabor é o atributo mais importante e a embalagem é o atributo menos importante. A classificação deste respondente é determinada para 59,7% por sabor e para 9,6% por embalagem.</p>
+</div>
+<div id="profiles-utilitários-previstos-1" class="section level3 unlisted unnumbered">
+<h3>Profiles: utilitários previstos</h3>
+<p>Vamos prever as classificações de todos os sorvetes possíveis:</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="análise-conjunta.html#cb56-1"></a><span class="kw">predict</span>(conjoint_allrespondents, profiles.all) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># verifique as secoes anteriores para profiles.all</span></span>
+<span id="cb56-2"><a href="análise-conjunta.html#cb56-2"></a></span>
+<span id="cb56-3"><a href="análise-conjunta.html#cb56-3"></a><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Prediction)) <span class="co"># mostrar os sorvetes com a classificacao mais alta prevista no topo</span></span></code></pre></div>
+<pre><code>## Conjoint Analysis
+## Data                 : icecream 
+## Response variable    : rating 
+## Explanatory variables: Flavor, Packaging, Light, Organic 
+## Prediction dataset   : profiles.all 
+## Rows shown           : 20 of 60 
+## 
+##      Flavor       Packaging      Light     Organic Prediction
+##       Mango            Cone No low fat     Organic      6.664
+##       Mango            Pint No low fat     Organic      6.564
+##     Vanilla            Cone No low fat     Organic      6.531
+##     Vanilla            Pint No low fat     Organic      6.431
+##       Mango Homemade waffle No low fat     Organic      6.420
+##       Mango            Cone No low fat Not organic      6.358
+##     Vanilla Homemade waffle No low fat     Organic      6.287
+##       Mango            Pint No low fat Not organic      6.258
+##     Vanilla            Cone No low fat Not organic      6.224
+##       Mango            Cone    Low fat     Organic      6.187
+##     Vanilla            Pint No low fat Not organic      6.124
+##       Mango Homemade waffle No low fat Not organic      6.113
+##       Mango            Pint    Low fat     Organic      6.087
+##     Vanilla            Cone    Low fat     Organic      6.053
+##     Vanilla Homemade waffle No low fat Not organic      5.980
+##     Vanilla            Pint    Low fat     Organic      5.953
+##       Mango Homemade waffle    Low fat     Organic      5.942
+##  Strawberry            Cone No low fat     Organic      5.909
+##       Mango            Cone    Low fat Not organic      5.880
+##     Vanilla Homemade waffle    Low fat     Organic      5.809</code></pre>
+<p>Mesmas conclusões de antes: prevemos que, em média, as pessoas mais gostariam de um sorvete de manga orgânico, sem pouca gordura, em um cone.</p>
+</div>
+</div>
+<div id="simulação-de-mercado" class="section level2 unlisted unnumbered">
+<h2>Simulação de Mercado</h2>
+<p>Digamos que criamos um pequeno número de sorvetes e queremos estimar a participação de mercado de cada um desses sorvetes. Digamos que selecionamos os quatro perfis a seguir:</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="análise-conjunta.html#cb58-1"></a><span class="co"># use slice() para selecionar as linhas </span></span>
+<span id="cb58-2"><a href="análise-conjunta.html#cb58-2"></a></span>
+<span id="cb58-3"><a href="análise-conjunta.html#cb58-3"></a>market_profiles &lt;-<span class="st"> </span>profiles.all <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb58-4"><a href="análise-conjunta.html#cb58-4"></a><span class="st">  </span><span class="kw">slice</span>(<span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">16</span>, <span class="dv">23</span>, <span class="dv">38</span>)) <span class="co"># de profiles.all, selecione as linhas 4, 16, 23, 38 como quatro profiles</span></span>
+<span id="cb58-5"><a href="análise-conjunta.html#cb58-5"></a></span>
+<span id="cb58-6"><a href="análise-conjunta.html#cb58-6"></a>market_profiles</span></code></pre></div>
+<pre><code>##       Flavor       Packaging      Light     Organic
+## 1 Strawberry            Cone    Low fat Not organic
+## 2  Chocolate            Cone No low fat Not organic
+## 3  Raspberry Homemade waffle No low fat Not organic
+## 4  Raspberry Homemade waffle    Low fat     Organic</code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="análise-conjunta.html#cb60-1"></a><span class="co">#Já sabemos como estimar qual sorvete será mais apreciado:</span></span>
+<span id="cb60-2"><a href="análise-conjunta.html#cb60-2"></a></span>
+<span id="cb60-3"><a href="análise-conjunta.html#cb60-3"></a>conjoint_allrespondents &lt;-<span class="st"> </span><span class="kw">conjoint</span>(icecream, <span class="dt">rvar =</span> <span class="st">&quot;rating&quot;</span>, <span class="dt">evar =</span> <span class="kw">c</span>(<span class="st">&quot;Flavor&quot;</span>,<span class="st">&quot;Packaging&quot;</span>,<span class="st">&quot;Light&quot;</span>,<span class="st">&quot;Organic&quot;</span>))</span>
+<span id="cb60-4"><a href="análise-conjunta.html#cb60-4"></a></span>
+<span id="cb60-5"><a href="análise-conjunta.html#cb60-5"></a><span class="kw">predict</span>(conjoint_allrespondents, market_profiles) <span class="op">%&gt;%</span></span>
+<span id="cb60-6"><a href="análise-conjunta.html#cb60-6"></a><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Prediction))</span></code></pre></div>
+<pre><code>## Conjoint Analysis
+## Data                 : icecream 
+## Response variable    : rating 
+## Explanatory variables: Flavor, Packaging, Light, Organic 
+## Prediction dataset   : market_profiles 
+## 
+##      Flavor       Packaging      Light     Organic Prediction
+##  Strawberry            Cone    Low fat Not organic      5.124
+##   Raspberry Homemade waffle No low fat Not organic      5.113
+##   Raspberry Homemade waffle    Low fat     Organic      4.942
+##   Chocolate            Cone No low fat Not organic      4.836</code></pre>
+<p>O sorvete de morango com baixo teor de gordura e não orgânico em um cone tem a classificação mais alta prevista entre todos os entrevistados. Mas isso não nos diz qual será a participação de mercado de cada um dos quatro perfis. Para isso, precisamos saber, para cada participante, qual perfil ele escolheria. Em outras palavras, precisamos prever as classificações para cada indivíduo separadamente:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="análise-conjunta.html#cb62-1"></a><span class="co"># mesmo modelo de antes, mas agora adicione por = &quot;respondent&quot;</span></span>
+<span id="cb62-2"><a href="análise-conjunta.html#cb62-2"></a>conjoint_perrespondent &lt;-<span class="st"> </span><span class="kw">conjoint</span>(icecream, <span class="dt">rvar =</span> <span class="st">&quot;rating&quot;</span>, <span class="dt">evar =</span> <span class="kw">c</span>(<span class="st">&quot;Flavor&quot;</span>,<span class="st">&quot;Packaging&quot;</span>,<span class="st">&quot;Light&quot;</span>,<span class="st">&quot;Organic&quot;</span>), <span class="dt">by =</span> <span class="st">&quot;respondent&quot;</span>)</span>
+<span id="cb62-3"><a href="análise-conjunta.html#cb62-3"></a></span>
+<span id="cb62-4"><a href="análise-conjunta.html#cb62-4"></a><span class="kw">predict</span>(conjoint_perrespondent, market_profiles) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb62-5"><a href="análise-conjunta.html#cb62-5"></a><span class="st">  </span><span class="kw">arrange</span>(respondent, <span class="kw">desc</span>(Prediction)) <span class="co"># classificar por respondente e depois por classificacao prevista</span></span></code></pre></div>
+<pre><code>## Conjoint Analysis
+## Data                 : icecream 
+## Response variable    : rating 
+## Explanatory variables: Flavor, Packaging, Light, Organic 
+## Prediction dataset   : market_profiles 
+## Rows shown           : 20 of 60 
+## 
+##     respondent     Flavor       Packaging      Light     Organic Prediction
+##   Individual 1 Strawberry            Cone    Low fat Not organic      8.800
+##   Individual 1  Raspberry Homemade waffle    Low fat     Organic      3.700
+##   Individual 1  Chocolate            Cone No low fat Not organic      2.800
+##   Individual 1  Raspberry Homemade waffle No low fat Not organic      1.300
+##  Individual 10  Raspberry Homemade waffle No low fat Not organic      9.950
+##  Individual 10  Raspberry Homemade waffle    Low fat     Organic      8.967
+##  Individual 10  Chocolate            Cone No low fat Not organic      5.367
+##  Individual 10 Strawberry            Cone    Low fat Not organic      2.033
+##  Individual 11 Strawberry            Cone    Low fat Not organic      5.800
+##  Individual 11  Raspberry Homemade waffle    Low fat     Organic      5.200
+##  Individual 11  Chocolate            Cone No low fat Not organic      3.800
+##  Individual 11  Raspberry Homemade waffle No low fat Not organic      2.800
+##  Individual 12  Raspberry Homemade waffle No low fat Not organic      9.600
+##  Individual 12  Raspberry Homemade waffle    Low fat     Organic      7.733
+##  Individual 12  Chocolate            Cone No low fat Not organic      5.933
+##  Individual 12 Strawberry            Cone    Low fat Not organic      3.267
+##  Individual 13  Raspberry Homemade waffle No low fat Not organic      6.550
+##  Individual 13  Raspberry Homemade waffle    Low fat     Organic      6.200
+##  Individual 13  Chocolate            Cone No low fat Not organic      5.300
+##  Individual 13 Strawberry            Cone    Low fat Not organic      1.300</code></pre>
+<p>Vamos reter para cada indivíduo apenas seu perfil mais bem classificado. Podemos fazer isso agrupando por entrevistado e adicionando uma variável denominada ranking que nos dirá o ranking de perfis, com base na classificação prevista, para cada entrevistado:</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="análise-conjunta.html#cb64-1"></a>highest_rated &lt;-<span class="st"> </span><span class="kw">predict</span>(conjoint_perrespondent, market_profiles) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb64-2"><a href="análise-conjunta.html#cb64-2"></a><span class="st">  </span><span class="kw">group_by</span>(respondent) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb64-3"><a href="análise-conjunta.html#cb64-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ranking =</span> <span class="kw">rank</span>(Prediction))</span>
+<span id="cb64-4"><a href="análise-conjunta.html#cb64-4"></a></span>
+<span id="cb64-5"><a href="análise-conjunta.html#cb64-5"></a><span class="co"># dando uma olhada</span></span>
+<span id="cb64-6"><a href="análise-conjunta.html#cb64-6"></a>highest_rated <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb64-7"><a href="análise-conjunta.html#cb64-7"></a><span class="st">  </span><span class="kw">arrange</span>(respondent, ranking)</span></code></pre></div>
+<pre><code>## # A tibble: 60 x 7
+## # Groups:   respondent [15]
+##    respondent    Flavor     Packaging     Light    Organic    Prediction ranking
+##    &lt;chr&gt;         &lt;fct&gt;      &lt;fct&gt;         &lt;fct&gt;    &lt;fct&gt;           &lt;dbl&gt;   &lt;dbl&gt;
+##  1 Individual 1  Raspberry  Homemade waf~ No low ~ Not organ~       1.3        1
+##  2 Individual 1  Chocolate  Cone          No low ~ Not organ~       2.80       2
+##  3 Individual 1  Raspberry  Homemade waf~ Low fat  Organic          3.7        3
+##  4 Individual 1  Strawberry Cone          Low fat  Not organ~       8.8        4
+##  5 Individual 10 Strawberry Cone          Low fat  Not organ~       2.03       1
+##  6 Individual 10 Chocolate  Cone          No low ~ Not organ~       5.37       2
+##  7 Individual 10 Raspberry  Homemade waf~ Low fat  Organic          8.97       3
+##  8 Individual 10 Raspberry  Homemade waf~ No low ~ Not organ~       9.95       4
+##  9 Individual 11 Raspberry  Homemade waf~ No low ~ Not organ~       2.8        1
+## 10 Individual 11 Chocolate  Cone          No low ~ Not organ~       3.80       2
+## # ... with 50 more rows</code></pre>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="análise-conjunta.html#cb66-1"></a><span class="co"># precisamos reter apenas o sorvete mais bem classificado</span></span>
+<span id="cb66-2"><a href="análise-conjunta.html#cb66-2"></a></span>
+<span id="cb66-3"><a href="análise-conjunta.html#cb66-3"></a>highest_rated &lt;-<span class="st"> </span>highest_rated <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb66-4"><a href="análise-conjunta.html#cb66-4"></a><span class="st">  </span><span class="kw">arrange</span>(respondent, ranking) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb66-5"><a href="análise-conjunta.html#cb66-5"></a><span class="st">  </span><span class="kw">filter</span>(ranking <span class="op">==</span><span class="st"> </span><span class="dv">4</span>)</span>
+<span id="cb66-6"><a href="análise-conjunta.html#cb66-6"></a></span>
+<span id="cb66-7"><a href="análise-conjunta.html#cb66-7"></a>highest_rated</span></code></pre></div>
+<pre><code>## # A tibble: 15 x 7
+## # Groups:   respondent [15]
+##    respondent    Flavor     Packaging     Light    Organic    Prediction ranking
+##    &lt;chr&gt;         &lt;fct&gt;      &lt;fct&gt;         &lt;fct&gt;    &lt;fct&gt;           &lt;dbl&gt;   &lt;dbl&gt;
+##  1 Individual 1  Strawberry Cone          Low fat  Not organ~       8.8        4
+##  2 Individual 10 Raspberry  Homemade waf~ No low ~ Not organ~       9.95       4
+##  3 Individual 11 Strawberry Cone          Low fat  Not organ~       5.80       4
+##  4 Individual 12 Raspberry  Homemade waf~ No low ~ Not organ~       9.60       4
+##  5 Individual 13 Raspberry  Homemade waf~ No low ~ Not organ~       6.55       4
+##  6 Individual 14 Raspberry  Homemade waf~ No low ~ Not organ~       9.8        4
+##  7 Individual 15 Strawberry Cone          Low fat  Not organ~       8.53       4
+##  8 Individual 2  Strawberry Cone          Low fat  Not organ~       9.63       4
+##  9 Individual 3  Chocolate  Cone          No low ~ Not organ~       5.57       4
+## 10 Individual 4  Raspberry  Homemade waf~ Low fat  Organic          4.2        4
+## 11 Individual 5  Strawberry Cone          Low fat  Not organ~       4.93       4
+## 12 Individual 6  Raspberry  Homemade waf~ Low fat  Organic          9.40       4
+## 13 Individual 7  Strawberry Cone          Low fat  Not organ~       9.17       4
+## 14 Individual 8  Chocolate  Cone          No low ~ Not organ~       4.93       4
+## 15 Individual 9  Strawberry Cone          Low fat  Not organ~       7.87       4</code></pre>
+<p>Agora podemos estimar a participação de mercado:</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="análise-conjunta.html#cb68-1"></a>market_share &lt;-<span class="st"> </span>highest_rated <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb68-2"><a href="análise-conjunta.html#cb68-2"></a><span class="st">  </span><span class="kw">group_by</span>(Flavor, Packaging, Light, Organic) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb68-3"><a href="análise-conjunta.html#cb68-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb68-4"><a href="análise-conjunta.html#cb68-4"></a><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(count))</span></code></pre></div>
+<pre><code>## `summarise()` regrouping output by &#39;Flavor&#39;, &#39;Packaging&#39;, &#39;Light&#39; (override with `.groups` argument)</code></pre>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="análise-conjunta.html#cb70-1"></a>market_share</span></code></pre></div>
+<pre><code>## # A tibble: 4 x 5
+## # Groups:   Flavor, Packaging, Light [4]
+##   Flavor     Packaging       Light      Organic     count
+##   &lt;fct&gt;      &lt;fct&gt;           &lt;fct&gt;      &lt;fct&gt;       &lt;int&gt;
+## 1 Strawberry Cone            Low fat    Not organic     7
+## 2 Raspberry  Homemade waffle No low fat Not organic     4
+## 3 Chocolate  Cone            No low fat Not organic     2
+## 4 Raspberry  Homemade waffle Low fat    Organic         2</code></pre>
+<p>Vimos que o sorvete de morango, cone, baixo teor de gordura e não orgânico é preferido por 7 em cada 15 participantes, o framboesa, waffle caseiro, sem baixo teor de gordura e sorvete não orgânico é favorecido por 4 em cada 15 participantes e assim por diante .</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="análise-de-cluster-para-segmentação.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rhozon/rparamkt/edit/master/08-analiseconjunta.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/rhozon/rparamkt/blob/master/08-analiseconjunta.Rmd",
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,289 @@
+
+# Análise de cluster para segmentação {.unlisted .unnumbered}
+
+Neste capítulo, você aprenderá como realizar uma análise de cluster e uma análise discriminante linear.
+
+Uma análise de cluster trabalha em um grupo de observações que diferem entre si em várias dimensões. Ele encontrará clusters de observações no espaço n-dimensional, de modo que a semelhança de observações dentro de clusters seja a mais alta possível e a similaridade de observações entre clusters seja a mais baixa possível. Você sempre pode executar uma análise de cluster e pode solicitar qualquer número de clusters. O número máximo de clusters é o número total de observações. Nesse caso, cada observação será um cluster, mas isso não seria um cluster muito útil. O objetivo do agrupamento em cluster é encontrar um pequeno número de clusters que possam ser descritos de forma significativa por suas pontuações médias nas n dimensões. Em outras palavras, o objetivo é encontrar diferentes 'perfis' de observações.
+
+A análise discriminante linear tenta prever uma variável categórica com base em várias variáveis independentes contínuas ou categóricas. É semelhante à regressão logística. Nós o usaremos para prever a associação de cluster de uma observação (conforme estabelecido pela análise de cluster) com base em algumas variáveis de segmentação (ou seja, outras informações que temos sobre as observações que não serviram de entrada na análise de cluster).
+
+Analisaremos os dados de 40 entrevistados que avaliaram a importância de vários atributos da loja ao comprar equipamentos de escritório. Usaremos a análise de cluster para encontrar agrupamentos de observações, neste caso, agrupamentos de respondentes. Esses clusters terão perfis diferentes (por exemplo, um cluster pode atribuir importância à política de preços e devoluções, o outro pode atribuir importância à variedade de opções e qualidade de serviço). Em seguida, usaremos a análise discriminante linear para testar se podemos prever a associação ao cluster (ou seja, que tipo de comprador de equipamento de escritório alguém é) com base em várias características dos entrevistados (por exemplo, sua renda).
+
+
+## Dados {.unlisted .unnumbered}
+### Importação {.unlisted .unnumbered}
+
+Analisaremos os dados de uma pesquisa na qual 40 entrevistados foram solicitados a avaliar a importância de vários atributos da loja ao comprar equipamentos. Faça o download dos dados [aqui](http://users.telenet.be/samuelfranssens/tutorial_data/segmentation_office.xlsx) e importe-os para o R:
+
+```{r}
+library(tidyverse) 
+library(readxl)
+
+url<-"http://users.telenet.be/samuelfranssens/tutorial_data/segmentation_office.xlsx"
+equipment <- tempfile()
+download.file(url, equipment, mode="wb")
+equipment<-read_excel(path = equipment, sheet = 2)
+
+```
+
+
+### Manipulação {.unlisted .unnumbered}
+
+```{r}
+equipment[1:5,]
+```
+
+Temos 10 colunas ou variáveis em nossos dados:
+
+- respondent\_id é um identificador para nossas observações
+- Os entrevistados classificaram a importância de cada um dos seguintes atributos em uma escala de 1 a 10: variety\_of\_choice, electronic, furniture, quality\_of\_service, low\_prices, return\_policy.
+- professional: 1 para profissionais, 0 para não profissionais
+- income: expresso em milhares de dólares
+- age
+
+
+A análise de cluster tentará identificar clusters com padrões semelhantes de classificações. A análise discriminante linear preverá a associação do cluster com base nas variáveis de segmentação (professional}, income}, e age}).
+
+Como sempre, vamos fatorar as variáveis que devem ser tratadas como categóricas:
+
+```{r}
+equipment <- equipment %>% 
+  mutate(respondent_id = factor(respondent_id),
+         professional = factor(professional, labels = c("non-professional","professional")))
+```
+
+### Recapitulação: importação e manipulação {.unlisted .unnumbered}
+
+Aqui está o que fizemos até agora, em uma sequência ordenada de operações canalizadas/pipe (faça o download dos dados [aqui](http://users.telenet.be/samuelfranssens/tutorial_data/segmentation_office.xlsx)):
+
+```{r}
+#library(tidyverse) 
+#library(readxl)
+
+#equipment <- read_excel("segmentation_office.xlsx","SegmentationData") %>%
+ # mutate(respondent_id = factor(respondent_id),
+  #       professional = factor(professional, labels = c("non-professional","professional")))
+```
+
+## Análise de Cluster {.unlisted .unnumbered}
+
+Primeiro, realizaremos uma análise hierárquica de cluster para encontrar o número ideal de clusters. Depois disso, realizaremos uma análise de cluster não hierárquica e solicitaremos o número de clusters considerados ideais pela análise de cluster hierárquica. As variáveis que servirão de entrada para a análise de cluster são as classificações de importância dos atributos da loja.
+
+###  Padronizar ou não ? {.unlisted .unnumbered}
+
+A primeira etapa de uma análise de cluster é decidir se padronizará as variáveis de entrada. A padronização não é necessária quando as variáveis de entrada são medidas na mesma escala ou quando as variáveis de entrada são os coeficientes obtidos por uma análise conjunta. Em outros casos, a padronização é necessária.
+
+No nosso exemplo, todas as variáveis de entrada são medidas na mesma escala e, portanto, a padronização não é necessária. Se necessário, isso pode ser feito facilmente com mutate(newvar = scale(oldvar))).
+
+###  Cluster hierárquico {.unlisted .unnumbered}
+
+Em seguida, criamos um novo conjunto de dados que inclui apenas as variáveis de entrada, ou seja, as classificações:
+
+```{r}
+cluster.data <- equipment %>% 
+  select(variety_of_choice, electronics, furniture, quality_of_service, low_prices, return_policy) # Selecione no conjunto de dados do equipamento apenas as variaveis com classificacoes padronizadas
+```
+
+Agora, podemos prosseguir com o cluster hierárquico para determinar o número ideal de clusters:
+
+```{r}
+# A funcao dist() cria uma matriz de dissimilaridade do nosso conjunto de dados e deve ser o primeiro argumento para a funcao hclust().
+# No argumento do metodo, voce pode especificar o metodo a ser usado para armazenamento em cluster.
+hierarchical.clustering <- hclust(dist(cluster.data), method = "ward.D") 
+```
+
+A análise de cluster é armazenada no objeto hierarchical.clustering e pode ser facilmente visualizada por um dendograma:
+
+```{r}
+plot(hierarchical.clustering)
+```
+
+
+A partir desse dendograma, parece que podemos dividir as observações em dois, três ou seis grupos de observações. Vamos realizar um teste formal, a regra de parada de Duda-Hart, para ver quantos clusters devemos reter. Para isso, precisamos (instalar e) carregar o pacote NbClust}:
+
+```{r}
+#install.packages("NbClust")
+library(NbClust)
+```
+
+A tabela de regras de parada de Duda-Hart pode ser obtida da seguinte maneira:
+
+```{r}
+duda <- NbClust(cluster.data, distance = "euclidean", method = "ward.D2", max.nc = 9, index = "duda")
+pseudot2 <- NbClust(cluster.data, distance = "euclidean", method = "ward.D2", max.nc = 9, index = "pseudot2")
+
+duda$All.index
+
+
+pseudot2$All.index
+
+```
+
+
+A sabedoria convencional para decidir o número de grupos com base na regra de parada de Duda-Hart é encontrar um dos maiores valores de Duda que corresponda a um baixo valor de pseudo-$T^2$. No entanto, você também pode solicitar o número ideal de clusters, conforme sugerido pela regra de parada:
+
+```{r}
+duda$Best.nc
+```
+
+Nesse caso, o número ideal é três.
+
+## Cluster não-hierárquico {.unlisted .unnumbered}
+
+Agora, realizamos uma análise de cluster não hierárquica na qual solicitamos três clusters (conforme determinado pela análise de cluster hierárquica):
+
+```{r}
+# existe um elemento aleatorio na analise de cluster
+# isso significa que voce nem sempre obtera a mesma saida toda vez que fizer uma analise de cluster
+# se voce deseja obter sempre a mesma saida, eh necessario corrigir o gerador de numeros aleatorios de R com o comando set.seed
+set.seed (1)
+
+# o argumento nstart deve ser incluido e definido como 25, mas sua explicacao esta fora do escopo deste tutorial
+kmeans.clustering <- kmeans(cluster.data, 3, nstart = 25)
+```
+
+Adicione ao conjunto de dados equipament} uma variável que indique a qual cluster uma observação pertence:
+
+```{r}
+equipment <- equipment %>% 
+  mutate(km.group = factor(kmeans.clustering$cluster, labels=c("cl1","cl2","cl3"))) # Fatore o indicador de cluster a partir do quadro de dados clustering k e adicione-o ao quadro de dados do equipamento.
+```
+
+Inspeciona os clusters:
+```{r}
+equipment %>% 
+  group_by(km.group) %>% # agrupado por cluster (km.group)
+  summarise(count = n(), 
+            variety = mean(variety_of_choice), 
+            electronics = mean(electronics), 
+            furniture = mean(furniture), 
+            service = mean(quality_of_service), 
+            prices = mean(low_prices), 
+            return = mean(return_policy)) #Em seguida, pergunte pelo número de entrevistados e pelos meios das classificações.
+
+```
+
+Vemos que:
+
+-  o cluster 1 atribui mais importância (do que outros clusters) à qualidade do serviço
+-  o cluster 2 atribui mais importância à variedade de opções
+-  o cluster 3 atribui mais importância a preços baixos
+
+Também podemos testar se há diferenças significativas entre os clusters, por exemplo, na variedade de opções. Para isso, usamos uma ANOVA unidirecional:
+
+```{r}
+# remotes::install_github("samuelfranssens/type3anova") # para instalar o pacote type3anova.
+# Voce precisa do pacote de controles remotos para isso e o pacote para carro precisa ser instalado para que o pacote type3anova funcione
+
+library(type3anova)
+type3anova(lm(variety_of_choice ~ km.group, data=equipment))
+
+```
+
+Existem diferenças significativas entre os clusters em importância associadas à variedade de opções, e isso faz sentido porque o objetivo da análise de clusters é maximizar as diferenças entre os clusters. Vamos acompanhar isso com o HSD de Tukey para ver exatamente quais meios diferem um do outro:
+
+
+```{r}
+TukeyHSD(aov(variety_of_choice ~ km.group, data=equipment), 
+         "km.group") # O primeiro argumento eh um objeto "aov", o segundo eh a nossa variavel independente.
+```
+Vemos que em todos os meios, a diferença é significativa.
+
+## LDA Canônico {.unlisted .unnumbered}
+
+Na vida real, geralmente não sabemos o que os potenciais compradores consideram importante, mas temos uma ideia, por exemplo, de sua renda, idade e status profissional. Portanto, seria útil testar quão bem podemos prever a associação ao cluster (perfil de classificações de importância) com base nas características dos respondentes (renda, idade, profissional), que também são chamados de variáveis de segmentação. A fórmula preditiva poderia então ser usada para prever a associação ao cluster de novos compradores em potencial. Para encontrar a fórmula correta, usamos a análise discriminante linear (LDA). Mas primeiro vamos dar uma olhada nas médias de income, age, e professional por cluster:
+
+```{r}
+
+equipment %>% 
+  group_by(km.group) %>% # Agrupar equipamentos por cluster.
+  summarise(income = mean(income), 
+            age = mean(age), 
+            professional = mean(as.numeric(professional)-1)) 
+
+
+#visualiza as predicoes
+
+```
+
+
+Vemos que o cluster 1 e 2 são um tanto semelhantes em termos de renda e idade, mas diferem na medida em que são compostos por profissionais. O cluster 3 difere do cluster 1 e 2 por ser mais jovem e menos rico.
+
+Agora podemos usar o LDA para testar o quão bem podemos prever a associação do cluster com base na renda, idade e profissional:
+
+```{r}
+library(MASS) # We need the MASS package. Install it first if needed.
+
+lda.cluster3 <- lda(km.group ~ income + age + professional, data=equipment, CV=TRUE) # CV = TRUE ensures that we can store the prediction of the LDA in the following step
+equipment <- equipment %>% 
+  mutate(class = factor(lda.cluster3$class, labels = c("lda1","lda2","lda3"))) # Save the prediction of the LDA as a factor. (The predictions are stored in lda.cluster3$class)
+```
+
+Vamos ver como o LDA tem se saído bem:
+
+```{r}
+ct <- table(equipment$km.group, equipment$class) # how many observations in each cluster were correctly predicted to be in that cluster by LDA?
+ct
+```
+
+Vemos, por exemplo, que para as 14 observações no cluster 1, o LDA prevê corretamente que 12 estão no cluster 1, mas prediz erroneamente que 2 estão no cluster 2 e 0 estão no cluster 3.
+
+A precisão geral da previsão pode ser obtida da seguinte forma:
+
+```{r}
+prop.table(ct) # get percentages
+
+# add the percentages on the diagonal
+sum(diag(prop.table(ct))) # Proportion correctly predicted
+```
+
+
+Digamos que desejamos prever a participação no cluster de novas pessoas para as quais temos apenas renda, idade e status profissional, mas não sua participação no cluster. Poderíamos olhar para a fórmula que o LDA derivou dos dados de pessoas para as quais tínhamos membros do cluster:
+
+```{r}
+lda.cluster3.formula <- lda(km.group ~ income + age + professional, data=equipment, CV=FALSE) # CV = FALSE ensures that we view the formula that we can use for prediction
+lda.cluster3.formula
+```
+
+Vemos que o LDA manteve duas dimensões discriminantes (e é aqui que difere da regressão logística, que é unidimensional). A primeira dimensão explica 77,76 por cento da variância em km.group, a segunda dimensão explica 22,24 por cento da variância em km.group. A tabela com coeficientes nos dá a fórmula para cada dimensão:
+
+Pontuação Discriminante 1 = 0,03 × renda + 0,08 x idade + 0,42 × Pontuação profissional e discriminante 2 = -0,04 × renda + 0,04 ×  idade + 2,1 × profissional.
+
+Para atribuir novas observações a um determinado cluster, primeiro precisamos calcular as pontuações discriminantes médias dos clusters e de cada nova observação (preenchendo os valores (médios) de renda, idade e profissional de cada cluster ou observação no discriminante ), calcule as distâncias geométricas entre as pontuações discriminantes das novas observações e as pontuações discriminantes médias dos clusters e, finalmente, atribua cada observação ao cluster que está mais próximo no espaço geométrico. Isso é uma chatice, por isso temos sorte de o R fornecer uma maneira simples de fazer isso.
+
+Vamos criar algumas novas observações primeiro:
+
+```{r}
+# the tibble function can be used to create a new data frame
+new_data <- tibble(income = c(65, 65, 35, 35), # to define a variable within the data frame, first provide the name of the variable (income), then provide the values
+                   age = c(20, 35, 45, 60),
+                   professional = c("professional","non-professional","non-professional","professional"))
+
+# check out the new data:
+new_data
+```
+Agora vamos prever a associação do cluster para essas "novas" pessoas:
+
+```{r}
+new_data <- new_data %>% 
+  mutate(prediction = predict(lda.cluster3.formula, new_data)$class) 
+# Create a new column called prediction in the new_data data frame and store in that the prediction, 
+# accessed by $class, for the new_data based on the formula from the LDA based on the old data (use the LDA where CV = FALSE).
+
+# have a look at the prediction:
+new_data
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+

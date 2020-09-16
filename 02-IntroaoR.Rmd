@@ -86,7 +86,7 @@ read\_excel é uma função do pacote readxl. São necessários dois argumentos:
 
 ## Lendo os dados do Airbnb {.unlisted .unnumbered}
 
-Nosso conjunto de dados contém informações sobre quartos na Bélgica listados no airbnb.com. Sabemos para cada sala (identificada por room\_id): quem é o hóspede (host\_id), que tipo de sala é (room\_type), onde está localizada (country, city, neighborhood e até a latitude e longitude exata), como muitas críticas que recebeu (\reviews), como as pessoas estavam satisfeitas (overall\_satisfaction), preço (price) e características dos quartos (accommodates, bedrooms, bathrooms, minstay).
+Nosso conjunto de dados contém informações sobre quartos na Bélgica listados no airbnb.com. Sabemos para cada sala (identificada por room\_id): quem é o hóspede (host\_id), que tipo de sala é (room\_type), onde está localizada (country, city, neighborhood e até a latitude e longitude exata), como muitas críticas que recebeu (reviews), como as pessoas estavam satisfeitas (overall\_satisfaction), preço (price) e características dos quartos (accommodates, bedrooms, bathrooms, minstay).
 
 Uma etapa realmente importante é verificar se seus dados foram importados corretamente. É uma boa prática sempre inspecionar seus dados. Você vê algum valor ausente, os números e os nomes fazem sentido? Se você começar imediatamente com a análise, corre o risco de ter que refazê-la porque os dados não foram lidos corretamente, ou pior, analisando dados errados sem perceber.
 
@@ -186,16 +186,45 @@ Isso instrui R a pegar o conjunto de dados do airbnb, criar uma nova variável r
 
 Se olharmos para os dados, também podemos ver que country é NA, o que significa que não está disponível ou está ausente. city é sempre a Bélgica (o que está errado porque a Bélgica é um país, não uma cidade) e o borought contém as informações da cidade. Vamos corrigir esses erros removendo a variável country de nosso conjunto de dados e renomeando city e borought. Também excluiremos o survey\_id porque essa variável é constante nas observações e não a usaremos no restante da análise:
 
-```{r}
-airbnb <- select(airbnb, -country, -survey_id) 
+```{r chunkbugado}
+library(dplyr)
+#airbnb <- airbnb%>%
+#  select(-country, -survey_id) 
+
 # Diga R para remover country & survey_id do quadro de dados do airbnb incluindo um sinal de menos antes dessas variáveis.
+
+airbnb<-airbnb%>%
+  select(room_id ,
+         host_id,
+         room_type,
+         country,
+         borough,
+         neighborhood,
+         reviews,
+         overall_satisfaction,
+         accommodates,
+         bedrooms,
+         bathrooms,
+         price,
+         minstay,
+         name,
+         last_modified,
+         latitude,
+         longitude,
+         location,
+         room_id_F,
+         host_id_F,
+         overall_satisfaction_100)
+```
+
+```{r}
 # Atribua novamente esse novo quadro de dados ao objeto airbnb.
 str(airbnb) # Agora você verá que o country e o survey_id se foram.
 
-airbnb <- rename(airbnb, country = city, city = borough) 
+#airbnb <- rename(airbnb, country = city, city = borough) 
 # Diga ao R para renomear algumas variáveis do quadro de dados do airbnb e reatribuir esse novo quadro de dados ao objeto do airbnb.
 # Nota: a sintaxe é um pouco contra-intuitiva: novo nome de variável (country) = nome da variável antiga (city)!
-str(airbnb) # country = Bélgica agora e cidade se refere a cidades
+ # country = Bélgica agora e cidade se refere a cidades
 ```
 
 ### Incluindo ou excluindo observações (linhas) {.unlisted .unnumbered}
