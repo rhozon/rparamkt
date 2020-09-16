@@ -160,7 +160,8 @@ Para saber quais cidades são grandes e quais são pequenas, podemos solicitar f
 ```{r}
 airbnb %>% 
   group_by(size, city) %>% 
-  summarize(count = n(), population = mean(population)) %>% # Cidades formam os grupos. Portanto, a populacao media de um grupo = a media de observacoes com a mesma populacao, porque elas vem da mesma cidade = a populacao da cidade
+  summarise(count = n(), 
+            population = mean(population)) %>% # Cidades formam os grupos. Portanto, a populacao media de um grupo = a media de observacoes com a mesma populacao, porque elas vem da mesma cidade = a populacao da cidade
   arrange(desc(size), desc(population)) %>% # maior cidade no topo
   print (n = Inf) # mostra a distribuicao completa das frequencias
 ```
@@ -177,7 +178,7 @@ airbnb.cities <- airbnb %>%
 
 airbnb.cities %>% 
   group_by(size) %>% 
-  summarize(mean_price = mean(price),
+  summarise(mean_price = mean(price),
             sd_price = sd(price),
             count = n())
 ```
@@ -216,7 +217,7 @@ Por exemplo, digamos que queremos testar se há uma diferença significativa ent
 ```{r}
 airbnb.summary <- airbnb %>% 
   group_by(room_type) %>% 
-  summarize(count = n(), # obtenha as frequencias dos diferentes tipos de quartos 
+  summarise(count = n(), # obtenha as frequencias dos diferentes tipos de quartos 
             mean_price = mean(price), # o preco medio por tipo de quarto
             sd_price = sd(price)) # e o desvio padrao do preco por tipo de quarto
 
@@ -310,7 +311,7 @@ Mas, neste caso, os intervalos interquartis (as alturas das caixas), que normalm
 ```{r}
 airbnb %>% 
   group_by(room_type) %>% 
-  summarize(count = n(), # obtenha as frequencias dos diferentes tipos de quartos
+  summarise(count = n(), # obtenha as frequencias dos diferentes tipos de quartos
             mean_price = mean(price), # o preco medio por tipo de quarto
             sd_price = sd(price)) # e o desvio padrao do preco por tipo de quarto
 ```
@@ -523,7 +524,7 @@ Como dito, quando o relacionamento entre uma variável independente e uma variá
 ```{r}
 airbnb %>% 
   filter(!is.na(overall_satisfaction)) %>% 
-  summarize(min = min(reviews),
+  summarise(min = min(reviews),
             Q1 = quantile(reviews, .25), # primeiro quartil
             Q2 = quantile(reviews, .50), # segundo quartil ou mediana
             Q3 = quantile(reviews, .75), # terceiro quartil
@@ -549,7 +550,7 @@ Por isso, pedimos ao R para criar uma nova variável review\_group que deve ser 
 # checagem:
 airbnb.reviews %>% 
   group_by(review_group) %>% 
-  summarize(min = min(reviews), max = max(reviews))
+  summarise(min = min(reviews), max = max(reviews))
 ```
 
 
@@ -669,7 +670,7 @@ Agora, imprima as frequências do tamanho da cidade e combinações de gems:
 ```{r}
 airbnb.cities %>% 
   group_by(size, gem) %>% 
-  summarize(count = n())
+  summarise(count = n())
 ```
 
 Esta informação está correta, mas o formato em que a tabela é apresentada é um pouco incomum. Gostaríamos de ter uma variável como linhas e a outra como colunas:
@@ -843,5 +844,6 @@ airbnb <- airbnb %>%
 table(airbnb$prediction,airbnb$gem)
 ```
 
+Podemos ver que, com esta regra de decisão (prever gems sempre que a probabilidade prevista de gems for superior a 7\%), obtivemos 11240 + 326 corretas e 5231 + 854 previsões erradas, que é uma taxa de acerto de (11240 + 326) / (11240 + 326 + 5231 + 854) = 65,5\%.
 
 
