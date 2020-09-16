@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Regressão Logística (opcional) | R para Estudantes de Marketing</title>
+  <meta name="description" content="Regressão Logística (opcional) | R para Estudantes de Marketing" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Regressão Logística (opcional) | R para Estudantes de Marketing" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Regressão Logística (opcional) | R para Estudantes de Marketing" />
+  
+  
+  
+
+<meta name="author" content="KU Leuven Marketing department (tradução: Rodrigo Hermont Ozon)" />
+
+
+<meta name="date" content="2020-09-16" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="regressão-linear.html"/>
+<link rel="next" href="análise-básica-de-dados-analisando-dados-secundários.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">R para Estudantes de Marketing</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Sobre o autor desta tradução</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#resumo"><i class="fa fa-check"></i>Resumo</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#download-e-instalação-do-r-e-do-rstudio"><i class="fa fa-check"></i>Download e instalação do R e do RStudio</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#obtendo-familiaridade-com-o-studio"><i class="fa fa-check"></i>Obtendo familiaridade com o Studio</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#console-vs.-script"><i class="fa fa-check"></i>Console vs. script</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#comentários"><i class="fa fa-check"></i>Comentários</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#pacotes"><i class="fa fa-check"></i>Pacotes</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html"><i class="fa fa-check"></i>Introdução ao R</a><ul>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#importando-dados"><i class="fa fa-check"></i>Importando dados</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#importando-arquivos-.csv"><i class="fa fa-check"></i>Importando arquivos .csv</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#ajustando-seu-diretório-de-trabalho"><i class="fa fa-check"></i>Ajustando seu diretório de trabalho</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#atribuindo-dados-a-objetos"><i class="fa fa-check"></i>Atribuindo dados a objetos</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#importando-arquivos-do-excel"><i class="fa fa-check"></i>Importando arquivos do Excel</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#lendo-os-dados-do-airbnb"><i class="fa fa-check"></i>Lendo os dados do Airbnb</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#manipulando-dataframes"><i class="fa fa-check"></i>Manipulando dataframes</a><ul>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#transformando-variáveis"><i class="fa fa-check"></i>Transformando variáveis</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#transformações-numéricas"><i class="fa fa-check"></i>Transformações numéricas</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#transformando-variáveis-com-a-função-mutate"><i class="fa fa-check"></i>Transformando variáveis com a função mutate</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#incluindo-ou-excluindo-e-renomeando-variáveis-colunas"><i class="fa fa-check"></i>Incluindo ou excluindo e renomeando variáveis (colunas)</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#incluindo-ou-excluindo-observações-linhas"><i class="fa fa-check"></i>Incluindo ou excluindo observações (linhas)</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#o-operador-pipe"><i class="fa fa-check"></i>O operador pipe</a><ul>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#uma-maneira-de-escrever-o-código"><i class="fa fa-check"></i>Uma maneira de escrever o código</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#agrupando-e-resumindo"><i class="fa fa-check"></i>Agrupando e resumindo</a><ul>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#tabelas-de-frequência"><i class="fa fa-check"></i>Tabelas de frequência</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#estatísticas-descritivas"><i class="fa fa-check"></i>Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#exportando-summaries-dos-dados"><i class="fa fa-check"></i>Exportando (summaries) dos dados</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#gráficos"><i class="fa fa-check"></i>Gráficos</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#diagrama-de-dispersão-scatterplot"><i class="fa fa-check"></i>Diagrama de dispersão (scatterplot)</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#jitter"><i class="fa fa-check"></i>Jitter</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#histograma"><i class="fa fa-check"></i>Histograma</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#transformação-logarítmica"><i class="fa fa-check"></i>Transformação logarítmica</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#plotando-a-mediana"><i class="fa fa-check"></i>Plotando a mediana</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#plotando-a-média"><i class="fa fa-check"></i>Plotando a média</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#salvando-imagens"><i class="fa fa-check"></i>Salvando imagens</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#introdução-ao-r"><i class="fa fa-check"></i>Introdução ao R</a><ul>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#importando-dados"><i class="fa fa-check"></i>Importando dados</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#importando-arquivos-.csv"><i class="fa fa-check"></i>Importando arquivos .csv</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#ajustando-seu-diretório-de-trabalho"><i class="fa fa-check"></i>Ajustando seu diretório de trabalho</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#atribuindo-dados-a-objetos"><i class="fa fa-check"></i>Atribuindo dados a objetos</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#importando-arquivos-do-excel"><i class="fa fa-check"></i>Importando arquivos do Excel</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#lendo-os-dados-do-airbnb"><i class="fa fa-check"></i>Lendo os dados do Airbnb</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#manipulando-dataframes"><i class="fa fa-check"></i>Manipulando dataframes</a><ul>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#transformando-variáveis"><i class="fa fa-check"></i>Transformando variáveis</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#transformações-numéricas"><i class="fa fa-check"></i>Transformações numéricas</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#transformando-variáveis-com-a-função-mutate"><i class="fa fa-check"></i>Transformando variáveis com a função mutate</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#incluindo-ou-excluindo-e-renomeando-variáveis-colunas"><i class="fa fa-check"></i>Incluindo ou excluindo e renomeando variáveis (colunas)</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#incluindo-ou-excluindo-observações-linhas"><i class="fa fa-check"></i>Incluindo ou excluindo observações (linhas)</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#o-operador-pipe"><i class="fa fa-check"></i>O operador pipe</a><ul>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#uma-maneira-de-escrever-o-código"><i class="fa fa-check"></i>Uma maneira de escrever o código</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#agrupando-e-resumindo"><i class="fa fa-check"></i>Agrupando e resumindo</a><ul>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#tabelas-de-frequência"><i class="fa fa-check"></i>Tabelas de frequência</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#estatísticas-descritivas"><i class="fa fa-check"></i>Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#exportando-summaries-dos-dados"><i class="fa fa-check"></i>Exportando (summaries) dos dados</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#gráficos"><i class="fa fa-check"></i>Gráficos</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#diagrama-de-dispersão-scatterplot"><i class="fa fa-check"></i>Diagrama de dispersão (scatterplot)</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#jitter"><i class="fa fa-check"></i>Jitter</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#histograma"><i class="fa fa-check"></i>Histograma</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#transformação-logarítmica"><i class="fa fa-check"></i>Transformação logarítmica</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#plotando-a-mediana"><i class="fa fa-check"></i>Plotando a mediana</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#plotando-a-média"><i class="fa fa-check"></i>Plotando a média</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#salvando-imagens"><i class="fa fa-check"></i>Salvando imagens</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html"><i class="fa fa-check"></i>Análise básica de dados: analisando dados secundários</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#dados"><i class="fa fa-check"></i>Dados</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#importação"><i class="fa fa-check"></i>Importação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#manipulação"><i class="fa fa-check"></i>Manipulação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#mesclando-datasets"><i class="fa fa-check"></i>Mesclando datasets</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#recapitulando-importação-e-manipulação"><i class="fa fa-check"></i>Recapitulando: importação e manipulação</a></li>
+<li><a href="análise-básica-de-dados-analisando-dados-secundários.html#amostras-independentes-teste-t">Amostras independentes: teste <span class="math inline">\(t\)</span></a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#anova-univariada"><i class="fa fa-check"></i>ANOVA univariada</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#suposição-de-normalidade-de-resíduos"><i class="fa fa-check"></i>Suposição de normalidade de resíduos</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#suposição-homogeneidade-de-variâncias"><i class="fa fa-check"></i>Suposição: homogeneidade de variâncias</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#anova"><i class="fa fa-check"></i>ANOVA</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#teste-de-tuckey-de-diferença-significativa-verdadeira"><i class="fa fa-check"></i>Teste de Tuckey de diferença significativa verdadeira</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="regressão-linear.html"><a href="regressão-linear.html"><i class="fa fa-check"></i>Regressão Linear</a><ul>
+<li class="chapter" data-level="" data-path="regressão-linear.html"><a href="regressão-linear.html#regressão-linear-simples"><i class="fa fa-check"></i>Regressão Linear Simples</a></li>
+<li class="chapter" data-level="" data-path="regressão-linear.html"><a href="regressão-linear.html#correlação"><i class="fa fa-check"></i>Correlação</a></li>
+<li class="chapter" data-level="" data-path="regressão-linear.html"><a href="regressão-linear.html#regressão-linear-múltipla-com-interação"><i class="fa fa-check"></i>Regressão linear múltipla, com interação</a></li>
+<li class="chapter" data-level="" data-path="regressão-linear.html"><a href="regressão-linear.html#premissas"><i class="fa fa-check"></i>Premissas</a></li>
+<li class="chapter" data-level="" data-path="regressão-linear.html"><a href="regressão-linear.html#normalidade-de-resíduos"><i class="fa fa-check"></i>Normalidade de resíduos</a></li>
+<li class="chapter" data-level="" data-path="regressão-linear.html"><a href="regressão-linear.html#homocedasticidade-de-resíduos"><i class="fa fa-check"></i>Homocedasticidade de resíduos</a></li>
+<li class="chapter" data-level="" data-path="regressão-linear.html"><a href="regressão-linear.html#multicolinearidade"><i class="fa fa-check"></i>Multicolinearidade</a></li>
+<li><a href="regressão-linear.html#teste-chi2">Teste <span class="math inline">\(\chi^{2}\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="regressão-logística-opcional.html"><a href="regressão-logística-opcional.html"><i class="fa fa-check"></i>Regressão Logística (opcional)</a><ul>
+<li class="chapter" data-level="" data-path="regressão-logística-opcional.html"><a href="regressão-logística-opcional.html#medindo-o-ajuste-de-uma-regressão-logística-porcentagem-classificada-corretamente"><i class="fa fa-check"></i>Medindo o ajuste de uma regressão logística: porcentagem classificada corretamente</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#análise-básica-de-dados-analisando-dados-secundários"><i class="fa fa-check"></i>Análise básica de dados: analisando dados secundários</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#dados"><i class="fa fa-check"></i>Dados</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#importação"><i class="fa fa-check"></i>Importação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#manipulação"><i class="fa fa-check"></i>Manipulação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#mesclando-datasets"><i class="fa fa-check"></i>Mesclando datasets</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#recapitulando-importação-e-manipulação"><i class="fa fa-check"></i>Recapitulando: importação e manipulação</a></li>
+<li><a href="análise-básica-de-dados-analisando-dados-secundários.html#amostras-independentes-teste-t">Amostras independentes: teste <span class="math inline">\(t\)</span></a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#anova-univariada"><i class="fa fa-check"></i>ANOVA univariada</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#suposição-de-normalidade-de-resíduos"><i class="fa fa-check"></i>Suposição de normalidade de resíduos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="regressão-linear.html"><a href="regressão-linear.html#regressão-linear"><i class="fa fa-check"></i>Regressão Linear</a><ul>
+<li class="chapter" data-level="" data-path="regressão-linear.html"><a href="regressão-linear.html#regressão-linear-simples"><i class="fa fa-check"></i>Regressão Linear Simples</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R para Estudantes de Marketing</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="regressão-logística-opcional" class="section level1 unlisted unnumbered">
+<h1>Regressão Logística (opcional)</h1>
+<p>Às vezes, queremos prever uma variável dependente binária, ou seja, uma variável que pode assumir apenas dois valores, com base em várias variáveis independentes contínuas ou categóricas. Por exemplo, digamos que estamos interessados em testar se uma listagem é ou não uma jóia depende do preço e do tipo de quarto da listagem.</p>
+<p>Não podemos usar ANOVA ou regressão linear aqui porque a variável dependente é uma variável binária e, portanto, normalmente não é distribuída. Outro problema com a ANOVA ou regressão linear é que ela pode prever valores que não são possíveis (por exemplo, nosso valor previsto pode ser 5, mas apenas 0 e 1 fazem sentido para essa variável dependente). Portanto, usaremos regressão logística. A regressão logística primeiro transforma a variável dependente Y com a transformação do logit. A transformação do logit usa o logaritmo natural das chances de que a variável dependente seja igual a 1:</p>
+<p><span class="math display">\[
+probabilidades=\displaystyle\frac{P(Y=1)}{P(Y=0}=\displaystyle\frac{P(Y=1)}{1-P(Y=1)}
+\]</span></p>
+<p>então o logit <span class="math inline">\(P(Y=1))=\ln\displaystyle\frac{P(Y-1)}{1-P(Y=1)}\)</span></p>
+<p>Isso garante que nossa variável dependente seja normalmente distribuída e não seja restrita a ser 0 ou 1.Isso garante que nossa variável dependente seja normalmente distribuída e não seja restrita a ser 0 ou 1.</p>
+<p>Vamos realizar a regressão logística:</p>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="regressão-logística-opcional.html#cb120-1"></a>logistic.model &lt;-<span class="st"> </span><span class="kw">glm</span>(gem <span class="op">~</span><span class="st"> </span>price <span class="op">*</span><span class="st"> </span>room_type, <span class="dt">data=</span>airbnb, <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>) <span class="co"># o argumento family = &quot;binomial&quot; diz R para tratar a variavel dependente como uma variavel 0/1</span></span>
+<span id="cb120-2"><a href="regressão-logística-opcional.html#cb120-2"></a><span class="kw">summary</span>(logistic.model) <span class="co"># saida da regressao</span></span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = gem ~ price * room_type, family = &quot;binomial&quot;, data = airbnb)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -0.4909  -0.3819  -0.3756  -0.3660   2.5307  
+## 
+## Coefficients:
+##                               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)                 -2.5270702  0.0570207 -44.318   &lt;2e-16 ***
+## price                       -0.0007185  0.0004030  -1.783   0.0746 .  
+## room_typePrivate room       -0.0334362  0.1072091  -0.312   0.7551    
+## room_typeShared room         1.0986318  1.1278159   0.974   0.3300    
+## price:room_typePrivate room -0.0011336  0.0012941  -0.876   0.3810    
+## price:room_typeShared room  -0.0562610  0.0381846  -1.473   0.1406    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 8663.8  on 17650  degrees of freedom
+## Residual deviance: 8648.6  on 17645  degrees of freedom
+## AIC: 8660.6
+## 
+## Number of Fisher Scoring iterations: 7</code></pre>
+<p>Vemos que o único preditor marginalmente significativo de uma listagem ser ou não uma jóia é o preço da listagem. Você pode relatar o seguinte: “Controlando o tipo de quarto e a interação entre preço e tipo de quarto, havia uma relação negativa marginalmente significativa entre o preço e a probabilidade de uma listagem ser uma jóia (<span class="math inline">\(\beta\)</span> = -0.0007185, <span class="math inline">\(\chi\)</span> (17645) = -1,783, p = 0,075).</p>
+<p>A interpretação dos coeficientes de regressão na regressão logística é diferente da do caso da regressão linear:</p>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="regressão-logística-opcional.html#cb122-1"></a><span class="kw">summary</span>(logistic.model)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = gem ~ price * room_type, family = &quot;binomial&quot;, data = airbnb)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -0.4909  -0.3819  -0.3756  -0.3660   2.5307  
+## 
+## Coefficients:
+##                               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)                 -2.5270702  0.0570207 -44.318   &lt;2e-16 ***
+## price                       -0.0007185  0.0004030  -1.783   0.0746 .  
+## room_typePrivate room       -0.0334362  0.1072091  -0.312   0.7551    
+## room_typeShared room         1.0986318  1.1278159   0.974   0.3300    
+## price:room_typePrivate room -0.0011336  0.0012941  -0.876   0.3810    
+## price:room_typeShared room  -0.0562610  0.0381846  -1.473   0.1406    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 8663.8  on 17650  degrees of freedom
+## Residual deviance: 8648.6  on 17645  degrees of freedom
+## AIC: 8660.6
+## 
+## Number of Fisher Scoring iterations: 7</code></pre>
+<p>O coeficiente de regressão do preço é -0.0007185. Isso significa que um aumento de uma unidade no preço levará a um aumento de -0.0007185 nas chances de log de joia ser igual a 1 (ou seja, de uma listagem sendo uma joia). Por exemplo:</p>
+<p><span class="math display">\[
+\textrm{logit}(P(Y = 1 | \textrm{price} = 60 )) = \textrm{logit}(P(Y = 1 | \textrm{price} = 59 )) - 0.0007185
+\]</span></p>
+<p><span class="math display">\[
+\mbox{logit}(P(Y = 1 | \mbox{price} = 60 )) = \mbox{logit}(P(Y = 1 | \mbox{price} = 59 )) - 0.0007185
+\]</span>
+<span class="math display">\[
+\Leftrightarrow \textrm{logit}(P(Y = 1 | \textrm{price} = 60 )) - \textrm{logit}(P(Y = 1 | \textrm{price} = 59 )) = -0.0007185
+\]</span>
+<span class="math display">\[
+\Leftrightarrow \textrm{ln(probs}(P(Y = 1 | \textrm{price} = 60 )) - \textrm{ln(probs}(P(Y = 1 | \textrm{price} = 59 )) = -0.0007185
+\]</span>
+<span class="math display">\[
+\Leftrightarrow \textrm{ln}(\dfrac{ \textrm{probs}(P(Y = 1 | \textrm{price} = 60 )}{\textrm{probs}(P(Y = 1 | \textrm{price} = 59 )}) = -0.0007185
+\]</span></p>
+<p><span class="math display">\[
+\Leftrightarrow \dfrac{ \textrm{probs}(P(Y = 1 | \textrm{price} = 60 )}{\textrm{probs}(P(Y = 1 | \textrm{price} = 59 )} = e^{-0.0007185}
+\]</span>
+<span class="math display">\[
+\Leftrightarrow \textrm{probs}(P(Y = 1 | \textrm{price} = 60 ) = e^{-0.0007185} * \textrm{probs}(P(Y = 1 | \textrm{price} = 59 )
+\]</span></p>
+<p>Assim, o coeficiente de regressão em uma regressão logística deve ser interpretado como o aumento relativo nas chances da variável dependente ser igual a 1, para cada aumento de unidade no preditor, controlando todos os outros fatores em nosso modelo. Nesse caso, as probabilidades de uma listagem ser uma gema devem ser multiplicadas por $ e ^ {0,0007185} = 0,999 $ ou diminuídas em 0,1%, para cada aumento de preço unitário. Em outras palavras, listagens mais caras têm menos probabilidade de serem jóias. No exemplo específico acima, as chances de ser uma joia de uma listagem com preço de 60 são <span class="math inline">\(e^{(-0.0007185×5)}= 0,996\)</span> vezes a chance de ser uma jóia de uma listagem com preço de 59.</p>
+<div id="medindo-o-ajuste-de-uma-regressão-logística-porcentagem-classificada-corretamente" class="section level2 unlisted unnumbered">
+<h2>Medindo o ajuste de uma regressão logística: porcentagem classificada corretamente</h2>
+<p>Nosso modelo usa o preço e o tipo de quarto da listagem para prever se a listagem é uma joia ou não. Ao fazer previsões, é natural nos perguntarmos se nossas previsões são boas. Em outras palavras, usando preço e tipo de quarto, com que frequência prevemos corretamente se uma listagem é uma jóia ou não? Para ter uma idéia da qualidade de nossas previsões, podemos pegar o preço e o tipo de quarto das listagens em nosso conjunto de dados, prever se as listagens são gemas e comparar nossas previsões com o status real da gema das listagens. Vamos primeiro fazer as previsões:</p>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="regressão-logística-opcional.html#cb124-1"></a>airbnb &lt;-<span class="st"> </span>airbnb <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb124-2"><a href="regressão-logística-opcional.html#cb124-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">prediction =</span> <span class="kw">predict</span>(logistic.model, airbnb))</span>
+<span id="cb124-3"><a href="regressão-logística-opcional.html#cb124-3"></a><span class="co"># Crie uma nova coluna chamada previsao no quadro de dados do airbnb e armazene nela a previsao,</span></span>
+<span id="cb124-4"><a href="regressão-logística-opcional.html#cb124-4"></a><span class="co"># baseado em logistic.model, para os dados do airbnb</span></span>
+<span id="cb124-5"><a href="regressão-logística-opcional.html#cb124-5"></a><span class="co"># De uma olhada nessas previsoes:</span></span>
+<span id="cb124-6"><a href="regressão-logística-opcional.html#cb124-6"></a><span class="kw">head</span>(airbnb<span class="op">$</span>prediction)</span></code></pre></div>
+<pre><code>##         1         2         3         4         5         6 
+## -4.790232 -4.448355 -4.049498 -4.619293 -4.106477 -4.847211</code></pre>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="regressão-logística-opcional.html#cb126-1"></a><span class="co"># Compare com as observacoes:</span></span>
+<span id="cb126-2"><a href="regressão-logística-opcional.html#cb126-2"></a><span class="kw">head</span>(airbnb<span class="op">$</span>gem)</span></code></pre></div>
+<pre><code>## [1] no gem no gem no gem no gem no gem no gem
+## Levels: no gem gem</code></pre>
+<p>Você vê o problema? As previsões são logits, ou seja, logaritmos de chances de que as listagens sejam gemas, mas as observações simplesmente nos dizem se uma listagem é uma gema ou não. Para uma comparação significativa entre previsões e observações, precisamos transformar os logits em uma decisão: gema ou não gema. É fácil transformar logits em probabilidades usando o exponencial do logit. A relação entre probabilidades e probabilidades é a seguinte:</p>
+<p><span class="math display">\[
+\textrm{probs} = \dfrac{P(Y = 1)}{P(Y = 0)} = \dfrac{P(Y = 1)}{1 - P(Y = 1)}
+\]</span>
+<span class="math display">\[
+\Leftrightarrow \dfrac{probs}{1 + \dfrac{P(Y = 1)}{1 - P(Y = 1)}} = \dfrac{\dfrac{P(Y = 1)}{1 - P(Y = 1)}}{1 + \dfrac{P(Y = 1)}{1 - P(Y = 1)}}
+\]</span></p>
+<p><span class="math display">\[
+\Leftrightarrow \dfrac{probs}{1 + probs} = \dfrac{\dfrac{P(Y = 1)}{1 - P(Y = 1)}}{\dfrac{1 - P(Y = 1) + P(Y = 1)}{1 - P(Y = 1)}}
+\]</span></p>
+<p><span class="math display">\[
+\Leftrightarrow \dfrac{probs}{1 + probs} = \dfrac{P(Y = 1)}{1 - P(Y = 1) + P(Y = 1)}
+\]</span>
+<span class="math display">\[
+\Leftrightarrow \dfrac{probs}{1 + probs} = P(Y = 1)
+\]</span>
+Agora vamos calcular, para cada listagem, a probabilidade de a listagem ser uma jóia (gem):</p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="regressão-logística-opcional.html#cb128-1"></a>airbnb &lt;-<span class="st"> </span>airbnb <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb128-2"><a href="regressão-logística-opcional.html#cb128-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">prediction.logit =</span> <span class="kw">predict</span>(logistic.model, airbnb),</span>
+<span id="cb128-3"><a href="regressão-logística-opcional.html#cb128-3"></a>         <span class="dt">prediction.odds =</span> <span class="kw">exp</span>(prediction.logit),</span>
+<span id="cb128-4"><a href="regressão-logística-opcional.html#cb128-4"></a>         <span class="dt">prediction.probability =</span> prediction.odds <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span><span class="op">+</span>prediction.odds))</span>
+<span id="cb128-5"><a href="regressão-logística-opcional.html#cb128-5"></a></span>
+<span id="cb128-6"><a href="regressão-logística-opcional.html#cb128-6"></a><span class="co"># Inspecionando as probabilidades preditas</span></span>
+<span id="cb128-7"><a href="regressão-logística-opcional.html#cb128-7"></a><span class="kw">head</span>(airbnb<span class="op">$</span>prediction.probability)</span></code></pre></div>
+<pre><code>##           1           2           3           4           5           6 
+## 0.008242034 0.011562542 0.017132489 0.009763496 0.016198950 0.007789092</code></pre>
+<p>Os primeiros números são probabilidades muito baixas, mas também existem probabilidades mais altas e todas as previsões estão entre 0 e 1, como deveriam. Agora precisamos decidir qual probabilidade é suficiente para prevermos que uma listagem é uma gem ou não.</p>
+<p>Uma escolha óbvia é uma probabilidade de 0,5: uma probabilidade maior que 0,5 significa que prevemos que é mais provável que uma listagem seja uma gem do que não. Vamos converter probabilidades em previsões:</p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="regressão-logística-opcional.html#cb130-1"></a>airbnb &lt;-<span class="st"> </span>airbnb <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb130-2"><a href="regressão-logística-opcional.html#cb130-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">prediction =</span> <span class="kw">case_when</span>(prediction.probability<span class="op">&lt;=</span>.<span class="dv">50</span> <span class="op">~</span><span class="st"> &quot;no gem&quot;</span>,</span>
+<span id="cb130-3"><a href="regressão-logística-opcional.html#cb130-3"></a>                                prediction.probability<span class="op">&gt;</span><span class="st"> </span><span class="fl">.50</span> <span class="op">~</span><span class="st"> &quot;gem&quot;</span>))</span>
+<span id="cb130-4"><a href="regressão-logística-opcional.html#cb130-4"></a></span>
+<span id="cb130-5"><a href="regressão-logística-opcional.html#cb130-5"></a><span class="co"># Inspecinando as predicoes</span></span>
+<span id="cb130-6"><a href="regressão-logística-opcional.html#cb130-6"></a><span class="kw">head</span>(airbnb<span class="op">$</span>prediction)</span></code></pre></div>
+<pre><code>## [1] &quot;no gem&quot; &quot;no gem&quot; &quot;no gem&quot; &quot;no gem&quot; &quot;no gem&quot; &quot;no gem&quot;</code></pre>
+<p>Uma etapa final é comparar previsões com observações:</p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="regressão-logística-opcional.html#cb132-1"></a><span class="kw">table</span>(airbnb<span class="op">$</span>prediction, airbnb<span class="op">$</span>gem)</span></code></pre></div>
+<pre><code>##         
+##          no gem   gem
+##   no gem  16471  1180</code></pre>
+<p>Normalmente, vemos uma tabela 2x2, mas vemos uma tabela com um valor previsto nas linhas e dois valores observados nas colunas. Isso ocorre porque todas as probabilidades previstas estão abaixo de 0,50 e, portanto, sempre previmos que não há gemas. Vamos reduzir o limite para prever que uma listagem é uma gem:</p>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="regressão-logística-opcional.html#cb134-1"></a>airbnb &lt;-<span class="st"> </span>airbnb <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb134-2"><a href="regressão-logística-opcional.html#cb134-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">prediction =</span> <span class="kw">case_when</span>(prediction.probability<span class="op">&lt;=</span>.<span class="dv">07</span> <span class="op">~</span><span class="st"> &quot;no gem&quot;</span>,</span>
+<span id="cb134-3"><a href="regressão-logística-opcional.html#cb134-3"></a>                                prediction.probability<span class="op">&gt;</span><span class="st"> </span><span class="fl">.07</span> <span class="op">~</span><span class="st"> &quot;gem&quot;</span>),</span>
+<span id="cb134-4"><a href="regressão-logística-opcional.html#cb134-4"></a>         <span class="dt">prediction =</span> <span class="kw">factor</span>(prediction, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;no gem&quot;</span>,<span class="st">&quot;gem&quot;</span>)))<span class="co"># verifique se nenhuma joia eh o primeiro nivel do nosso fator</span></span>
+<span id="cb134-5"><a href="regressão-logística-opcional.html#cb134-5"></a></span>
+<span id="cb134-6"><a href="regressão-logística-opcional.html#cb134-6"></a><span class="co"># Observando a tabela</span></span>
+<span id="cb134-7"><a href="regressão-logística-opcional.html#cb134-7"></a><span class="kw">table</span>(airbnb<span class="op">$</span>prediction,airbnb<span class="op">$</span>gem)</span></code></pre></div>
+<pre><code>##         
+##          no gem   gem
+##   no gem  11240   854
+##   gem      5231   326</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="regressão-linear.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="análise-básica-de-dados-analisando-dados-secundários.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rhozon/rparamkt/edit/master/03-AnaliseBasicadedados.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/rhozon/rparamkt/blob/master/03-AnaliseBasicadedados.Rmd",
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,847 @@
+# Análise básica de dados: analisando dados secundários {.unlisted .unnumbered}
+
+Neste capítulo, analisaremos os dados do Airbnb.com. A introdução tem mais informações sobre esses dados.
+
+## Dados {.unlisted .unnumbered}
+### Importação {.unlisted .unnumbered}
+
+Você pode baixar o conjunto de dados clicando com o botão direito do mouse [nesse link](http://users.telenet.be/samuelfranssens/tutorial_data/tomslee_airbnb_belgium_1454_2017-07-14.csv), selecionando “Salvar link como…” (ou algo semelhante) e salvando o arquivo .csv em um diretório no disco rígido. Como mencionado na introdução, é uma boa ideia salvar seu trabalho em um diretório que é automaticamente copiado pelo software de compartilhamento de arquivos. Vamos importar os dados:
+
+```{r}
+library(tidyverse)
+#setwd("c:/Dropbox/work/teaching/R/") # Ajusta seu diretorio de trabalho
+
+airbnb <- read.csv(file="http://users.telenet.be/samuelfranssens/tutorial_data/tomslee_airbnb_belgium_1454_2017-07-14.csv") %>% 
+  mutate(room_id = factor(room_id), host_id = factor(host_id)) %>% 
+  select(-country, -survey_id) %>% # dropa country & survey_id, veja a introdução de por que fazemos isso
+  rename(country = city, city = borough) # renomeia city & borough, veja a introdução de por que fazemos isso
+```
+Não se esqueça de salvar seu script no diretório de trabalho.
+
+### Manipulação {.unlisted .unnumbered}
+
+Se você abrir o quadro de dados do airbnb em uma guia do Visualizador, verá que os bathrooms e o minstay são colunas vazias e que o local e last\_modified não são muito informativos. Vamos remover estas variáveis:
+
+```{r}
+airbnb <- airbnb %>% 
+  select (-bathrooms, -minstay, -location, -last_modified)
+```
+
+
+Agora, dê uma olhada na variável overall\_satisfaction:
+
+```{r}
+# use head() para imprimir apenas os primeiros valores de um vetor, para evitar uma lista muito longa
+# tail() imprime apenas os últimos valores de um vetor
+head(airbnb$overall_satisfaction) 
+```
+
+
+A segunda classificação é zero. Provavelmente, isso significa que a classificação está faltando, em vez de ser realmente zero. Vamos substituir os valores zero na overall\_satisfaction por NA:
+
+```{r}
+airbnb <- airbnb %>% 
+  mutate(overall_satisfaction = replace(overall_satisfaction, overall_satisfaction == 0, NA)) 
+  
+# crie uma variavel "nova" overall_satisfaction que seja igual a overall_satisfaction com valores de NA em que overall_satisfaction seja igual a zero.
+
+# Digamos que desejassemos substituir NA por 0, entao o comando se tornaria: substitute(overall_satisfaction, is.na(overall_satisfaction), 0)
+# overall_satisfaction == NA nao funciona
+
+head(airbnb$overall_satisfaction)
+```
+
+### Mesclando datasets {.unlisted .unnumbered}
+
+Posteriormente, testaremos se o preço está relacionado a determinadas características dos tipos de quartos. As características potencialmente interessantes são: room\_type, city, reviews, overall\_satisfaction, etc. Para torná-lo ainda mais interessante, podemos aumentar os dados, por exemplo, com dados disponíveis publicamente nas cidades. Reuni os tamanhos de população das cidades belgas mais populosas [deste site](https://population.mongabay.com/population/belgium/). Faça o download desses dados [(aqui)](http://users.telenet.be/samuelfranssens/tutorial_data/population.xlsx) e importe-os para o R:
+
+```{r}
+#population <- read_excel("population.xlsx","data")
+
+
+library(readxl)
+
+url<-"http://users.telenet.be/samuelfranssens/tutorial_data/population.xlsx"
+population <- tempfile()
+download.file(url, population, mode="wb")
+population<-read_excel(path = population, sheet = 1)
+
+population
+```
+
+Agora, queremos vincular esses dados ao nosso quadro de dados do airbnb. Isso é muito fácil no R (mas é muito difícil, por exemplo, no Excel):
+
+```{r}
+airbnb.merged <- left_join(airbnb, population, by = c("city" = "place"))
+# o primeiro argumento eh o conjunto de dados que queremos aumentar
+# o segundo argumento eh onde encontramos os dados para aumentar o primeiro conjunto de dados com
+# o terceiro argumento sao as variaveis que usamos para vincular um conjunto de dados ao outro (cidade eh uma variavel no airbnb, local eh uma variavel na populacao)   
+```
+
+
+Confira as colunas mais relevantes do quadro de dados airbnb.merged:
+
+```{r}
+airbnb.merged %>% 
+  select(room_id, city, price, population)
+```
+
+
+Vemos que há uma population de colunas em nosso conjunto de dados airbnb.merged. Você também pode ver isso no painel Ambiente: airbnb.merged tem uma variável a mais que airbnb (mas o mesmo número de observações).
+
+Faltam dados para Bruxelas, no entanto. Isso ocorre porque Bruxelas está escrito em holandês no conjunto de dados airbnb, mas em inglês no conjunto de dados da population. 
+
+Vamos substituir Bruxelas por Bruxelas no conjunto de dados da population (e também alterar a ortografia de duas outras cidades) e vincular os dados novamente:
+
+
+```{r}
+population <- population %>% 
+  mutate(place = replace(place, place == "Brussels", "Brussel"),
+         place = replace(place, place == "Ostend", "Oostende"),
+         place = replace(place, place == "Mouscron", "Moeskroen"))
+
+airbnb.merged <- left_join(airbnb, population, by = c("city" = "place"))
+
+airbnb.merged %>% 
+  select(room_id, city, price, population)
+```
+
+### Recapitulando: importação e manipulação {.unlisted .unnumbered}
+
+Aqui está o que fizemos até agora, em uma sequência ordenada de operações pipe (faça o download dos dados [aqui](http://users.telenet.be/samuelfranssens/tutorial_data/tomslee_airbnb_belgium_1454_2017-07-14.csv) e [aqui](http://users.telenet.be/samuelfranssens/tutorial_data/population.xlsx):
+
+```{r}
+#library(tidyverse)
+#setwd("c:/Dropbox/work/teaching/R") # Configura seu diretorio de trabalho
+
+#airbnb <- read_csv("tomslee_airbnb_belgium_1454_2017-07-14.csv") %>% 
+  #mutate(room_id = factor(room_id), host_id = factor(host_id),
+   #      overall_satisfaction = replace(overall_satisfaction, overall_satisfaction == 0, NA)) %>% 
+#  select(-country, -survey_id,- bathrooms, -minstay, -location, -last_modified) %>% 
+#  rename(country = city, city = borough) 
+
+#population <- read_excel("population.xlsx","data") %>% 
+  #mutate(place = replace(place, place == "Brussels", "Brussel"),
+        # place = replace(place, place == "Ostend", "Oostende"),
+        # place = replace(place, place == "Mouscron", "Moeskroen"))
+
+#airbnb <- left_join(airbnb, population, by = c("city" = "place"))
+```
+
+### Amostras independentes: teste $t$ {.unlisted .unnumbered}
+
+Digamos que queremos testar se os preços diferem entre cidades grandes e pequenas. Para fazer isso, precisamos de uma variável que indique se um Airbnb está em uma cidade grande ou pequena. Na Bélgica, consideramos cidades com uma população de pelo menos cem mil como grande:
+
+```{r}
+
+
+
+airbnb <- airbnb.merged %>% 
+  mutate(large = population > 100000,
+        size = factor(large, labels = c("small","large")))
+
+# Nos poderiamos tambem ter escrito: mutate(size = factor(population > 100000, labels = c("small","large)))
+
+# observando a variavel populacao
+head(airbnb$population)
+
+# olhando a maior variavel
+head(airbnb$large)
+
+# e o tamanho da variavel
+head(airbnb$size)
+```
+
+
+No script acima, primeiro criamos uma variável lógica (esse é outro tipo de variável; discutimos outras aqui). Chamamos essa variável de grande e é TRUE quando a população é maior que 100000 e FALSE, se não. Depois, criamos um novo tamanho de variável que é a fatoração de grande porte. Observe que adicionamos outro argumento à função factor, ou seja, labels, para fornecer os valores large de nomes mais intuitivos. FALSE vem em primeiro lugar no alfabeto e obtém o primeiro rótulo pequeno, TRUE fica em segundo lugar no alfabeto e obtém o segundo rótulo grande.
+
+Para saber quais cidades são grandes e quais são pequenas, podemos solicitar frequências de combinações de tamanho (grande versus pequeno) e city (a própria cidade). Aprendemos como fazer isso no capítulo introdutório (consulte as tabelas de frequência e as estatísticas descritivas):
+
+```{r}
+airbnb %>% 
+  group_by(size, city) %>% 
+  summarize(count = n(), population = mean(population)) %>% # Cidades formam os grupos. Portanto, a populacao media de um grupo = a media de observacoes com a mesma populacao, porque elas vem da mesma cidade = a populacao da cidade
+  arrange(desc(size), desc(population)) %>% # maior cidade no topo
+  print (n = Inf) # mostra a distribuicao completa das frequencias
+```
+
+
+Vemos que algumas cidades têm um valor de NA para tamanho. Isso ocorre porque não temos população para essas cidades (e, portanto, também não sabemos se é uma cidade grande ou pequena). Vamos filtrar essas observações e verificar as médias e os desvios padrão de preço, dependendo do tamanho da cidade:
+
+```{r}
+airbnb.cities <- airbnb %>% 
+  filter(!is.na(population)) 
+# Filtre as observacoes para as quais nao temos a populacao.
+# O ponto de exclamacao deve ser lido como NAO. Entao, queremos manter as observacoes para as quais a populacao NAO eh NA.
+# Visite https://r4ds.had.co.nz/transform.html#filter-rows-with-filter para conhecer mais sobre operadores logicos (veja secao 5.2.2).
+
+airbnb.cities %>% 
+  group_by(size) %>% 
+  summarize(mean_price = mean(price),
+            sd_price = sd(price),
+            count = n())
+```
+
+Vemos que os preços são mais altos nas pequenas e nas grandes cidades, mas queremos saber se essa diferença é significativa. Um teste t de amostras independentes pode fornecer a resposta (as listagens nas grandes cidades e as listagens nas pequenas cidades são as amostras independentes), mas precisamos verificar primeiro uma suposição: as variâncias das duas amostras independentes são iguais?
+
+```{r}
+#install.packages(car) # Para o teste de igualdade de variancias precisaremos do pacote car.
+library(car)
+
+# Teste de Levene para variancias iguais 
+# Baixo valor p significa que as variancias nao sao iguais. 
+# Primeiro argumento = variavel dependente continua, segundo argumento = variavel independente categorica.
+
+leveneTest(airbnb.cities$price, airbnb.cities$size) 
+```
+
+
+A hipótese nula de variâncias iguais é rejeitada ($p <0,001$), portanto, devemos continuar com um teste $t$ que pressupõe variâncias desiguais:
+
+```{r}
+# Teste se os preços médios das cidades grandes e pequenas são diferentes.
+# Indique se o teste deve assumir variações iguais ou não (defina var.equal = TRUE para um teste que assume variações iguais).
+
+t.test(airbnb.cities$price ~ airbnb.cities$size, var.equal = FALSE)
+```
+
+Você pode relatar o seguinte: “As cidades grandes (M = 85,42, DP = 82,46) tinham um preço mais baixo ($t$ (5762,79) = 12,376, p $<$0,001, variação desigual assumida) do que as cidades pequenas (M = 110,31, DP = 121,63). ”
+
+### ANOVA univariada {.unlisted .unnumbered}
+
+Quando sua variável independente (categórica) possui apenas dois grupos, é possível testar se as médias da variável dependente (contínua) são significativamente diferentes ou não com um teste $t$. Quando sua variável independente possui mais de dois grupos, você pode testar se as médias são diferentes com uma ANOVA.
+
+Por exemplo, digamos que queremos testar se há uma diferença significativa entre os preços médios de casas e apartamentos inteiros, salas privadas e quartos compartilhados. Vamos dar uma olhada nos meios por tipo de quarto:
+
+```{r}
+airbnb.summary <- airbnb %>% 
+  group_by(room_type) %>% 
+  summarize(count = n(), # obtenha as frequencias dos diferentes tipos de quartos 
+            mean_price = mean(price), # o preco medio por tipo de quarto
+            sd_price = sd(price)) # e o desvio padrao do preco por tipo de quarto
+
+airbnb.summary
+```
+
+Também podemos traçar esses meios em um gráfico de barras:
+
+```{r}
+# Ao criar um grafico de barras, o conjunto de dados que serve como entrada para o ggplot eh o resumo com os meios, nao o conjunto de dados completo.
+# (Eh por isso que salvamos o resumo acima em um objeto airbnb.summary)
+
+ggplot(data = airbnb.summary, mapping = aes(x = room_type, y = mean_price)) + 
+  geom_bar(stat = "identity", position = "dodge")
+```
+
+Não é de surpreender que casas ou apartamentos inteiros tenham preços mais altos do que quartos particulares, que, por sua vez, têm preços mais altos que quartos compartilhados. Também vemos que há quase o dobro de casas e apartamentos inteiros do que quartos privativos disponíveis e quase não há quartos compartilhados disponíveis. Além disso, o desvio padrão é muito mais alto na categoria de casas ou apartamentos inteiros do que nas categorias de quarto particular ou compartilhado.
+
+Uma ANOVA pode testar se há diferenças significativas nos preços médios por tipo de quarto. Porém, antes de executar uma ANOVA, precisamos verificar se as premissas da ANOVA são atendidas.
+
+### Suposição de normalidade de resíduos {.unlisted .unnumbered}
+
+
+A primeira suposição é que a variável dependente (price) é normalmente distribuída em cada nível da variável independente (room\_type). Primeiro, vamos inspecionar visualmente se essa suposição será válida:
+
+```{r}
+# Ao criar um histograma, o conjunto de dados que serve como entrada para o ggplot eh o conjunto de dados completo, nao o resumo com os meios
+
+ggplot(data = airbnb, mapping = aes(x = price)) + # Queremos price no eixo x.
+  facet_wrap(~ room_type) + # Queremos que isso seja dividido por room_type.
+  #facet_wrap garantira que o ggplot crie paineis diferentes no seu gráfico.
+  geom_histogram() # geom_histogram garante que as frequencias dos valores no eixo X sejam plotadas.
+  ## `stat_bin()` using `bins = 30`. Pega o melhor valor com `binwidth`.
+```
+
+
+Vemos que há inclinação correta para cada tipo de quarto. Também podemos testar formalmente, dentro de cada tipo de quarto, se as distribuições são normais com o teste Shapiro-Wilk. Por exemplo, para as quartos compartilhados:
+
+```{r}
+airbnb.shared <- airbnb %>% 
+  filter(room_type == "Shared room") # reter dados apenas das salas compartilhadas
+
+shapiro.test(airbnb.shared$price)
+```
+
+O valor-$p$ deste teste é extremamente pequeno, portanto a hipótese nula de que a amostra provém de uma distribuição normal deve ser rejeitada. Se tentarmos o teste Shapiro-Wilk para os quartos privados:
+
+```{r}
+airbnb.private <- airbnb %>% 
+  filter(room_type == "Private room") # armazenar dados apenas dos quartos compartilhados
+  
+#shapiro.test(airbnb.private$price)
+
+## Error in shapiro.test(airbnb.private$price): sample size must be between 3 and 5000
+```
+
+Ocorreu um erro ao dizer que o tamanho da amostra é muito grande. Para contornar esse problema, podemos tentar o teste Anderson-Darling do pacote nortest:
+
+```{r}
+#install.packages("nortest")
+library(nortest)
+ad.test(airbnb.private$price)
+```
+
+Mais uma vez, rejeitamos a hipótese nula de normalidade. Deixo como exercício para testar a normalidade dos preços de casas e apartamentos inteiros.
+
+Agora que sabemos que a suposição de normalidade é violada, o que podemos fazer? Podemos considerar transformar nossa variável dependente com uma transformação de log:
+
+```{r}
+ggplot(data=airbnb, mapping=aes(x=log(price, base = exp (1)))) + # Queremos o preco transformado em log no eixo X.
+ facet_wrap(~ room_type) + # Queremos que isso seja dividido por room_type. Facet_wrap garantira que o ggplot crie paineis diferentes no seu grafico.
+ geom_histogram() # geom_histogram garante que as frequencias dos valores no eixo X sejam plotadas.
+```
+
+Como você pode ver, uma transformação de log normaliza uma distribuição inclinada à direita. Poderíamos então executar a ANOVA na variável dependente transformada em log. No entanto, na realidade, muitas vezes é seguro ignorar violações da suposição de normalidade (a menos que você esteja lidando com pequenas amostras, o que nós não somos). Vamos simplesmente continuar com o preço não transformado como variável dependente.
+
+
+
+### Suposição: homogeneidade de variâncias {.unlisted .unnumbered}
+
+Uma segunda suposição que precisamos verificar é se as variações de nosso preço variável dependente são iguais nas categorias de nossa variável independente room\_type. Normalmente, um gráfico boxplot é informativo:
+
+```{r}
+ggplot(data = airbnb, mapping = aes(x = room_type, y = price)) + 
+  geom_boxplot()
+```
+
+
+Mas, neste caso, os intervalos interquartis (as alturas das caixas), que normalmente nos dariam uma idéia da variação dentro de cada tipo de quarto, são muito estreitos. Isso ocorre porque o intervalo de valores Y a ser plotado é muito amplo devido a alguns valores extremos. Se observarmos os desvios padrão, porém, veremos que estes são muito maiores para todos as salas e apartamentos do que para os quartos privativo e compartilhado:
+
+```{r}
+airbnb %>% 
+  group_by(room_type) %>% 
+  summarize(count = n(), # obtenha as frequencias dos diferentes tipos de quartos
+            mean_price = mean(price), # o preco medio por tipo de quarto
+            sd_price = sd(price)) # e o desvio padrao do preco por tipo de quarto
+```
+
+Também podemos realizar um teste formal de homogeneidade de variâncias. Para isso, precisamos da função leveneTest do pacote car:
+
+```{r}
+#install.packages("car") # Para o teste de variancias iguais, precisamos de um pacote chamado car. Instalamos isso antes, portanto, nao eh necessario reinstala-lo se voce ja o tiver feito.
+
+library(car)
+
+#Teste de Levene de variancias iguais.
+# Valor baixo de p significa que as variancias nao sao iguais.
+# Primeiro argumento = variavel dependente continua, segundo argumento = variavel independente categorica.
+
+leveneTest(airbnb$price, airbnb$room_type) 
+```
+
+Como o valor $p$ é extremamente pequeno, rejeitamos a hipótese nula de variâncias iguais. Assim como no pressuposto da normalidade, as violações do pressuposto de variâncias iguais podem, no entanto, ser frequentemente ignoradas e o faremos neste caso.
+
+### ANOVA {.unlisted .unnumbered}
+
+Para realizar uma ANOVA, precisamos instalar alguns pacotes:
+
+```{r}
+#install.packages(remotes) #O pacote de controles remotos nos permite instalar pacotes armazenados no GitHub, um site para desenvolvedores de pacotes. 
+#install.packages("car") #Também precisaremos do pacote do carro para executar a ANOVA (não é necessário reinstalá-lo se você já tiver feito isso).
+
+library(remotes)
+install_github('samuelfranssens/type3anova') # Instala o pacote type3anova. Esta e as etapas anteriores precisam ser executadas apenas uma vez.
+
+library(type3anova) # Carregue o pacote type3anova.
+```
+
+Agora podemos prosseguir com a ANOVA verdadeira:
+
+```{r}
+# Primeiro cria um modelo linear
+# A formula lm() toma os argumentos de dados 
+# A fórmula tem a seguinte sintaxe: variável dependente ~ variável (s) independente
+
+linearmodel <- lm(price ~ room_type, data=airbnb) 
+
+# Em seguida, peça a saída no formato ANOVA. Isso fornece a soma dos quadrados do Tipo III. 
+# Observe que isso é diferente da anova (modelo linear), que fornece a soma dos quadrados do tipo I.
+
+type3anova(linearmodel) 
+```
+
+
+Nesse caso, o valor-p associado ao efeito de room\_type é praticamente 0, o que significa que rejeitamos a hipótese nula de que o preço médio é igual para cada room\_type. Você pode relatar o seguinte: “Houve diferenças significativas entre os preços médios das diferentes tipos de salas ($F (2, 17648) = 533,57, p <0,001$).”
+
+
+
+### Teste de Tuckey de diferença significativa verdadeira {.unlisted .unnumbered}
+
+Observe que a ANOVA testa a hipótese nula de que as médias em todos os nossos grupos são iguais. A rejeição desta hipótese nula significa que há uma diferença significativa em pelo menos um dos possíveis pares de médias (ou seja, em casa / apartamento inteiro vs. privado e / ou em casa / apartamento inteiro vs. compartilhado e / ou privado) vs. compartilhado). Para ter uma idéia de qual par de médias contém uma diferença significativa, podemos acompanhar o teste de Tukey, que nos dará todas as comparações pareadas.
+
+
+O teste de Tukey corrige os valores de p para cima - portanto, é mais conservador decidir que algo é significativo - porque as comparações são post-hoc ou exploratórias:
+
+```{r}
+TukeyHSD(aov(price ~ room_type, data=airbnb), 
+         "room_type") # O primeiro argumento eh um objeto "aov", o segundo eh a nossa variavel independente.
+```
+
+Isso nos mostra que não há diferença significativa no preço médio de quartos compartilhados e privados, mas que quartos compartilhados e quartos particulares diferem significativamente de casas e apartamentos inteiros.
+
+
+# Regressão Linear {.unlisted .unnumbered}
+
+## Regressão Linear Simples {.unlisted .unnumbered}
+
+Digamos que desejamos prever o preço com base em várias características do quarto. Vamos começar com um caso simples em que prevemos preço com base em um preditor: overal\_satisfaction (satisfação geral). A satisfação geral é a classificação que uma listagem recebe no airbnb.com. Vamos fazer um gráfico de dispersão primeiro:
+
+```{r}
+ggplot(data = airbnb, mapping = aes(x = overall_satisfaction, y = price)) +
+  geom_jitter() # jitter em vez de pontos, caso contrario, muitos pontos sao desenhados um sobre o outro
+```
+
+
+
+(Recebemos uma mensagem de erro informando que várias linhas foram removidas. Essas são as linhas com valores ausentes para a overall\_satisfaction, portanto, não há necessidade de se preocupar com essa mensagem de erro. Consulte as [manipulações de dados) para saber por que faltam valores para a overall\_satisfaction.](https://bookdown.org/content/1340/data.html#modelling_manipulations)
+
+
+Os outliers de preço reduzem a informatividade do gráfico, portanto, vamos transformar a variável price. Também vamos adicionar alguns meios ao gráfico, como aprendemos [aqui](https://bookdown.org/content/1340/graphs.html#graphs), e uma linha de regressão:
+
+```{r}
+ggplot(data = airbnb, mapping = aes(x = overall_satisfaction, y = log(price, base = exp(1)))) +
+  geom_jitter() + # jitter em vez de pontos, caso contrario, muitos pontos sao desenhados um sobre o outro
+  stat_summary(fun.y=mean, colour="green", size = 4, geom="point", shape = 23, fill = "green") + # medias
+  stat_smooth(method = "lm", se=FALSE) # reta de regressao
+```
+
+Vemos que o preço tende a aumentar um pouco com maior satisfação. Para testar se a relação entre preço e satisfação é realmente significativa, podemos realizar uma regressão simples (simples refere-se ao fato de haver apenas um preditor):
+
+```{r}
+linearmodel <- lm(price ~ overall_satisfaction, data = airbnb) # criamos um modelo linear. O primeiro argumento eh o modelo que assume a forma de variavel dependente - variavel (s) independente (s). O segundo argumento sao os dados que devemos considerar.
+
+summary(linearmodel) # solicite um resumo dos resultados desse modelo linear
+```
+
+
+Vemos dois parâmetros neste modelo:
+
+
+- $\beta_{0}$ ou intercepto (29.75)
+- $\beta_{1}$ inclinação de overral\_satisfaction (12.35)
+
+
+Esses parâmetros têm as seguintes interpretações. A interceptação ($\beta_{0}$) é o preço estimado para uma observação com satisfação geral igual a zero. A inclinação ($\beta_{1}$) é o aumento estimado do preço para cada aumento na satisfação geral. Isso determina a inclinação da linha de regressão ajustada no gráfico. Portanto, para uma listagem com uma satisfação geral de, por exemplo, 3,5, o preço estimado é 29,75 + 3,5× 12,35 = 72,98.
+
+A inclinação é positiva e significativa. Você pode relatar o seguinte: “Havia uma relação significativamente positiva entre preço e satisfação geral ($\beta = 12,35$, t (10585) = 6,63, $p <$0,001). "
+
+Na saída, também obtemos informações sobre o modelo geral.
+
+O modelo vem com um valor F de 43,9 com 1 grau de liberdade no numerador e 10585 graus de liberdade no denominador. Essa estatística F nos diz se nosso modelo com um preditor (overall\_satisfaction) prediz a variável dependente (price) melhor do que um modelo sem preditores (o que simplesmente preveria a média do preço para todos os níveis de satisfação geral). Os graus de liberdade nos permitem encontrar o valor $p$ correspondente ($<$0,001) da estatística F (43,9). Os graus de liberdade no numerador são iguais ao número de preditores em nosso modelo. Os graus de liberdade no denominador são iguais ao número de observações menos o número de preditores menos um. Lembre-se de que temos 10587 observações para as quais temos valores para price e overall\_satisfaction. Como o valor $p$ é menor que 0,05, rejeitamos a hipótese nula de que nosso modelo não prediz melhor a variável dependente do que um modelo sem preditores. Observe que, no caso de regressão linear simples, o valor p do modelo corresponde ao valor $p$ do preditor único. Para modelos com mais preditores, não existe essa correspondência.
+
+Por fim, observe também a estatística do R quadrado do modelo. Esta estatística é igual a 0,004. Essa estatística nos diz quanto da variação na variável dependente é explicada por nossos preditores. Quanto mais preditores você adicionar a um modelo, maior será o R quadrado.
+
+## Correlação {.unlisted .unnumbered}
+
+Observe que na regressão linear simples, a inclinação do preditor é uma função da correlação entre o preditor e a variável dependente. Podemos calcular a correlação da seguinte maneira:
+
+```{r}
+# Certifique-se de incluir o argumento use, caso contrario, o resultado sera NA devido aos valores ausentes na overall_satisfaction.
+# O argumento use instrui o R para calcular a correlacao com base apenas nas observacoes para as quais temos dados sobre price e overall_satisfaction.
+
+cor(airbnb$price, airbnb$overall_satisfaction, use = "pairwise.complete.obs")
+```
+
+Vemos que a correlação é positiva, mas muito baixa (r = 0,064).
+
+Elevando ao quadrado essa correlação, você obterá o R quadrado de um modelo com apenas esse preditor (0,064 × 0,064 = 0,004).
+
+Ao lidar com múltiplos preditores (como na próxima seção), podemos gerar uma matriz de correlação. Isso é especialmente útil ao verificar a multicolinearidade. Digamos que desejamos que as correlações entre, price, overall\_satisfaction, reviews, accommodates:
+
+```{r}
+airbnb.corr <- airbnb%>%
+   filter(! is.na (overall_satisfaction))%>% # caso contrario, você vera NAs no resultado
+   select(price, overall_satisfaction, reviews, accommodates)
+
+cor(airbnb.corr) # obter a matriz de correlacao
+
+cor(airbnb.corr) # obtenha a matriz de correlacao
+```
+
+Você pode visualizar facilmente essa matriz de correlação:
+
+```{r}
+#install.packages(corrplot) # instala e carrega o pacote corrplot
+library(corrplot)
+
+corrplot(cor(airbnb.corr), method = "number", type = "lower", bg = "grey") # apresente numa tabela
+```
+
+
+As cores das correlações dependem de seus valores absolutos.
+
+Você também pode obter valores de p para as correlações ($p <0,05$ indica que a correlação difere significativamente de zero):
+
+
+```{r}
+# O comando para os valores-p eh cor.mtest(airbnb.corr)
+# Mas queremos apenas os valores-p, portanto $ p
+# E arredondamos para cinco digitos, portanto arredondamos (, 5)
+
+round(cor.mtest(airbnb.corr)$p, 5) 
+```
+
+## Regressão linear múltipla, com interação {.unlisted .unnumbered}
+
+Frequentemente, estamos interessados em interações entre preditores (por exemplo, overall\_satisfaction e reviews). Uma interação entre preditores nos diz que o efeito de um preditor depende do nível do outro preditor:
+
+
+```{r}
+# overall_satisfaction + reviews: a interacao nao eh incluida como preditor
+# overall_satisfaction * reviews: a interacao entre os dois preditores eh incluida como preditora
+
+summary(lm(formula = price ~ overall_satisfaction * reviews, data = airbnb))
+```
+
+Com esse modelo, preço estimado = $\beta_{0} + \beta_{1}\mbox{\textit{overall\_satisfaction}} + \beta_{2}reviews + \beta_{3}\mbox{\textit{overall\_satisfaction}} × reviews$, em que:
+
+
+- $\beta_{0}$ é o intercepto (48.77)
+- controlando todas as outras variáveis em nosso modelo
+- $\beta_{2}$ representa a relação entre revisões e preço (-0.99), controlando todas as outras variáveis em nosso modelo
+- $\beta_{3}$ é a interação entre satisfação geral e revisões (0.19)
+
+
+Para um determinado nível de reviews, o relacionamento entre overall\_satisfaction e price pode ser reescrito como:
+
+$$
+=[\beta_{0}+\beta_{2}\mbox{reviews}]+(\beta_{1}+\beta_{3}\mbox{reviews})\times\,\,\mbox{overall_satisfaction}
+$$
+
+Vemos que tanto a interceptação ($\beta_{0}+\beta_{2}reviews$) e a inclinação ($\beta_{1}+\beta_{3}reviews$) a relação entre overall\_satisfaction} e price} depende de reviews}. No modelo sem interações, apenas a interceptação da relação entre overall\_satisfaction e price dependia de reviews. Como adicionamos ao nosso modelo uma interação entre a overall\_satisfaction e o reviews, a inclinação agora também depende de reviews.
+
+Da mesma forma, para um determinado nível de overall\_satisfaction, o relacionamento entre reviews e price pode ser reescrito como:
+
+$$
+=[\beta_{0}+\beta_{1}\mbox{overall_satisfaction}]+(\beta_{2}+\beta_{3}\mbox{overall_satisfaction})\times\,\,\mbox{reviews}
+$$
+
+Aqui também vemos que tanto a interceptação quanto a inclinação da relação entre revisões (reviews) e preço (price) dependem da satisfação geral (overall\_satisfaction).
+
+Como dito, quando o relacionamento entre uma variável independente e uma variável dependente depende do nível de outra variável independente, temos uma interação entre as duas variáveis independentes. Para esses dados, a interação é altamente significativa ($p <0,001$). Vamos visualizar essa interação. Nós nos concentramos na relação entre satisfação geral e preço. Planejaremos isso para um nível de comentários que possa ser considerado baixo, médio e alto:
+
+```{r}
+airbnb %>% 
+  filter(!is.na(overall_satisfaction)) %>% 
+  summarize(min = min(reviews),
+            Q1 = quantile(reviews, .25), # primeiro quartil
+            Q2 = quantile(reviews, .50), # segundo quartil ou mediana
+            Q3 = quantile(reviews, .75), # terceiro quartil
+            max = max(reviews),
+            mean = mean(reviews))
+```
+
+
+e crie grupos com base nesses números:
+
+```{r}
+airbnb.reviews <- airbnb %>% 
+  filter(!is.na(overall_satisfaction)) %>% 
+  mutate(review_group = case_when(reviews <= quantile(reviews, .33) ~ "low",
+                                  reviews <= quantile(reviews, .66) ~ "medium",
+                                  TRUE                              ~ "high"),
+         review_group = factor(review_group, levels = c("low","medium","high")))
+```
+
+Por isso, pedimos ao R para criar uma nova variável review\_group que deve ser igual a "low" quando o número de revisões for menor ou igual ao 33º percentil, "medium" quando o número de revisões for menor ou igual ao 66º percentil e "high", caso contrário. Depois, fatoramos a variável review\_group recém-criada e fornecemos um novo argumento, levels, que especifica a ordem dos níveis dos fatores (caso contrário, a ordem seria alfabética: alta, baixa, média). Vamos verificar se o agrupamento foi bem-sucedido:
+
+```{r}
+# checagem:
+airbnb.reviews %>% 
+  group_by(review_group) %>% 
+  summarize(min = min(reviews), max = max(reviews))
+```
+
+
+De fato, o número máximo de revisões em cada grupo corresponde aos pontos de corte definidos acima. Agora, podemos solicitar a R um gráfico da relação entre overall\_satisfaction e price para os três níveis de revisão:
+
+
+```{r}
+ggplot(data = airbnb.reviews, mapping = aes(x = overall_satisfaction, y = log(price, base = exp(1)))) + # transformacao log de preco
+  facet_wrap(~ review_group) + # peca paineis diferentes para cada grupo de revisao
+  geom_jitter() +
+  stat_smooth(method = "lm", se = FALSE)
+```
+
+
+Vemos que a relação entre overall\_satisfaction e price é sempre positiva, mas é mais positiva para listagens com muitas críticas do que para listagens com poucas críticas. Pode haver muitas razões para isso. Talvez seja o caso de listagens com críticas positivas aumentarem o preço, mas somente depois de receberem uma certa quantidade de críticas.
+
+Também vemos que as listagens com muitas avaliações quase nunca têm uma classificação de satisfação menor que 3. Isso faz sentido, porque é difícil continuar atraindo pessoas quando a classificação de uma listagem é baixa. Listas com poucas críticas tendem a ter baixos índices de satisfação geral.
+
+Portanto, parece que nossos preditores estão correlacionados: quanto mais avaliações uma listagem tiver, maior será seu índice de satisfação. Isso potencialmente apresenta um problema que discutiremos em uma das próximas seções sobre [multicolinearidade](https://bookdown.org/content/1340/linear-regression.html#multicollinearity)
+
+
+## Premissas {.unlisted .unnumbered}
+
+Antes de tirar conclusões de uma análise de regressão, é preciso verificar várias suposições. Essas premissas devem ser atendidas independentemente do número de preditores no modelo, mas continuaremos com o caso de dois preditores.
+
+## Normalidade de resíduos {.unlisted .unnumbered}
+
+Os resíduos (a diferença entre os valores observados e os estimados) devem ser normalmente distribuídos. Podemos inspecionar visualmente os resíduos:
+
+```{r}
+linearmodel <- lm(price ~ overall_satisfaction * reviews, data = airbnb)
+residuals <- as_tibble(resid(linearmodel))  
+
+#Atenção: Chamar `as_tibble ()` em um vetor eh desencorajado, porque eh provavel que o comportamento mude no futuro. Use `enframe (name = NULL)` em seu lugar.
+## Este aviso eh exibido uma vez por sessao.
+
+# veja os residuos do modelo linear com resid(linearmodel) 
+# e mude isso em seu dataframe com as_tibble()
+
+ggplot(data = residuals, mapping = aes(x = value)) + 
+  geom_histogram()
+```
+
+## Homocedasticidade de resíduos {.unlisted .unnumbered}
+
+Os resíduos (a diferença entre os valores observados e os estimados) devem ter uma variação constante. Podemos verificar isso plotando os resíduos versus os valores previstos:
+
+```{r}
+linearmodel <- lm(price ~ overall_satisfaction * reviews, data = airbnb)
+
+ # cria um dataframe (a tibble)
+residuals_predicted <- tibble(residuals = resid(linearmodel), # a primeira variavel são residuos, que sao os residuos do nosso modelo linear
+                              predicted = predict(linearmodel)) # a segunda variavel eh prevista, quais sao os valores previstos do nosso modelo linear
+
+ggplot(data = residuals_predicted, mapping = aes(x = predicted, y = residuals)) + 
+  geom_point()
+```
+
+Essa suposição é violada porque, quanto maiores nossos valores previstos, maior a variação que vemos nos resíduos.
+
+
+## Multicolinearidade {.unlisted .unnumbered}
+
+A multicolinearidade existe sempre que dois ou mais dos preditores em um modelo de regressão são moderadamente ou altamente correlacionados (portanto, é claro que isso não é um problema no caso de regressão simples). Vamos testar a correlação entre overall\_satisfaction e reviews:
+
+```{r}
+# Certifique-se de incluir o argumento use, caso contrario, o resultado sera NA devido aos valores ausentes no overall_satisfaction.
+# O argumento use instrui o R para calcular a correlacao com base apenas nas observacoes para as quais temos dados sobre price e overall_satisfaction.
+
+cor.test(airbnb$overall_satisfaction,airbnb$reviews, use = "pairwise.complete.obs") # teste para correlacao
+```
+
+Nossos preditores são de fato significativamente correlacionados ($p <$0,001), mas a correlação é realmente baixa (0,03). Ao lidar com mais de dois preditores, é uma boa idéia criar uma matriz de correlação.
+
+O problema da multicolinearidade é que ela infla os erros padrão dos coeficientes de regressão. Como resultado, os testes de significância desses coeficientes terão mais dificuldade em rejeitar a hipótese nula. Podemos facilmente ter uma idéia do grau em que os coeficientes são inflados. Para ilustrar isso, vamos estimar um modelo com preditores correlacionados: acomodações (accommodates) e preço (price) ($r = 0,56$).
+
+```{r}
+linearmodel <- lm(overall_satisfaction ~  accommodates * price, data = airbnb)
+summary(linearmodel)
+```
+
+Vemos que todos os preditores são significativos. Vamos dar uma olhada nos fatores de inflação da variância:
+
+```{r}
+library(car) # a funcao vif eh do pacote cars
+
+vif(linearmodel)
+```
+Os fatores VIF informam até que ponto os erros padrão são inflados. Uma regra prática é que VIFs de 5 e acima indicam inflação significativa.
+
+## Teste $\chi^{2}$ {.unlisted .unnumbered}
+
+Suponha que tenhamos interesse em encontrar uma verdadeira jóia (gem) de uma lista. Por exemplo, estamos interessados em listagens com uma classificação de 5 em 5 e pelo menos 30 avaliações:
+
+```{r}
+airbnb <- airbnb %>% 
+  mutate(gem = (overall_satisfaction == 5 & reviews>=30), # duas condicoes devem ser atendidas antes de dizer que uma listagem eh uma joia
+         gem = factor(gem, labels = c("no gem","gem")))  # de a variavel logica rotulos mais intuitivos
+```
+
+Agora, digamos que estamos interessados em saber se é mais provável encontrar "jóias" (gem) em cidades pequenas ou grandes (criamos a variável de tamanho aqui). O teste do qui-quadrado pode fornecer uma resposta a essa pergunta testando a hipótese nula de não haver relação entre duas variáveis categóricas (tamanho da cidade:  large vs. small \& gem: yes vs. no). 
+
+Ele compara a tabela de frequências observada com a tabela de frequências que você esperaria quando não houvesse relação entre as duas variáveis. Quanto mais as tabelas de frequência observada e esperada divergem, maior a estatística qui-quadrado, menor o valor de p e menos provável é que as duas variáveis não sejam relacionadas.
+
+Antes de realizarmos um teste qui-quadrado, lembre-se de que algumas cidades têm um valor em falta para o tamanho porque têm um valor em falta para a population. Vamos filtrar isso primeiro:
+
+```{r}
+airbnb.cities <- airbnb %>% 
+  filter(!is.na(size)) 
+
+# queremos apenas aquelas observacoes em que tamanho nao eh NA. ! significa 'nao'
+# veja https://r4ds.had.co.nz/transform.html#filter-rows-with-filter para mais funcoes logicas (desca ate a secao 5.2.2)
+```
+
+Agora, imprima as frequências do tamanho da cidade e combinações de gems:
+
+```{r}
+airbnb.cities %>% 
+  group_by(size, gem) %>% 
+  summarize(count = n())
+```
+
+Esta informação está correta, mas o formato em que a tabela é apresentada é um pouco incomum. Gostaríamos de ter uma variável como linhas e a outra como colunas:
+
+```{r}
+table(airbnb.cities$size, airbnb.cities$gem)
+```
+
+
+Isso é um pouco mais fácil de interpretar. Uma tabela como essa é frequentemente chamada de tabela cruzada. É fácil pedir porcentagens em vez de contagens:
+
+```{r}
+crosstable <- table(airbnb.cities$size, airbnb.cities$gem) #Precisamos salvar a tabela cruzada primeiro.
+
+prop.table(crosstable) # Use a funcao prop.table () para solicitar porcentagens.
+```
+
+
+Com base nessas frequências ou porcentagens, não devemos esperar uma forte relação entre size e gem. Vamos realizar o teste do qui-quadrado para testar nossa intuição:
+
+```{r}
+chisq.test(crosstable)
+```
+
+O valor da estatística qui é 74,35 e o valor p é praticamente 0, por isso rejeitamos a hipótese nula de nenhum relacionamento. Não é o que esperávamos, mas o valor p é baixo porque nossa amostra é bastante grande (15966 observações). 
+
+Você pode relatar o seguinte: “Havia uma relação significativa entre o tamanho da cidade e se uma listagem era ou não uma jóia ($\chi^{2} (1, N = 15966) = 74,35, p <0,001$), de modo que as cidades grandes (8,05\%) tinham uma porcentagem maior de jóias (raridades) do que as cidades pequenas (4,1\%). 
+
+# Regressão Logística (opcional) {.unlisted .unnumbered}
+
+
+Às vezes, queremos prever uma variável dependente binária, ou seja, uma variável que pode assumir apenas dois valores, com base em várias variáveis independentes contínuas ou categóricas. Por exemplo, digamos que estamos interessados em testar se uma listagem é ou não uma jóia depende do preço e do tipo de quarto da listagem.
+
+Não podemos usar ANOVA ou regressão linear aqui porque a variável dependente é uma variável binária e, portanto, normalmente não é distribuída. Outro problema com a ANOVA ou regressão linear é que ela pode prever valores que não são possíveis (por exemplo, nosso valor previsto pode ser 5, mas apenas 0 e 1 fazem sentido para essa variável dependente). Portanto, usaremos regressão logística. A regressão logística primeiro transforma a variável dependente Y com a transformação do logit. A transformação do logit usa o logaritmo natural das chances de que a variável dependente seja igual a 1:
+
+$$
+probabilidades=\displaystyle\frac{P(Y=1)}{P(Y=0}=\displaystyle\frac{P(Y=1)}{1-P(Y=1)}
+$$
+
+então o logit $P(Y=1))=\ln\displaystyle\frac{P(Y-1)}{1-P(Y=1)}$
+
+Isso garante que nossa variável dependente seja normalmente distribuída e não seja restrita a ser 0 ou 1.Isso garante que nossa variável dependente seja normalmente distribuída e não seja restrita a ser 0 ou 1.
+
+Vamos realizar a regressão logística:
+
+```{r}
+logistic.model <- glm(gem ~ price * room_type, data=airbnb, family="binomial") # o argumento family = "binomial" diz R para tratar a variavel dependente como uma variavel 0/1
+summary(logistic.model) # saida da regressao
+```
+
+Vemos que o único preditor marginalmente significativo de uma listagem ser ou não uma jóia é o preço da listagem. Você pode relatar o seguinte: “Controlando o tipo de quarto e a interação entre preço e tipo de quarto, havia uma relação negativa marginalmente significativa entre o preço e a probabilidade de uma listagem ser uma jóia ($\beta$ = -0.0007185, $\chi$ (17645) = -1,783, p = 0,075). 
+
+A interpretação dos coeficientes de regressão na regressão logística é diferente da do caso da regressão linear:
+
+```{r}
+summary(logistic.model)
+```
+
+O coeficiente de regressão do preço é -0.0007185. Isso significa que um aumento de uma unidade no preço levará a um aumento de -0.0007185 nas chances de log de joia ser igual a 1 (ou seja, de uma listagem sendo uma joia). Por exemplo:
+
+$$
+\textrm{logit}(P(Y = 1 | \textrm{price} = 60 )) = \textrm{logit}(P(Y = 1 | \textrm{price} = 59 )) - 0.0007185
+$$
+
+$$
+\mbox{logit}(P(Y = 1 | \mbox{price} = 60 )) = \mbox{logit}(P(Y = 1 | \mbox{price} = 59 )) - 0.0007185
+$$
+$$
+\Leftrightarrow \textrm{logit}(P(Y = 1 | \textrm{price} = 60 )) - \textrm{logit}(P(Y = 1 | \textrm{price} = 59 )) = -0.0007185
+$$
+$$
+\Leftrightarrow \textrm{ln(probs}(P(Y = 1 | \textrm{price} = 60 )) - \textrm{ln(probs}(P(Y = 1 | \textrm{price} = 59 )) = -0.0007185
+$$
+$$
+\Leftrightarrow \textrm{ln}(\dfrac{ \textrm{probs}(P(Y = 1 | \textrm{price} = 60 )}{\textrm{probs}(P(Y = 1 | \textrm{price} = 59 )}) = -0.0007185
+$$
+
+$$
+\Leftrightarrow \dfrac{ \textrm{probs}(P(Y = 1 | \textrm{price} = 60 )}{\textrm{probs}(P(Y = 1 | \textrm{price} = 59 )} = e^{-0.0007185}
+$$
+$$
+\Leftrightarrow \textrm{probs}(P(Y = 1 | \textrm{price} = 60 ) = e^{-0.0007185} * \textrm{probs}(P(Y = 1 | \textrm{price} = 59 )
+$$
+
+
+
+Assim, o coeficiente de regressão em uma regressão logística deve ser interpretado como o aumento relativo nas chances da variável dependente ser igual a 1, para cada aumento de unidade no preditor, controlando todos os outros fatores em nosso modelo. Nesse caso, as probabilidades de uma listagem ser uma gema devem ser multiplicadas por $ e ^ {0,0007185} = 0,999 $ ou diminuídas em 0,1\%, para cada aumento de preço unitário. Em outras palavras, listagens mais caras têm menos probabilidade de serem jóias. No exemplo específico acima, as chances de ser uma joia de uma listagem com preço de 60 são $e^{(-0.0007185×5)}= 0,996$ vezes a chance de ser uma jóia de uma listagem com preço de 59.
+
+## Medindo o ajuste de uma regressão logística: porcentagem classificada corretamente {.unlisted .unnumbered}
+
+
+Nosso modelo usa o preço e o tipo de quarto da listagem para prever se a listagem é uma joia ou não. Ao fazer previsões, é natural nos perguntarmos se nossas previsões são boas. Em outras palavras, usando preço e tipo de quarto, com que frequência prevemos corretamente se uma listagem é uma jóia ou não? Para ter uma idéia da qualidade de nossas previsões, podemos pegar o preço e o tipo de quarto das listagens em nosso conjunto de dados, prever se as listagens são gemas e comparar nossas previsões com o status real da gema das listagens. Vamos primeiro fazer as previsões:
+
+```{r}
+airbnb <- airbnb %>% 
+  mutate(prediction = predict(logistic.model, airbnb))
+# Crie uma nova coluna chamada previsao no quadro de dados do airbnb e armazene nela a previsao,
+# baseado em logistic.model, para os dados do airbnb
+# De uma olhada nessas previsoes:
+head(airbnb$prediction)
+# Compare com as observacoes:
+head(airbnb$gem)
+
+```
+
+
+
+
+Você vê o problema? As previsões são logits, ou seja, logaritmos de chances de que as listagens sejam gemas, mas as observações simplesmente nos dizem se uma listagem é uma gema ou não. Para uma comparação significativa entre previsões e observações, precisamos transformar os logits em uma decisão: gema ou não gema. É fácil transformar logits em probabilidades usando o exponencial do logit. A relação entre probabilidades e probabilidades é a seguinte:
+
+$$
+\textrm{probs} = \dfrac{P(Y = 1)}{P(Y = 0)} = \dfrac{P(Y = 1)}{1 - P(Y = 1)}
+$$
+$$
+\Leftrightarrow \dfrac{probs}{1 + \dfrac{P(Y = 1)}{1 - P(Y = 1)}} = \dfrac{\dfrac{P(Y = 1)}{1 - P(Y = 1)}}{1 + \dfrac{P(Y = 1)}{1 - P(Y = 1)}}
+$$
+
+$$
+\Leftrightarrow \dfrac{probs}{1 + probs} = \dfrac{\dfrac{P(Y = 1)}{1 - P(Y = 1)}}{\dfrac{1 - P(Y = 1) + P(Y = 1)}{1 - P(Y = 1)}}
+$$
+
+$$
+\Leftrightarrow \dfrac{probs}{1 + probs} = \dfrac{P(Y = 1)}{1 - P(Y = 1) + P(Y = 1)}
+$$
+$$
+\Leftrightarrow \dfrac{probs}{1 + probs} = P(Y = 1)
+$$
+Agora vamos calcular, para cada listagem, a probabilidade de a listagem ser uma jóia (gem):
+
+```{r}
+airbnb <- airbnb %>% 
+  mutate(prediction.logit = predict(logistic.model, airbnb),
+         prediction.odds = exp(prediction.logit),
+         prediction.probability = prediction.odds / (1+prediction.odds))
+
+# Inspecionando as probabilidades preditas
+head(airbnb$prediction.probability)
+```
+
+
+Os primeiros números são probabilidades muito baixas, mas também existem probabilidades mais altas e todas as previsões estão entre 0 e 1, como deveriam. Agora precisamos decidir qual probabilidade é suficiente para prevermos que uma listagem é uma gem ou não. 
+
+
+Uma escolha óbvia é uma probabilidade de 0,5: uma probabilidade maior que 0,5 significa que prevemos que é mais provável que uma listagem seja uma gem do que não. Vamos converter probabilidades em previsões:
+
+```{r}
+airbnb <- airbnb %>% 
+  mutate(prediction = case_when(prediction.probability<=.50 ~ "no gem",
+                                prediction.probability> .50 ~ "gem"))
+
+# Inspecinando as predicoes
+head(airbnb$prediction)
+```
+
+
+Uma etapa final é comparar previsões com observações:
+
+```{r}
+table(airbnb$prediction, airbnb$gem)
+```
+
+Normalmente, vemos uma tabela 2x2, mas vemos uma tabela com um valor previsto nas linhas e dois valores observados nas colunas. Isso ocorre porque todas as probabilidades previstas estão abaixo de 0,50 e, portanto, sempre previmos que não há gemas. Vamos reduzir o limite para prever que uma listagem é uma gem:
+
+```{r}
+airbnb <- airbnb %>% 
+  mutate(prediction = case_when(prediction.probability<=.07 ~ "no gem",
+                                prediction.probability> .07 ~ "gem"),
+         prediction = factor(prediction, levels = c("no gem","gem")))# verifique se nenhuma joia eh o primeiro nivel do nosso fator
+
+# Observando a tabela
+table(airbnb$prediction,airbnb$gem)
+```
+
+
+

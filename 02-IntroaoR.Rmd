@@ -540,7 +540,7 @@ ggplot(data = airbnb.topten, mapping = aes(x = city, log(price, base = exp(1))))
 dev.off() # Isso dira ao R que terminamos a plotagem e que ela deve salvar a plotagem no disco rigido.
 ```
 
-Embora o R tenha uma interface não gráfica, ele pode criar gráficos muito bons. Praticamente todos os pequenos detalhes no gráfico podem ser ajustados. Muitos dos gráficos que você vê em "jornalismo de dados" (por exemplo, em [https://www.nytimes.com/](https://www.nytimes.com/) ou em [http://fivethirtyeight.com/](http://fivethirtyeight.com/) são feitos em R.
+Embora o R tenha uma interface não gráfica, ele pode criar gráficos muito bons. Praticamente todos os pequenos detalhes no gráfico podem ser ajustados. Muitos dos gráficos que você vê em "jornalismo de dados" (por exemplo, em [https://www.nytimes.com/](https://www.nytimes.com/) ou em [http://fivethirtyeight.com/](http://fivethirtyeight.com/) são feitos em R.)
 
 
 

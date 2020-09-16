@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Análise Básica de Dados: Experimentos | R para Estudantes de Marketing</title>
+  <meta name="description" content="Análise Básica de Dados: Experimentos | R para Estudantes de Marketing" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Análise Básica de Dados: Experimentos | R para Estudantes de Marketing" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Análise Básica de Dados: Experimentos | R para Estudantes de Marketing" />
+  
+  
+  
+
+<meta name="author" content="KU Leuven Marketing department (tradução: Rodrigo Hermont Ozon)" />
+
+
+<meta name="date" content="2020-09-16" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="análise-básica-de-dados-analisando-dados-secundários.html"/>
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">R para Estudantes de Marketing</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Sobre o autor desta tradução</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#resumo"><i class="fa fa-check"></i>Resumo</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#download-e-instalação-do-r-e-do-rstudio"><i class="fa fa-check"></i>Download e instalação do R e do RStudio</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#obtendo-familiaridade-com-o-studio"><i class="fa fa-check"></i>Obtendo familiaridade com o Studio</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#console-vs.-script"><i class="fa fa-check"></i>Console vs. script</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#comentários"><i class="fa fa-check"></i>Comentários</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#pacotes"><i class="fa fa-check"></i>Pacotes</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html"><i class="fa fa-check"></i>Introdução ao R</a><ul>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#importando-dados"><i class="fa fa-check"></i>Importando dados</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#importando-arquivos-.csv"><i class="fa fa-check"></i>Importando arquivos .csv</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#ajustando-seu-diretório-de-trabalho"><i class="fa fa-check"></i>Ajustando seu diretório de trabalho</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#atribuindo-dados-a-objetos"><i class="fa fa-check"></i>Atribuindo dados a objetos</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#importando-arquivos-do-excel"><i class="fa fa-check"></i>Importando arquivos do Excel</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#lendo-os-dados-do-airbnb"><i class="fa fa-check"></i>Lendo os dados do Airbnb</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#manipulando-dataframes"><i class="fa fa-check"></i>Manipulando dataframes</a><ul>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#transformando-variáveis"><i class="fa fa-check"></i>Transformando variáveis</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#transformações-numéricas"><i class="fa fa-check"></i>Transformações numéricas</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#transformando-variáveis-com-a-função-mutate"><i class="fa fa-check"></i>Transformando variáveis com a função mutate</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#incluindo-ou-excluindo-e-renomeando-variáveis-colunas"><i class="fa fa-check"></i>Incluindo ou excluindo e renomeando variáveis (colunas)</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#incluindo-ou-excluindo-observações-linhas"><i class="fa fa-check"></i>Incluindo ou excluindo observações (linhas)</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#o-operador-pipe"><i class="fa fa-check"></i>O operador pipe</a><ul>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#uma-maneira-de-escrever-o-código"><i class="fa fa-check"></i>Uma maneira de escrever o código</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#agrupando-e-resumindo"><i class="fa fa-check"></i>Agrupando e resumindo</a><ul>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#tabelas-de-frequência"><i class="fa fa-check"></i>Tabelas de frequência</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#estatísticas-descritivas"><i class="fa fa-check"></i>Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#exportando-summaries-dos-dados"><i class="fa fa-check"></i>Exportando (summaries) dos dados</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#gráficos"><i class="fa fa-check"></i>Gráficos</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#diagrama-de-dispersão-scatterplot"><i class="fa fa-check"></i>Diagrama de dispersão (scatterplot)</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#jitter"><i class="fa fa-check"></i>Jitter</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#histograma"><i class="fa fa-check"></i>Histograma</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#transformação-logarítmica"><i class="fa fa-check"></i>Transformação logarítmica</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#plotando-a-mediana"><i class="fa fa-check"></i>Plotando a mediana</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#plotando-a-média"><i class="fa fa-check"></i>Plotando a média</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#salvando-imagens"><i class="fa fa-check"></i>Salvando imagens</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#introdução-ao-r"><i class="fa fa-check"></i>Introdução ao R</a><ul>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#importando-dados"><i class="fa fa-check"></i>Importando dados</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#importando-arquivos-.csv"><i class="fa fa-check"></i>Importando arquivos .csv</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#ajustando-seu-diretório-de-trabalho"><i class="fa fa-check"></i>Ajustando seu diretório de trabalho</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#atribuindo-dados-a-objetos"><i class="fa fa-check"></i>Atribuindo dados a objetos</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#importando-arquivos-do-excel"><i class="fa fa-check"></i>Importando arquivos do Excel</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#lendo-os-dados-do-airbnb"><i class="fa fa-check"></i>Lendo os dados do Airbnb</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#manipulando-dataframes"><i class="fa fa-check"></i>Manipulando dataframes</a><ul>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#transformando-variáveis"><i class="fa fa-check"></i>Transformando variáveis</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#transformações-numéricas"><i class="fa fa-check"></i>Transformações numéricas</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#transformando-variáveis-com-a-função-mutate"><i class="fa fa-check"></i>Transformando variáveis com a função mutate</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#incluindo-ou-excluindo-e-renomeando-variáveis-colunas"><i class="fa fa-check"></i>Incluindo ou excluindo e renomeando variáveis (colunas)</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#incluindo-ou-excluindo-observações-linhas"><i class="fa fa-check"></i>Incluindo ou excluindo observações (linhas)</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#o-operador-pipe"><i class="fa fa-check"></i>O operador pipe</a><ul>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#uma-maneira-de-escrever-o-código"><i class="fa fa-check"></i>Uma maneira de escrever o código</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#agrupando-e-resumindo"><i class="fa fa-check"></i>Agrupando e resumindo</a><ul>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#tabelas-de-frequência"><i class="fa fa-check"></i>Tabelas de frequência</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#estatísticas-descritivas"><i class="fa fa-check"></i>Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#exportando-summaries-dos-dados"><i class="fa fa-check"></i>Exportando (summaries) dos dados</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#gráficos"><i class="fa fa-check"></i>Gráficos</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#diagrama-de-dispersão-scatterplot"><i class="fa fa-check"></i>Diagrama de dispersão (scatterplot)</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#jitter"><i class="fa fa-check"></i>Jitter</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#histograma"><i class="fa fa-check"></i>Histograma</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#transformação-logarítmica"><i class="fa fa-check"></i>Transformação logarítmica</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#plotando-a-mediana"><i class="fa fa-check"></i>Plotando a mediana</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#plotando-a-média"><i class="fa fa-check"></i>Plotando a média</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#salvando-imagens"><i class="fa fa-check"></i>Salvando imagens</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html"><i class="fa fa-check"></i>Análise básica de dados: analisando dados secundários</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#dados"><i class="fa fa-check"></i>Dados</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#importação"><i class="fa fa-check"></i>Importação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#manipulação"><i class="fa fa-check"></i>Manipulação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#mesclando-datasets"><i class="fa fa-check"></i>Mesclando datasets</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#recapitulando-importação-e-manipulação"><i class="fa fa-check"></i>Recapitulando: importação e manipulação</a></li>
+<li><a href="análise-básica-de-dados-analisando-dados-secundários.html#amostras-independentes-teste-t">Amostras independentes: teste <span class="math inline">\(t\)</span></a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#anova-univariada"><i class="fa fa-check"></i>ANOVA univariada</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#suposição-de-normalidade-de-resíduos"><i class="fa fa-check"></i>Suposição de normalidade de resíduos</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#suposição-homogeneidade-de-variâncias"><i class="fa fa-check"></i>Suposição: homogeneidade de variâncias</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#anova"><i class="fa fa-check"></i>ANOVA</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#teste-de-tuckey-de-diferença-significativa-verdadeira"><i class="fa fa-check"></i>Teste de Tuckey de diferença significativa verdadeira</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#regressão-linear-simples"><i class="fa fa-check"></i>Regressão Linear Simples</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#correlação"><i class="fa fa-check"></i>Correlação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#regressão-linear-múltipla-com-interação"><i class="fa fa-check"></i>Regressão linear múltipla, com interação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#premissas"><i class="fa fa-check"></i>Premissas</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#normalidade-de-resíduos"><i class="fa fa-check"></i>Normalidade de resíduos</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#homocedasticidade-de-resíduos"><i class="fa fa-check"></i>Homocedasticidade de resíduos</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#multicolinearidade"><i class="fa fa-check"></i>Multicolinearidade</a></li>
+<li><a href="análise-básica-de-dados-analisando-dados-secundários.html#teste-chi2">Teste <span class="math inline">\(\chi^{2}\)</span></a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#medindo-o-ajuste-de-uma-regressão-logística-porcentagem-classificada-corretamente"><i class="fa fa-check"></i>Medindo o ajuste de uma regressão logística: porcentagem classificada corretamente</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#análise-básica-de-dados-analisando-dados-secundários"><i class="fa fa-check"></i>Análise básica de dados: analisando dados secundários</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#dados"><i class="fa fa-check"></i>Dados</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#importação"><i class="fa fa-check"></i>Importação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#manipulação"><i class="fa fa-check"></i>Manipulação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#mesclando-datasets"><i class="fa fa-check"></i>Mesclando datasets</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#recapitulando-importação-e-manipulação"><i class="fa fa-check"></i>Recapitulando: importação e manipulação</a></li>
+<li><a href="análise-básica-de-dados-analisando-dados-secundários.html#amostras-independentes-teste-t">Amostras independentes: teste <span class="math inline">\(t\)</span></a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#anova-univariada"><i class="fa fa-check"></i>ANOVA univariada</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#suposição-de-normalidade-de-resíduos"><i class="fa fa-check"></i>Suposição de normalidade de resíduos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-experimentos.html"><a href="análise-básica-de-dados-experimentos.html"><i class="fa fa-check"></i>Análise Básica de Dados: Experimentos</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#dados"><i class="fa fa-check"></i>Dados</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#importação"><i class="fa fa-check"></i>Importação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#manipulação"><i class="fa fa-check"></i>Manipulação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-experimentos.html"><a href="análise-básica-de-dados-experimentos.html#fatorar-algumas-variáveis"><i class="fa fa-check"></i>Fatorar algumas variáveis</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-experimentos.html"><a href="análise-básica-de-dados-experimentos.html#calcular-a-consistência-interna-e-a-média-de-perguntas-que-medem-o-mesmo-conceito"><i class="fa fa-check"></i>Calcular a consistência interna e a média de perguntas que medem o mesmo conceito</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-experimentos.html"><a href="análise-básica-de-dados-experimentos.html#recapitulando-importando-e-manipulando"><i class="fa fa-check"></i>Recapitulando: importando e manipulando</a></li>
+</ul></li>
+<li><a href="análise-básica-de-dados-experimentos.html#teste-t">Teste <span class="math inline">\(t\)</span></a><ul>
+<li><a href="análise-básica-de-dados-experimentos.html#teste-t-para-amostras-independentes">Teste <span class="math inline">\(t\)</span> para amostras independentes</a></li>
+<li><a href="análise-básica-de-dados-experimentos.html#teste-t-para-amostras-dependentes">Teste <span class="math inline">\(t\)</span> para amostras dependentes</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R para Estudantes de Marketing</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="análise-básica-de-dados-experimentos" class="section level1 unlisted unnumbered">
+<h1>Análise Básica de Dados: Experimentos</h1>
+<p>Neste capítulo, analisaremos os dados de um experimento que testou se o senso de poder das pessoas afeta sua disposição de pagar (WTP) por produtos relacionados ao status (ou seja, por consumo conspícuo) e se essa relação é diferente quando a WTP desses produtos é visível para os outros versus não.</p>
+<p>Os participantes vieram ao nosso laboratório em grupos de oito ou sete. Estavam sentados em frente a um computador em cubículos semi-fechados. Na introdução, os participantes leram que primeiro teriam que preencher um questionário de personalidade e uma pesquisa sobre como eles lidavam com dinheiro. Depois disso, eles teriam que trabalhar juntos em grupos de dois em alguns quebra-cabeças.</p>
+<p>A primeira parte da sessão foi um questionário de personalidade avaliando dominância e aspirações de status (Cassidy &amp; Lynn, 1989; Mead &amp; Maner, 2012). Os participantes leram 18 declarações e indicaram se cada uma delas se aplicava a elas ou não. Após o preenchimento deste questionário, os participantes foram lembrados de que, no final da sessão, teriam que trabalhar juntos com outro participante em alguns quebra-cabeças. Cada díade consistiria em um gerente e um trabalhador. Os participantes leram que a atribuição a esses papéis foi baseada em seus resultados no questionário de personalidade, mas, na realidade, a atribuição a papéis foi aleatória.</p>
+<p>Os participantes na condição de alta potência então leram que eram mais adequados para serem gerentes, enquanto os participantes na condição de baixa potência liam que eram mais adequados para serem trabalhadores (Galinsky, Gruenfeld e Magee, 2003). As instruções deixaram claro que os gerentes teriam mais poder na tarefa de resolver quebra-cabeças do que os trabalhadores (eles poderiam decidir como um bônus em potencial de 20 euros seria dividido entre gerente e trabalhador). Antes de iniciar os quebra-cabeças, no entanto, os participantes foram convidados a participar de um estudo diferente.</p>
+<p>Em um estudo ostensivamente diferente, a disposição dos participantes de gastar em produtos conspícuos e discretos foi medida. Na introdução desta parte do experimento, a presença do público foi manipulada. Na condição privada, os participantes foram informados simplesmente de que estávamos interessados em seus padrões de consumo. Eles foram questionados quanto gastariam em dez produtos que diferiam na medida em que poderiam ser usados para sinalizar o status. Os produtos conspícuos ou aprimoradores de status eram: um carro novo, uma casa, viagens, roupas e um relógio de pulso (para homens) ou jóias (para mulheres). Os produtos discretos ou com status neutro eram produtos de higiene pessoal básicos, medicamentos domésticos, despertador de quarto, utensílios de cozinha e limpeza doméstica (Griskevicius, et al., 2007). Os participantes responderam em uma escala de nove pontos, variando de 1: “Eu compraria itens muito baratos” a 9: “Eu compraria itens muito caros”.</p>
+<p>Na condição pública, os participantes foram informados de que estávamos trabalhando em um site onde as pessoas pudessem se encontrar. Este site nos ajudaria a investigar como as pessoas formam impressões entre si com base nos padrões de consumo. Os participantes leram que primeiro teriam que indicar quanto gastariam em alguns produtos. Suas escolhas seriam resumidas em um perfil. Os outros participantes da sessão teriam que formar impressões sobre eles com base nesse perfil. Depois de ver um exemplo da aparência do perfil, os participantes passaram para a mesma medida de consumo da condição privada.</p>
+<p>Em suma, o experimento tem um design 2 (poder: alto vs. baixo) x 2 (público: público vs. privado) x 2 (consumo: conspícuo vs. discreto) com poder e audiência manipulados entre os sujeitos e consumo manipulado entre os sujeitos.</p>
+<p>As hipóteses neste experimento foram as seguintes:</p>
+<ul>
+<li>Na condição de privado, esperávamos que os participantes de baixa potência tivessem uma WTP maior do que os participantes de alta potência para produtos visíveis, mas não para produtos discretos. Esse padrão de resultados replicaria os resultados de Rucker e Galinsky (2008).</li>
+<li>Esperávamos que a manipulação pública versus privada reduzisse a WTP para produtos visíveis para participantes de baixa potência, mas não para participantes de alta potência.Não esperávamos um efeito da manipulação pública versus privada na WTP para produtos discretos para participantes de baixa ou alta potência.</li>
+</ul>
+<p>Este experimento é descrito com mais detalhes em minha tese de doutorado (Franssens, 2016)</p>
+<div id="referências" class="section level4 unlisted unnumbered">
+<h4>Referências</h4>
+<p>Cassidy, T., &amp; Lynn, R. (1989). <em>A multifactorial approach to achievement motivation: The development of a comprehensive measure</em>. Journal of Occupational Psychology, 62(4), 301-312.</p>
+<p>Franssens, S. (2016). <em>Essays in consumer behavior (Doctoral dissertation)</em>. KU Leuven, Leuven, Belgium.</p>
+<p>Galinsky, A. D., Gruenfeld, D. H., &amp; Magee, J. C. (2003). <em>From Power to action.</em> Journal of Personality and Social Psychology, 85(3), 453-466. <a href="https://doi.org/10.1037/0022-3514.85.3.453" class="uri">https://doi.org/10.1037/0022-3514.85.3.453</a></p>
+<p>Griskevicius, V., Tybur, J. M., Sundie, J. M., Cialdini, R. B., Miller, G. F., &amp; Kenrick, D. T. (2007). <em>Blatant benevolence and conspicuous consumption: When romantic motives elicit strategic costly signals.</em> Journal of Personality and Social Psychology, 93(1), 85-102. <a href="https://doi.org/10.1037/0022-3514.93.1.85" class="uri">https://doi.org/10.1037/0022-3514.93.1.85</a></p>
+<p>Mead, N. L., &amp; Maner, J. K. (2012). <em>On keeping your enemies close: Powerful leaders seek proximity to ingroup power threats.</em> Journal of Personality and Social Psychology, 102(3), 576-591. <a href="https://doi.org/10.1037/a0025755" class="uri">https://doi.org/10.1037/a0025755</a></p>
+<p>Rucker, D. D., &amp; Galinsky, A. D. (2008). <em>Desire to acquire: Powerlessness and compensatory consumption.</em> Journal of Consumer Research, 35(2), 257-267. <a href="https://doi.org/10.1086/588569" class="uri">https://doi.org/10.1086/588569</a></p>
+<hr />
+</div>
+<div id="dados" class="section level2 unlisted unnumbered">
+<h2>Dados</h2>
+<div id="importação" class="section level3 unlisted unnumbered">
+<h3>Importação</h3>
+<p>Faça o download dos dados <a href="http://users.telenet.be/samuelfranssens/tutorial_data/power_conspicuous_consumption.xlsx">aqui</a>. Como sempre, salve os dados em um diretório (de preferência um backup automático do software de compartilhamento de arquivos) e inicie seu script carregando o tidyverse e definindo o diretório de trabalho no diretório em que você acabou de salvar seus dados:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="análise-básica-de-dados-experimentos.html#cb1-1"></a><span class="co">#library(tidyverse)</span></span>
+<span id="cb1-2"><a href="análise-básica-de-dados-experimentos.html#cb1-2"></a><span class="co">#library(readxl) # precisamos deste pacote pois nossos dados estao num arquivo Excel</span></span>
+<span id="cb1-3"><a href="análise-básica-de-dados-experimentos.html#cb1-3"></a><span class="co">#setwd(&quot;c:/dropbox/work/teaching/R/&quot;) # mudando para o nosso diretorio de trabalho</span></span>
+<span id="cb1-4"><a href="análise-básica-de-dados-experimentos.html#cb1-4"></a></span>
+<span id="cb1-5"><a href="análise-básica-de-dados-experimentos.html#cb1-5"></a><span class="co">#powercc &lt;- read_excel(&quot;power_conspicuous_consumption.xlsx&quot;,&quot;data&quot;) # Importe o arquivo Excel. Perceba que o nome da aba do Excel eh data</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="análise-básica-de-dados-experimentos.html#cb2-1"></a><span class="kw">library</span>(readxl)</span>
+<span id="cb2-2"><a href="análise-básica-de-dados-experimentos.html#cb2-2"></a></span>
+<span id="cb2-3"><a href="análise-básica-de-dados-experimentos.html#cb2-3"></a>url&lt;-<span class="st">&quot;http://users.telenet.be/samuelfranssens/tutorial_data/power_conspicuous_consumption.xlsx&quot;</span></span>
+<span id="cb2-4"><a href="análise-básica-de-dados-experimentos.html#cb2-4"></a>powercc &lt;-<span class="st"> </span><span class="kw">tempfile</span>()</span>
+<span id="cb2-5"><a href="análise-básica-de-dados-experimentos.html#cb2-5"></a><span class="kw">download.file</span>(url, powercc, <span class="dt">mode=</span><span class="st">&quot;wb&quot;</span>)</span>
+<span id="cb2-6"><a href="análise-básica-de-dados-experimentos.html#cb2-6"></a>powercc&lt;-<span class="kw">read_excel</span>(<span class="dt">path =</span> powercc, <span class="dt">sheet =</span> <span class="dv">1</span>)</span>
+<span id="cb2-7"><a href="análise-básica-de-dados-experimentos.html#cb2-7"></a></span>
+<span id="cb2-8"><a href="análise-básica-de-dados-experimentos.html#cb2-8"></a>powercc</span></code></pre></div>
+<pre><code>## # A tibble: 147 x 39
+##    subject start_date          end_date            duration finished power
+##      &lt;dbl&gt; &lt;dttm&gt;              &lt;dttm&gt;                 &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;
+##  1       1 2012-04-19 09:32:56 2012-04-19 09:49:42    1006.        1 high 
+##  2       2 2012-04-19 09:31:26 2012-04-19 09:51:13    1187.        1 low  
+##  3       3 2012-04-19 09:29:50 2012-04-19 09:53:10    1400.        1 low  
+##  4       4 2012-04-19 09:26:25 2012-04-19 09:53:21    1616.        1 low  
+##  5       5 2012-04-19 09:20:55 2012-04-19 09:54:21    2006.        1 high 
+##  6       6 2012-04-19 09:28:02 2012-04-19 09:55:50    1668.        1 high 
+##  7       7 2012-04-19 09:17:54 2012-04-19 09:58:49    2455.        1 low  
+##  8       8 2012-04-19 09:22:26 2012-04-19 10:01:40    2354.        1 high 
+##  9       9 2012-04-19 10:13:12 2012-04-19 10:31:03    1071.        1 low  
+## 10      10 2012-04-19 10:12:55 2012-04-19 10:31:29    1114.        1 high 
+## # ... with 137 more rows, and 33 more variables: audience &lt;chr&gt;,
+## #   group_size &lt;dbl&gt;, gender &lt;chr&gt;, age &lt;dbl&gt;, dominance1 &lt;dbl&gt;,
+## #   dominance2 &lt;dbl&gt;, dominance3 &lt;dbl&gt;, dominance4 &lt;dbl&gt;, dominance5 &lt;dbl&gt;,
+## #   dominance6 &lt;dbl&gt;, dominance7 &lt;dbl&gt;, sa1 &lt;dbl&gt;, sa2 &lt;dbl&gt;, sa3 &lt;dbl&gt;,
+## #   sa4 &lt;dbl&gt;, sa5 &lt;dbl&gt;, sa6 &lt;dbl&gt;, sa7 &lt;dbl&gt;, sa8 &lt;dbl&gt;, sa9 &lt;dbl&gt;,
+## #   sa10 &lt;dbl&gt;, sa11 &lt;dbl&gt;, inconspicuous1 &lt;dbl&gt;, inconspicuous2 &lt;dbl&gt;,
+## #   inconspicuous3 &lt;dbl&gt;, inconspicuous4 &lt;dbl&gt;, inconspicuous5 &lt;dbl&gt;,
+## #   conspicuous1 &lt;dbl&gt;, conspicuous2 &lt;dbl&gt;, conspicuous3 &lt;dbl&gt;,
+## #   conspicuous4 &lt;dbl&gt;, conspicuous5 &lt;dbl&gt;, agree &lt;dbl&gt;</code></pre>
+<p>Não se esqueça de salvar seu script no diretório de trabalho.</p>
+</div>
+<div id="manipulação" class="section level3 unlisted unnumbered">
+<h3>Manipulação</h3>
+<p>Temos 39 colunas ou variáveis em nossos dados:</p>
+<ul>
+<li>subject identifica os participantes</li>
+<li>start_date e end_date indicam o início e o fim da sessão experimental.</li>
+<li>duration indica a duração da sessão experimental</li>
+<li>finished: os participantes concluíram todo o experimento?</li>
+<li>power (alto vs. baixo) e público (privado vs. público) são as condições experimentais</li>
+<li>group_size: em grupos de quantos participantes compareceram ao laboratório?</li>
+<li>gender e age do participante</li>
+<li>dominance1, dominance2, etc. são as perguntas que mediram a dominância. Um exemplo é “Eu acho que gostaria de ter autoridade sobre outras pessoas”. Os participantes responderam com sim (1) ou não (0).</li>
+<li>sa1, sa2 etc. são as perguntas que medem as aspirações de status. Um exemplo é: “Gostaria de um trabalho importante, onde as pessoas me admirassem”. Os participantes responderam com sim (1) ou não (0).</li>
+<li>inconspicuous1, inconspicuous2, etc. contêm a WTP para os produtos inconspicuous. Escala de 1: eu compraria itens muito baratos a 9: eu compraria itens muito caros.</li>
+<li>conspicuous1, conspicuous2, etc. contêm a WTP para os produtos conspícuos. Escala de 1: eu compraria itens muito baratos a 9: eu compraria itens muito caros.</li>
+<li>agree: uma questão exploratória que mede se as pessoas concordam que elas são mais adequadas ao papel de trabalhador ou gerente. Os participantes responderam em uma escala de 1: muito mais adequado para a função de trabalhador (gerente) a 7: muito mais adequado para a função de gerente (trabalhador). Números mais altos indicam concordância com a atribuição de função no experimento.</li>
+</ul>
+</div>
+<div id="fatorar-algumas-variáveis" class="section level3 unlisted unnumbered">
+<h3>Fatorar algumas variáveis</h3>
+<p>Após a inspeção dos dados, vemos que o tipo de subject é duplo, o que significa que o subject deve ser fatorado para que seus valores não sejam tratados como números. Também fatoraremos nossas condições experimentais:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="análise-básica-de-dados-experimentos.html#cb4-1"></a><span class="kw">library</span>(dplyr)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="análise-básica-de-dados-experimentos.html#cb8-1"></a>powercc &lt;-<span class="st"> </span>powercc <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># nos criamos o objeto powercc anteriormente </span></span>
+<span id="cb8-2"><a href="análise-básica-de-dados-experimentos.html#cb8-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">subject =</span> <span class="kw">factor</span>(subject),</span>
+<span id="cb8-3"><a href="análise-básica-de-dados-experimentos.html#cb8-3"></a>         <span class="dt">power =</span> <span class="kw">factor</span>(power, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;low&quot;</span>,<span class="st">&quot;high&quot;</span>)), <span class="co"># note os niveis dos argumentos</span></span>
+<span id="cb8-4"><a href="análise-básica-de-dados-experimentos.html#cb8-4"></a>         <span class="dt">audience =</span> <span class="kw">factor</span>(audience, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;private&quot;</span>,<span class="st">&quot;public&quot;</span>))) <span class="co"># note os niveis dos argumentos</span></span></code></pre></div>
+<p>Observe que fornecemos novos  de argumento ao fatorar poder e público. Este argumento especifica a ordem dos  de um fator. No contexto desse experimento, é mais natural falar sobre o efeito da alta versus baixa potência no consumo do que falar sobre o efeito da baixa versus alta potência no consumo. Portanto, dizemos ao que o baixo nível de energia deve ser considerado como o primeiro nível. Mais adiante, veremos que o resultado das análises pode ser interpretado como efeitos de alta potência (segundo nível) vs. baixa potência (primeiro nível). O mesmo raciocínio se aplica ao fator público, embora não seja necessário fornecer os níveis para esse fator porque o privado vem antes do público em ordem alfabética. Sua escolha do nível para o primeiro ou nível de referência influencia apenas a interpretação, não o resultado real da análise.</p>
+<p>Em uma sessão experimental, o alarme de incêndio disparou e tivemos que sair do laboratório. Vamos remover os participantes que não concluíram a experiência:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="análise-básica-de-dados-experimentos.html#cb9-1"></a>powercc &lt;-<span class="st"> </span>powercc <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># nos ja criamos o objeto powercc anteriormente</span></span>
+<span id="cb9-2"><a href="análise-básica-de-dados-experimentos.html#cb9-2"></a><span class="st">  </span><span class="kw">filter</span>(finished <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="co"># somente mantenha as observacoes que sao terminadas ou iguais a 1</span></span></code></pre></div>
+<p>Observe o dobro <span class="math inline">\(==\)</span> ao testar a igualdade. Confira o livro <a href="https://r4ds.had.co.nz/transform.html#filter-rows-with-filter">R4 Data Science para outros operadores lógicos (role para baixo para chegar à Seção 5.2.2).</a></p>
+</div>
+<div id="calcular-a-consistência-interna-e-a-média-de-perguntas-que-medem-o-mesmo-conceito" class="section level3 unlisted unnumbered">
+<h3>Calcular a consistência interna e a média de perguntas que medem o mesmo conceito</h3>
+<p>Gostaríamos de calcular a média das perguntas que medem a dominância para obter um único número indicando se o participante tem uma personalidade dominante ou não dominante. Antes de fazer isso, devemos ter uma idéia da consistência interna das perguntas que medem o domínio. Isso nos dirá se todas essas perguntas medem o mesmo conceito. Uma medida da consistência interna é o alfa de Cronbach. Para calcular, precisamos de um pacote chamado psych:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="análise-básica-de-dados-experimentos.html#cb10-1"></a><span class="co">#install.packages(&quot;psych&quot;)</span></span>
+<span id="cb10-2"><a href="análise-básica-de-dados-experimentos.html#cb10-2"></a><span class="kw">library</span>(psych)</span></code></pre></div>
+<p>Depois que o pacote for carregado, podemos usar a função alfa para calcular o alfa de Cronbach para um conjunto de perguntas:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="análise-básica-de-dados-experimentos.html#cb11-1"></a>dominance.questions &lt;-<span class="st"> </span>powercc <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb11-2"><a href="análise-básica-de-dados-experimentos.html#cb11-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="st">&quot;dominance&quot;</span>)) <span class="co"># pegue o dataframe powercc e selecione todas as viariaveis com o nome que se inicia com dominancia</span></span>
+<span id="cb11-3"><a href="análise-básica-de-dados-experimentos.html#cb11-3"></a></span>
+<span id="cb11-4"><a href="análise-básica-de-dados-experimentos.html#cb11-4"></a><span class="kw">alpha</span>(dominance.questions) <span class="co"># calcula o alfa de cronbach para essas variaveis</span></span></code></pre></div>
+<pre><code>## 
+## Reliability analysis   
+## Call: alpha(x = dominance.questions)
+## 
+##   raw_alpha std.alpha G6(smc) average_r S/N   ase mean   sd median_r
+##       0.69      0.67    0.67      0.23 2.1 0.038 0.63 0.27     0.21
+## 
+##  lower alpha upper     95% confidence boundaries
+## 0.61 0.69 0.76 
+## 
+##  Reliability if an item is dropped:
+##            raw_alpha std.alpha G6(smc) average_r S/N alpha se var.r med.r
+## dominance1      0.68      0.67    0.66      0.25 2.0    0.039 0.016  0.22
+## dominance2      0.65      0.63    0.62      0.22 1.7    0.043 0.018  0.21
+## dominance3      0.59      0.58    0.56      0.19 1.4    0.050 0.014  0.20
+## dominance4      0.62      0.60    0.59      0.20 1.5    0.047 0.018  0.21
+## dominance5      0.65      0.64    0.63      0.23 1.7    0.043 0.021  0.21
+## dominance6      0.70      0.70    0.68      0.28 2.4    0.038 0.009  0.25
+## dominance7      0.65      0.64    0.62      0.23 1.8    0.043 0.017  0.20
+## 
+##  Item statistics 
+##              n raw.r std.r r.cor r.drop mean   sd
+## dominance1 143  0.52  0.49  0.33   0.29 0.53 0.50
+## dominance2 143  0.59  0.61  0.52   0.42 0.80 0.40
+## dominance3 143  0.75  0.74  0.71   0.59 0.52 0.50
+## dominance4 143  0.68  0.68  0.61   0.50 0.58 0.50
+## dominance5 143  0.61  0.59  0.48   0.40 0.55 0.50
+## dominance6 143  0.29  0.38  0.19   0.14 0.91 0.29
+## dominance7 143  0.62  0.59  0.48   0.41 0.53 0.50
+## 
+## Non missing response frequency for each item
+##               0    1 miss
+## dominance1 0.47 0.53    0
+## dominance2 0.20 0.80    0
+## dominance3 0.48 0.52    0
+## dominance4 0.42 0.58    0
+## dominance5 0.45 0.55    0
+## dominance6 0.09 0.91    0
+## dominance7 0.47 0.53    0</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="análise-básica-de-dados-experimentos.html#cb13-1"></a><span class="co"># Observe que também poderíamos ter escrito isso da seguinte maneira:</span></span>
+<span id="cb13-2"><a href="análise-básica-de-dados-experimentos.html#cb13-2"></a><span class="co"># powercc %&gt;% select(starts_with(&quot;dominance&quot;)) %&gt;% cronbach()</span></span></code></pre></div>
+<p>Isso produz muita saída. Em raw_alpha, vemos que o alfa é 0,69, que fica no lado inferior (0,70 é geralmente considerado o mínimo necessário), mas ainda está ok. A tabela abaixo nos diz qual seria o alfa se retirássemos uma pergunta de nossa medida. A queda da dominance6 aumentaria o alfa para 0,7. Comparado ao alfa original de 0,69, esse aumento é pequeno e, portanto, não perdemos a dominance6. Se houvesse uma pergunta com um alto “alfa se descartado”, isso indicaria que esta pergunta está medindo algo diferente das outras perguntas. Nesse caso, você pode considerar remover esta pergunta da sua medida.</p>
+<p>Podemos proceder calculando a média das respostas sobre a questão do domínio:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="análise-básica-de-dados-experimentos.html#cb14-1"></a>powercc &lt;-<span class="st"> </span>powercc <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb14-2"><a href="análise-básica-de-dados-experimentos.html#cb14-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dominance =</span> (dominance1<span class="op">+</span>dominance2<span class="op">+</span>dominance3<span class="op">+</span>dominance4<span class="op">+</span>dominance5<span class="op">+</span>dominance6<span class="op">+</span>dominance7)<span class="op">/</span><span class="dv">7</span>,</span>
+<span id="cb14-3"><a href="análise-básica-de-dados-experimentos.html#cb14-3"></a>         <span class="dt">cc =</span> (conspicuous1<span class="op">+</span>conspicuous2<span class="op">+</span>conspicuous3<span class="op">+</span>conspicuous4<span class="op">+</span>conspicuous5)<span class="op">/</span><span class="dv">5</span>,</span>
+<span id="cb14-4"><a href="análise-básica-de-dados-experimentos.html#cb14-4"></a>         <span class="dt">icc =</span> (inconspicuous1<span class="op">+</span>inconspicuous2<span class="op">+</span>inconspicuous3<span class="op">+</span>inconspicuous4<span class="op">+</span>inconspicuous5)<span class="op">/</span><span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb14-5"><a href="análise-básica-de-dados-experimentos.html#cb14-5"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span><span class="kw">starts_with</span>(<span class="st">&quot;sa&quot;</span>))</span></code></pre></div>
+<p>Também calculei a média das perguntas sobre consumo conspícuo e consumo discreto, mas não sobre as aspirações de status porque o alfa de Cronbach era muito baixo. Excluí as perguntas sobre aspirações de status do conjunto de dados. Deixo como um exercício verificar os alfa de Cronbach de cada um desses conceitos (faça isso antes de excluir as perguntas sobre as aspirações de status, é claro).</p>
+</div>
+<div id="recapitulando-importando-e-manipulando" class="section level3 unlisted unnumbered">
+<h3>Recapitulando: importando e manipulando</h3>
+<p>Aqui está o que fizemos até agora, em uma sequência ordenada de operações canalizadas (faça o ):</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="análise-básica-de-dados-experimentos.html#cb15-1"></a><span class="co">#library(tidyverse)</span></span>
+<span id="cb15-2"><a href="análise-básica-de-dados-experimentos.html#cb15-2"></a><span class="co">#library(readxl)</span></span>
+<span id="cb15-3"><a href="análise-básica-de-dados-experimentos.html#cb15-3"></a><span class="co">#setwd(&quot;c:/dropbox/work/teaching/R/&quot;) # mudando para seu proprio diretorio</span></span>
+<span id="cb15-4"><a href="análise-básica-de-dados-experimentos.html#cb15-4"></a></span>
+<span id="cb15-5"><a href="análise-básica-de-dados-experimentos.html#cb15-5"></a><span class="co">#powercc &lt;- read_excel(&quot;power_conspicuous_consumption.xlsx&quot;,&quot;data&quot;)  %&gt;%</span></span>
+<span id="cb15-6"><a href="análise-básica-de-dados-experimentos.html#cb15-6"></a> <span class="co"># filter(finished == 1) %&gt;% </span></span>
+<span id="cb15-7"><a href="análise-básica-de-dados-experimentos.html#cb15-7"></a>  <span class="co">#mutate(subject = factor(subject),</span></span>
+<span id="cb15-8"><a href="análise-básica-de-dados-experimentos.html#cb15-8"></a>   <span class="co">#      power = factor(power, levels = c(&quot;low&quot;,&quot;high&quot;)),</span></span>
+<span id="cb15-9"><a href="análise-básica-de-dados-experimentos.html#cb15-9"></a></span>
+<span id="cb15-10"><a href="análise-básica-de-dados-experimentos.html#cb15-10"></a>    <span class="co">#     audience = factor(audience, levels = c(&quot;private&quot;,&quot;public&quot;)),</span></span>
+<span id="cb15-11"><a href="análise-básica-de-dados-experimentos.html#cb15-11"></a>     <span class="co">#    dominance = (dominance1+dominance2+dominance3+dominance4+dominance5+dominance6+dominance7)/7,</span></span>
+<span id="cb15-12"><a href="análise-básica-de-dados-experimentos.html#cb15-12"></a>     <span class="co">#    cc = (conspicuous1+conspicuous2+conspicuous3+conspicuous4+conspicuous5)/5,</span></span>
+<span id="cb15-13"><a href="análise-básica-de-dados-experimentos.html#cb15-13"></a>      <span class="co">#   icc = (inconspicuous1+inconspicuous2+inconspicuous3+inconspicuous4+inconspicuous5)/5) %&gt;% </span></span>
+<span id="cb15-14"><a href="análise-básica-de-dados-experimentos.html#cb15-14"></a>  <span class="co"># select(-starts_with(&quot;sa&quot;))</span></span></code></pre></div>
+</div>
+</div>
+<div id="teste-t" class="section level2 unlisted unnumbered">
+<h2>Teste <span class="math inline">\(t\)</span></h2>
+<div id="teste-t-para-amostras-independentes" class="section level3 unlisted unnumbered">
+<h3>Teste <span class="math inline">\(t\)</span> para amostras independentes</h3>
+<p>Digamos que queremos testar se homens e mulheres diferem no grau em que são dominantes. Vamos criar um boxplot primeiro e depois verificar as médias e os desvios padrão:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="análise-básica-de-dados-experimentos.html#cb16-1"></a><span class="kw">library</span>(ggplot2)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;ggplot2&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:psych&#39;:
+## 
+##     %+%, alpha</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="análise-básica-de-dados-experimentos.html#cb19-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> powercc, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> gender, <span class="dt">y =</span> dominance)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb19-2"><a href="análise-básica-de-dados-experimentos.html#cb19-2"></a><span class="st">  </span><span class="kw">geom_boxplot</span>()</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="análise-básica-de-dados-experimentos.html#cb20-1"></a>powercc <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb20-2"><a href="análise-básica-de-dados-experimentos.html#cb20-2"></a><span class="st">  </span><span class="kw">group_by</span>(gender) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb20-3"><a href="análise-básica-de-dados-experimentos.html#cb20-3"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_dominance =</span> <span class="kw">mean</span>(dominance),</span>
+<span id="cb20-4"><a href="análise-básica-de-dados-experimentos.html#cb20-4"></a>            <span class="dt">sd_dominance =</span> <span class="kw">sd</span>(dominance))</span></code></pre></div>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre><code>## # A tibble: 2 x 3
+##   gender mean_dominance sd_dominance
+##   &lt;chr&gt;           &lt;dbl&gt;        &lt;dbl&gt;
+## 1 female          0.614        0.247
+## 2 male            0.646        0.296</code></pre>
+<p>Os homens pontuam um pouco mais alto que as mulheres, mas queremos saber se essa diferença é significativa. Um teste <span class="math inline">\(t\)</span> de amostras independentes pode fornecer a resposta (os homens e as mulheres em nosso experimento são amostras independentes), mas precisamos verificar primeiro uma suposição: as variações das duas amostras independentes são iguais?</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="análise-básica-de-dados-experimentos.html#cb23-1"></a><span class="co">#install.packages(&quot;car&quot;) # para o teste de variancias iguais, precisamos de um pacote chamado car</span></span>
+<span id="cb23-2"><a href="análise-básica-de-dados-experimentos.html#cb23-2"></a><span class="kw">library</span>(car)</span></code></pre></div>
+<pre><code>## Loading required package: carData</code></pre>
+<pre><code>## 
+## Attaching package: &#39;car&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:psych&#39;:
+## 
+##     logit</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     recode</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="análise-básica-de-dados-experimentos.html#cb28-1"></a><span class="co"># Teste Levene para igualdade de variancias.</span></span>
+<span id="cb28-2"><a href="análise-básica-de-dados-experimentos.html#cb28-2"></a><span class="co"># Baixo valor-p indica que as variancias nao sejam iguais.</span></span>
+<span id="cb28-3"><a href="análise-básica-de-dados-experimentos.html#cb28-3"></a><span class="co"># Primeiro argumento = variavel dependente continua, segundo argumento = variavel independente categorica</span></span>
+<span id="cb28-4"><a href="análise-básica-de-dados-experimentos.html#cb28-4"></a></span>
+<span id="cb28-5"><a href="análise-básica-de-dados-experimentos.html#cb28-5"></a><span class="kw">leveneTest</span>(powercc<span class="op">$</span>dominance, powercc<span class="op">$</span>gender) </span></code></pre></div>
+<pre><code>## Warning in leveneTest.default(powercc$dominance, powercc$gender): powercc$gender
+## coerced to factor.</code></pre>
+<pre><code>## Levene&#39;s Test for Homogeneity of Variance (center = median)
+##        Df F value Pr(&gt;F)
+## group   1  2.1915  0.141
+##       141</code></pre>
+<p>A hipótese nula de variâncias iguais não é rejeitada (<span class="math inline">\(p = 0,14\)</span>), para que possamos continuar com um teste <span class="math inline">\(t\)</span> que assume variâncias iguais:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="análise-básica-de-dados-experimentos.html#cb31-1"></a><span class="co"># Teste se os meios de dominancia diferem entre os sexos.</span></span>
+<span id="cb31-2"><a href="análise-básica-de-dados-experimentos.html#cb31-2"></a><span class="co"># Indique se o teste deve assumir variacoes iguais ou nao (define var.equal = FALSE para um teste que nao assume variacoes iguais).</span></span>
+<span id="cb31-3"><a href="análise-básica-de-dados-experimentos.html#cb31-3"></a></span>
+<span id="cb31-4"><a href="análise-básica-de-dados-experimentos.html#cb31-4"></a><span class="kw">t.test</span>(powercc<span class="op">$</span>dominance <span class="op">~</span><span class="st"> </span>powercc<span class="op">$</span>gender, <span class="dt">var.equal =</span> <span class="ot">TRUE</span>) </span></code></pre></div>
+<pre><code>## 
+## 	Two Sample t-test
+## 
+## data:  powercc$dominance by powercc$gender
+## t = -0.6899, df = 141, p-value = 0.4914
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -0.12179092  0.05877722
+## sample estimates:
+## mean in group female   mean in group male 
+##            0.6142857            0.6457926</code></pre>
+<p>Você pode relatar o seguinte: “Homens (<span class="math inline">\(M = 0,65, DP = 0,3\)</span>) e mulheres (<span class="math inline">\(M = 0,61, DP = 0,25\)</span>) não diferiram no grau em que se classificaram como dominantes (<span class="math inline">\(t (141) = -0,69 , p = 0,49\)</span>).”</p>
+</div>
+<div id="teste-t-para-amostras-dependentes" class="section level3 unlisted unnumbered">
+<h3>Teste <span class="math inline">\(t\)</span> para amostras dependentes</h3>
+<p>Digamos que queremos testar se as pessoas estão mais dispostas a gastar em itens conspícuos do que em itens discretos. Vamos verificar os meios e os desvios padrão primeiro:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="análise-básica-de-dados-experimentos.html#cb33-1"></a>powercc <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># nao ha necessidade de agrupar! nao estamos dividindo nossa amostra em subgrupos</span></span>
+<span id="cb33-2"><a href="análise-básica-de-dados-experimentos.html#cb33-2"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_cc =</span> <span class="kw">mean</span>(cc), <span class="dt">sd_cc =</span> <span class="kw">sd</span>(cc),</span>
+<span id="cb33-3"><a href="análise-básica-de-dados-experimentos.html#cb33-3"></a>            <span class="dt">mean_icc =</span> <span class="kw">mean</span>(icc), <span class="dt">sd_icc =</span> <span class="kw">sd</span>(icc))</span></code></pre></div>
+<pre><code>## # A tibble: 1 x 4
+##   mean_cc sd_cc mean_icc sd_icc
+##     &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;
+## 1    6.01  1.05     3.60  0.988</code></pre>
+<p>As médias são mais altas para produtos conspícuos do que para produtos discretos, mas queremos saber se essa diferença é significativa e, portanto, realizar um teste t de amostras dependentes (cada participante classifica produtos conspícuos e discretos, portanto, essas classificações são dependentes):</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="análise-básica-de-dados-experimentos.html#cb35-1"></a><span class="kw">t.test</span>(powercc<span class="op">$</span>cc, powercc<span class="op">$</span>icc, <span class="dt">paired =</span> <span class="ot">TRUE</span>) <span class="co"># Teste se as medias de cc e icc sao diferentes. Indique que este eh um teste t de amostras dependentes com emparelhado = TRUE.</span></span></code></pre></div>
+<pre><code>## 
+## 	Paired t-test
+## 
+## data:  powercc$cc and powercc$icc
+## t = 25.064, df = 142, p-value &lt; 2.2e-16
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  2.214575 2.593816
+## sample estimates:
+## mean of the differences 
+##                2.404196</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="análise-básica-de-dados-analisando-dados-secundários.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rhozon/rparamkt/edit/master/04-AnaliseBasicadedadosExperimentos.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/rhozon/rparamkt/blob/master/04-AnaliseBasicadedadosExperimentos.Rmd",
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
