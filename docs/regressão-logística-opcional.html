@@ -236,6 +236,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#plotando-as-cargas-fatoriais"><i class="fa fa-check"></i>Plotando as cargas fatoriais</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html"><i class="fa fa-check"></i>Análise de componentes principais para mapas perceptivos (toothpaste dataset)</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#dados"><i class="fa fa-check"></i>Dados</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#importação"><i class="fa fa-check"></i>Importação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#manipulação"><i class="fa fa-check"></i>Manipulação</a></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#recapitulação-importação-e-manipulação"><i class="fa fa-check"></i>Recapitulação: importação e manipulação</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#quantos-fatores-devemos-considerar"><i class="fa fa-check"></i>Quantos fatores devemos considerar ?</a></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#análise-de-componentes-principais"><i class="fa fa-check"></i>Análise de Componentes Principais</a><ul>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cargas-fatoriais"><i class="fa fa-check"></i>Cargas fatoriais</a></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#gráfico-das-cargas-fatoriais"><i class="fa fa-check"></i>Gráfico das cargas fatoriais</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -265,8 +277,8 @@ probabilidades=\displaystyle\frac{P(Y=1)}{P(Y=0}=\displaystyle\frac{P(Y=1)}{1-P(
 <p>então o logit <span class="math inline">\(P(Y=1))=\ln\displaystyle\frac{P(Y-1)}{1-P(Y=1)}\)</span></p>
 <p>Isso garante que nossa variável dependente seja normalmente distribuída e não seja restrita a ser 0 ou 1.Isso garante que nossa variável dependente seja normalmente distribuída e não seja restrita a ser 0 ou 1.</p>
 <p>Vamos realizar a regressão logística:</p>
-<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="regressão-logística-opcional.html#cb198-1"></a>logistic.model &lt;-<span class="st"> </span><span class="kw">glm</span>(gem <span class="op">~</span><span class="st"> </span>price <span class="op">*</span><span class="st"> </span>room_type, <span class="dt">data=</span>airbnb, <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>) <span class="co"># o argumento family = &quot;binomial&quot; diz R para tratar a variavel dependente como uma variavel 0/1</span></span>
-<span id="cb198-2"><a href="regressão-logística-opcional.html#cb198-2"></a><span class="kw">summary</span>(logistic.model) <span class="co"># saida da regressao</span></span></code></pre></div>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="regressão-logística-opcional.html#cb182-1"></a>logistic.model &lt;-<span class="st"> </span><span class="kw">glm</span>(gem <span class="op">~</span><span class="st"> </span>price <span class="op">*</span><span class="st"> </span>room_type, <span class="dt">data=</span>airbnb, <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>) <span class="co"># o argumento family = &quot;binomial&quot; diz R para tratar a variavel dependente como uma variavel 0/1</span></span>
+<span id="cb182-2"><a href="regressão-logística-opcional.html#cb182-2"></a><span class="kw">summary</span>(logistic.model) <span class="co"># saida da regressao</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = gem ~ price * room_type, family = &quot;binomial&quot;, data = airbnb)
@@ -295,7 +307,7 @@ probabilidades=\displaystyle\frac{P(Y=1)}{P(Y=0}=\displaystyle\frac{P(Y=1)}{1-P(
 ## Number of Fisher Scoring iterations: 7</code></pre>
 <p>Vemos que o único preditor marginalmente significativo de uma listagem ser ou não uma jóia é o preço da listagem. Você pode relatar o seguinte: “Controlando o tipo de quarto e a interação entre preço e tipo de quarto, havia uma relação negativa marginalmente significativa entre o preço e a probabilidade de uma listagem ser uma jóia (<span class="math inline">\(\beta\)</span> = -0.0007185, <span class="math inline">\(\chi\)</span> (17645) = -1,783, p = 0,075).</p>
 <p>A interpretação dos coeficientes de regressão na regressão logística é diferente da do caso da regressão linear:</p>
-<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="regressão-logística-opcional.html#cb200-1"></a><span class="kw">summary</span>(logistic.model)</span></code></pre></div>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="regressão-logística-opcional.html#cb184-1"></a><span class="kw">summary</span>(logistic.model)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = gem ~ price * room_type, family = &quot;binomial&quot;, data = airbnb)
@@ -348,16 +360,16 @@ probabilidades=\displaystyle\frac{P(Y=1)}{P(Y=0}=\displaystyle\frac{P(Y=1)}{1-P(
 <div id="medindo-o-ajuste-de-uma-regressão-logística-porcentagem-classificada-corretamente" class="section level2 unlisted unnumbered">
 <h2>Medindo o ajuste de uma regressão logística: porcentagem classificada corretamente</h2>
 <p>Nosso modelo usa o preço e o tipo de quarto da listagem para prever se a listagem é uma joia ou não. Ao fazer previsões, é natural nos perguntarmos se nossas previsões são boas. Em outras palavras, usando preço e tipo de quarto, com que frequência prevemos corretamente se uma listagem é uma jóia ou não? Para ter uma idéia da qualidade de nossas previsões, podemos pegar o preço e o tipo de quarto das listagens em nosso conjunto de dados, prever se as listagens são gemas e comparar nossas previsões com o status real da gema das listagens. Vamos primeiro fazer as previsões:</p>
-<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="regressão-logística-opcional.html#cb202-1"></a>airbnb &lt;-<span class="st"> </span>airbnb <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb202-2"><a href="regressão-logística-opcional.html#cb202-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">prediction =</span> <span class="kw">predict</span>(logistic.model, airbnb))</span>
-<span id="cb202-3"><a href="regressão-logística-opcional.html#cb202-3"></a><span class="co"># Crie uma nova coluna chamada previsao no quadro de dados do airbnb e armazene nela a previsao,</span></span>
-<span id="cb202-4"><a href="regressão-logística-opcional.html#cb202-4"></a><span class="co"># baseado em logistic.model, para os dados do airbnb</span></span>
-<span id="cb202-5"><a href="regressão-logística-opcional.html#cb202-5"></a><span class="co"># De uma olhada nessas previsoes:</span></span>
-<span id="cb202-6"><a href="regressão-logística-opcional.html#cb202-6"></a><span class="kw">head</span>(airbnb<span class="op">$</span>prediction)</span></code></pre></div>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="regressão-logística-opcional.html#cb186-1"></a>airbnb &lt;-<span class="st"> </span>airbnb <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb186-2"><a href="regressão-logística-opcional.html#cb186-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">prediction =</span> <span class="kw">predict</span>(logistic.model, airbnb))</span>
+<span id="cb186-3"><a href="regressão-logística-opcional.html#cb186-3"></a><span class="co"># Crie uma nova coluna chamada previsao no quadro de dados do airbnb e armazene nela a previsao,</span></span>
+<span id="cb186-4"><a href="regressão-logística-opcional.html#cb186-4"></a><span class="co"># baseado em logistic.model, para os dados do airbnb</span></span>
+<span id="cb186-5"><a href="regressão-logística-opcional.html#cb186-5"></a><span class="co"># De uma olhada nessas previsoes:</span></span>
+<span id="cb186-6"><a href="regressão-logística-opcional.html#cb186-6"></a><span class="kw">head</span>(airbnb<span class="op">$</span>prediction)</span></code></pre></div>
 <pre><code>##         1         2         3         4         5         6 
 ## -4.790232 -4.448355 -4.049498 -4.619293 -4.106477 -4.847211</code></pre>
-<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="regressão-logística-opcional.html#cb204-1"></a><span class="co"># Compare com as observacoes:</span></span>
-<span id="cb204-2"><a href="regressão-logística-opcional.html#cb204-2"></a><span class="kw">head</span>(airbnb<span class="op">$</span>gem)</span></code></pre></div>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="regressão-logística-opcional.html#cb188-1"></a><span class="co"># Compare com as observacoes:</span></span>
+<span id="cb188-2"><a href="regressão-logística-opcional.html#cb188-2"></a><span class="kw">head</span>(airbnb<span class="op">$</span>gem)</span></code></pre></div>
 <pre><code>## [1] no gem no gem no gem no gem no gem no gem
 ## Levels: no gem gem</code></pre>
 <p>Você vê o problema? As previsões são logits, ou seja, logaritmos de chances de que as listagens sejam gemas, mas as observações simplesmente nos dizem se uma listagem é uma gema ou não. Para uma comparação significativa entre previsões e observações, precisamos transformar os logits em uma decisão: gema ou não gema. É fácil transformar logits em probabilidades usando o exponencial do logit. A relação entre probabilidades e probabilidades é a seguinte:</p>
@@ -377,37 +389,37 @@ probabilidades=\displaystyle\frac{P(Y=1)}{P(Y=0}=\displaystyle\frac{P(Y=1)}{1-P(
 \Leftrightarrow \dfrac{probs}{1 + probs} = P(Y = 1)
 \]</span>
 Agora vamos calcular, para cada listagem, a probabilidade de a listagem ser uma jóia (gem):</p>
-<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="regressão-logística-opcional.html#cb206-1"></a>airbnb &lt;-<span class="st"> </span>airbnb <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb206-2"><a href="regressão-logística-opcional.html#cb206-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">prediction.logit =</span> <span class="kw">predict</span>(logistic.model, airbnb),</span>
-<span id="cb206-3"><a href="regressão-logística-opcional.html#cb206-3"></a>         <span class="dt">prediction.odds =</span> <span class="kw">exp</span>(prediction.logit),</span>
-<span id="cb206-4"><a href="regressão-logística-opcional.html#cb206-4"></a>         <span class="dt">prediction.probability =</span> prediction.odds <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span><span class="op">+</span>prediction.odds))</span>
-<span id="cb206-5"><a href="regressão-logística-opcional.html#cb206-5"></a></span>
-<span id="cb206-6"><a href="regressão-logística-opcional.html#cb206-6"></a><span class="co"># Inspecionando as probabilidades preditas</span></span>
-<span id="cb206-7"><a href="regressão-logística-opcional.html#cb206-7"></a><span class="kw">head</span>(airbnb<span class="op">$</span>prediction.probability)</span></code></pre></div>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="regressão-logística-opcional.html#cb190-1"></a>airbnb &lt;-<span class="st"> </span>airbnb <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb190-2"><a href="regressão-logística-opcional.html#cb190-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">prediction.logit =</span> <span class="kw">predict</span>(logistic.model, airbnb),</span>
+<span id="cb190-3"><a href="regressão-logística-opcional.html#cb190-3"></a>         <span class="dt">prediction.odds =</span> <span class="kw">exp</span>(prediction.logit),</span>
+<span id="cb190-4"><a href="regressão-logística-opcional.html#cb190-4"></a>         <span class="dt">prediction.probability =</span> prediction.odds <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span><span class="op">+</span>prediction.odds))</span>
+<span id="cb190-5"><a href="regressão-logística-opcional.html#cb190-5"></a></span>
+<span id="cb190-6"><a href="regressão-logística-opcional.html#cb190-6"></a><span class="co"># Inspecionando as probabilidades preditas</span></span>
+<span id="cb190-7"><a href="regressão-logística-opcional.html#cb190-7"></a><span class="kw">head</span>(airbnb<span class="op">$</span>prediction.probability)</span></code></pre></div>
 <pre><code>##           1           2           3           4           5           6 
 ## 0.008242034 0.011562542 0.017132489 0.009763496 0.016198950 0.007789092</code></pre>
 <p>Os primeiros números são probabilidades muito baixas, mas também existem probabilidades mais altas e todas as previsões estão entre 0 e 1, como deveriam. Agora precisamos decidir qual probabilidade é suficiente para prevermos que uma listagem é uma gem ou não.</p>
 <p>Uma escolha óbvia é uma probabilidade de 0,5: uma probabilidade maior que 0,5 significa que prevemos que é mais provável que uma listagem seja uma gem do que não. Vamos converter probabilidades em previsões:</p>
-<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="regressão-logística-opcional.html#cb208-1"></a>airbnb &lt;-<span class="st"> </span>airbnb <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb208-2"><a href="regressão-logística-opcional.html#cb208-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">prediction =</span> <span class="kw">case_when</span>(prediction.probability<span class="op">&lt;=</span>.<span class="dv">50</span> <span class="op">~</span><span class="st"> &quot;no gem&quot;</span>,</span>
-<span id="cb208-3"><a href="regressão-logística-opcional.html#cb208-3"></a>                                prediction.probability<span class="op">&gt;</span><span class="st"> </span><span class="fl">.50</span> <span class="op">~</span><span class="st"> &quot;gem&quot;</span>))</span>
-<span id="cb208-4"><a href="regressão-logística-opcional.html#cb208-4"></a></span>
-<span id="cb208-5"><a href="regressão-logística-opcional.html#cb208-5"></a><span class="co"># Inspecinando as predicoes</span></span>
-<span id="cb208-6"><a href="regressão-logística-opcional.html#cb208-6"></a><span class="kw">head</span>(airbnb<span class="op">$</span>prediction)</span></code></pre></div>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="regressão-logística-opcional.html#cb192-1"></a>airbnb &lt;-<span class="st"> </span>airbnb <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb192-2"><a href="regressão-logística-opcional.html#cb192-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">prediction =</span> <span class="kw">case_when</span>(prediction.probability<span class="op">&lt;=</span>.<span class="dv">50</span> <span class="op">~</span><span class="st"> &quot;no gem&quot;</span>,</span>
+<span id="cb192-3"><a href="regressão-logística-opcional.html#cb192-3"></a>                                prediction.probability<span class="op">&gt;</span><span class="st"> </span><span class="fl">.50</span> <span class="op">~</span><span class="st"> &quot;gem&quot;</span>))</span>
+<span id="cb192-4"><a href="regressão-logística-opcional.html#cb192-4"></a></span>
+<span id="cb192-5"><a href="regressão-logística-opcional.html#cb192-5"></a><span class="co"># Inspecinando as predicoes</span></span>
+<span id="cb192-6"><a href="regressão-logística-opcional.html#cb192-6"></a><span class="kw">head</span>(airbnb<span class="op">$</span>prediction)</span></code></pre></div>
 <pre><code>## [1] &quot;no gem&quot; &quot;no gem&quot; &quot;no gem&quot; &quot;no gem&quot; &quot;no gem&quot; &quot;no gem&quot;</code></pre>
 <p>Uma etapa final é comparar previsões com observações:</p>
-<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="regressão-logística-opcional.html#cb210-1"></a><span class="kw">table</span>(airbnb<span class="op">$</span>prediction, airbnb<span class="op">$</span>gem)</span></code></pre></div>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="regressão-logística-opcional.html#cb194-1"></a><span class="kw">table</span>(airbnb<span class="op">$</span>prediction, airbnb<span class="op">$</span>gem)</span></code></pre></div>
 <pre><code>##         
 ##          no gem   gem
 ##   no gem  16471  1180</code></pre>
 <p>Normalmente, vemos uma tabela 2x2, mas vemos uma tabela com um valor previsto nas linhas e dois valores observados nas colunas. Isso ocorre porque todas as probabilidades previstas estão abaixo de 0,50 e, portanto, sempre previmos que não há gemas. Vamos reduzir o limite para prever que uma listagem é uma gem:</p>
-<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="regressão-logística-opcional.html#cb212-1"></a>airbnb &lt;-<span class="st"> </span>airbnb <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb212-2"><a href="regressão-logística-opcional.html#cb212-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">prediction =</span> <span class="kw">case_when</span>(prediction.probability<span class="op">&lt;=</span>.<span class="dv">07</span> <span class="op">~</span><span class="st"> &quot;no gem&quot;</span>,</span>
-<span id="cb212-3"><a href="regressão-logística-opcional.html#cb212-3"></a>                                prediction.probability<span class="op">&gt;</span><span class="st"> </span><span class="fl">.07</span> <span class="op">~</span><span class="st"> &quot;gem&quot;</span>),</span>
-<span id="cb212-4"><a href="regressão-logística-opcional.html#cb212-4"></a>         <span class="dt">prediction =</span> <span class="kw">factor</span>(prediction, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;no gem&quot;</span>,<span class="st">&quot;gem&quot;</span>)))<span class="co"># verifique se nenhuma joia eh o primeiro nivel do nosso fator</span></span>
-<span id="cb212-5"><a href="regressão-logística-opcional.html#cb212-5"></a></span>
-<span id="cb212-6"><a href="regressão-logística-opcional.html#cb212-6"></a><span class="co"># Observando a tabela</span></span>
-<span id="cb212-7"><a href="regressão-logística-opcional.html#cb212-7"></a><span class="kw">table</span>(airbnb<span class="op">$</span>prediction,airbnb<span class="op">$</span>gem)</span></code></pre></div>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="regressão-logística-opcional.html#cb196-1"></a>airbnb &lt;-<span class="st"> </span>airbnb <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb196-2"><a href="regressão-logística-opcional.html#cb196-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">prediction =</span> <span class="kw">case_when</span>(prediction.probability<span class="op">&lt;=</span>.<span class="dv">07</span> <span class="op">~</span><span class="st"> &quot;no gem&quot;</span>,</span>
+<span id="cb196-3"><a href="regressão-logística-opcional.html#cb196-3"></a>                                prediction.probability<span class="op">&gt;</span><span class="st"> </span><span class="fl">.07</span> <span class="op">~</span><span class="st"> &quot;gem&quot;</span>),</span>
+<span id="cb196-4"><a href="regressão-logística-opcional.html#cb196-4"></a>         <span class="dt">prediction =</span> <span class="kw">factor</span>(prediction, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;no gem&quot;</span>,<span class="st">&quot;gem&quot;</span>)))<span class="co"># verifique se nenhuma joia eh o primeiro nivel do nosso fator</span></span>
+<span id="cb196-5"><a href="regressão-logística-opcional.html#cb196-5"></a></span>
+<span id="cb196-6"><a href="regressão-logística-opcional.html#cb196-6"></a><span class="co"># Observando a tabela</span></span>
+<span id="cb196-7"><a href="regressão-logística-opcional.html#cb196-7"></a><span class="kw">table</span>(airbnb<span class="op">$</span>prediction,airbnb<span class="op">$</span>gem)</span></code></pre></div>
 <pre><code>##         
 ##          no gem   gem
 ##   no gem  11240   854

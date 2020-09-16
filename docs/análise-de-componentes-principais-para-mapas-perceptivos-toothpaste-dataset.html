@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Análise de componentes principais para mapas perceptivos (toothpaste dataset) | R para Estudantes de Marketing</title>
+  <meta name="description" content="Análise de componentes principais para mapas perceptivos (toothpaste dataset) | R para Estudantes de Marketing" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Análise de componentes principais para mapas perceptivos (toothpaste dataset) | R para Estudantes de Marketing" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Análise de componentes principais para mapas perceptivos (toothpaste dataset) | R para Estudantes de Marketing" />
+  
+  
+  
+
+<meta name="author" content="KU Leuven Marketing department (tradução: Rodrigo Hermont Ozon)" />
+
+
+<meta name="date" content="2020-09-16" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"/>
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">R para Estudantes de Marketing</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Sobre o autor desta tradução</a><ul>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#resumo"><i class="fa fa-check"></i>Resumo</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="sobre-este-tutorial.html"><a href="sobre-este-tutorial.html"><i class="fa fa-check"></i>Sobre este tutorial</a><ul>
+<li class="chapter" data-level="" data-path="sobre-este-tutorial.html"><a href="sobre-este-tutorial.html#download-e-instalação-do-r-e-do-rstudio"><i class="fa fa-check"></i>Download e instalação do R e do RStudio</a></li>
+<li class="chapter" data-level="" data-path="sobre-este-tutorial.html"><a href="sobre-este-tutorial.html#obtendo-familiaridade-com-o-studio"><i class="fa fa-check"></i>Obtendo familiaridade com o Studio</a><ul>
+<li class="chapter" data-level="" data-path="sobre-este-tutorial.html"><a href="sobre-este-tutorial.html#console-vs.-script"><i class="fa fa-check"></i>Console vs. script</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="sobre-este-tutorial.html"><a href="sobre-este-tutorial.html#comentários"><i class="fa fa-check"></i>Comentários</a></li>
+<li class="chapter" data-level="" data-path="sobre-este-tutorial.html"><a href="sobre-este-tutorial.html#pacotes"><i class="fa fa-check"></i>Pacotes</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html"><i class="fa fa-check"></i>Introdução ao R</a><ul>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#importando-dados"><i class="fa fa-check"></i>Importando dados</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#importando-arquivos-.csv"><i class="fa fa-check"></i>Importando arquivos .csv</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#ajustando-seu-diretório-de-trabalho"><i class="fa fa-check"></i>Ajustando seu diretório de trabalho</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#atribuindo-dados-a-objetos"><i class="fa fa-check"></i>Atribuindo dados a objetos</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#importando-arquivos-do-excel"><i class="fa fa-check"></i>Importando arquivos do Excel</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#lendo-os-dados-do-airbnb"><i class="fa fa-check"></i>Lendo os dados do Airbnb</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#manipulando-dataframes"><i class="fa fa-check"></i>Manipulando dataframes</a><ul>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#transformando-variáveis"><i class="fa fa-check"></i>Transformando variáveis</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#transformações-numéricas"><i class="fa fa-check"></i>Transformações numéricas</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#transformando-variáveis-com-a-função-mutate"><i class="fa fa-check"></i>Transformando variáveis com a função mutate</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#incluindo-ou-excluindo-e-renomeando-variáveis-colunas"><i class="fa fa-check"></i>Incluindo ou excluindo e renomeando variáveis (colunas)</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#incluindo-ou-excluindo-observações-linhas"><i class="fa fa-check"></i>Incluindo ou excluindo observações (linhas)</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#o-operador-pipe"><i class="fa fa-check"></i>O operador pipe</a><ul>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#uma-maneira-de-escrever-o-código"><i class="fa fa-check"></i>Uma maneira de escrever o código</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#agrupando-e-resumindo"><i class="fa fa-check"></i>Agrupando e resumindo</a><ul>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#tabelas-de-frequência"><i class="fa fa-check"></i>Tabelas de frequência</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#estatísticas-descritivas"><i class="fa fa-check"></i>Estatísticas Descritivas</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#exportando-summaries-dos-dados"><i class="fa fa-check"></i>Exportando (summaries) dos dados</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#gráficos"><i class="fa fa-check"></i>Gráficos</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#diagrama-de-dispersão-scatterplot"><i class="fa fa-check"></i>Diagrama de dispersão (scatterplot)</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#jitter"><i class="fa fa-check"></i>Jitter</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#histograma"><i class="fa fa-check"></i>Histograma</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#transformação-logarítmica"><i class="fa fa-check"></i>Transformação logarítmica</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#plotando-a-mediana"><i class="fa fa-check"></i>Plotando a mediana</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#plotando-a-média"><i class="fa fa-check"></i>Plotando a média</a></li>
+<li class="chapter" data-level="" data-path="introdução-ao-r.html"><a href="introdução-ao-r.html#salvando-imagens"><i class="fa fa-check"></i>Salvando imagens</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html"><i class="fa fa-check"></i>Análise básica de dados: analisando dados secundários</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#dados"><i class="fa fa-check"></i>Dados</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#importação"><i class="fa fa-check"></i>Importação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#manipulação"><i class="fa fa-check"></i>Manipulação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#mesclando-datasets"><i class="fa fa-check"></i>Mesclando datasets</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#recapitulando-importação-e-manipulação"><i class="fa fa-check"></i>Recapitulando: importação e manipulação</a></li>
+<li><a href="análise-básica-de-dados-analisando-dados-secundários.html#amostras-independentes-teste-t">Amostras independentes: teste <span class="math inline">\(t\)</span></a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#anova-univariada"><i class="fa fa-check"></i>ANOVA univariada</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#suposição-de-normalidade-de-resíduos"><i class="fa fa-check"></i>Suposição de normalidade de resíduos</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#suposição-homogeneidade-de-variâncias"><i class="fa fa-check"></i>Suposição: homogeneidade de variâncias</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#anova"><i class="fa fa-check"></i>ANOVA</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#teste-de-tuckey-de-diferença-significativa-verdadeira"><i class="fa fa-check"></i>Teste de Tuckey de diferença significativa verdadeira</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="regressão-linear.html"><a href="regressão-linear.html"><i class="fa fa-check"></i>Regressão Linear</a><ul>
+<li class="chapter" data-level="" data-path="regressão-linear.html"><a href="regressão-linear.html#regressão-linear-simples"><i class="fa fa-check"></i>Regressão Linear Simples</a></li>
+<li class="chapter" data-level="" data-path="regressão-linear.html"><a href="regressão-linear.html#correlação"><i class="fa fa-check"></i>Correlação</a></li>
+<li class="chapter" data-level="" data-path="regressão-linear.html"><a href="regressão-linear.html#regressão-linear-múltipla-com-interação"><i class="fa fa-check"></i>Regressão linear múltipla, com interação</a></li>
+<li class="chapter" data-level="" data-path="regressão-linear.html"><a href="regressão-linear.html#premissas"><i class="fa fa-check"></i>Premissas</a></li>
+<li class="chapter" data-level="" data-path="regressão-linear.html"><a href="regressão-linear.html#normalidade-de-resíduos"><i class="fa fa-check"></i>Normalidade de resíduos</a></li>
+<li class="chapter" data-level="" data-path="regressão-linear.html"><a href="regressão-linear.html#homocedasticidade-de-resíduos"><i class="fa fa-check"></i>Homocedasticidade de resíduos</a></li>
+<li class="chapter" data-level="" data-path="regressão-linear.html"><a href="regressão-linear.html#multicolinearidade"><i class="fa fa-check"></i>Multicolinearidade</a></li>
+<li><a href="regressão-linear.html#teste-chi2">Teste <span class="math inline">\(\chi^{2}\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="regressão-logística-opcional.html"><a href="regressão-logística-opcional.html"><i class="fa fa-check"></i>Regressão Logística (opcional)</a><ul>
+<li class="chapter" data-level="" data-path="regressão-logística-opcional.html"><a href="regressão-logística-opcional.html#medindo-o-ajuste-de-uma-regressão-logística-porcentagem-classificada-corretamente"><i class="fa fa-check"></i>Medindo o ajuste de uma regressão logística: porcentagem classificada corretamente</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-experimentos.html"><a href="análise-básica-de-dados-experimentos.html"><i class="fa fa-check"></i>Análise Básica de Dados: Experimentos</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#dados"><i class="fa fa-check"></i>Dados</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#importação"><i class="fa fa-check"></i>Importação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#manipulação"><i class="fa fa-check"></i>Manipulação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-experimentos.html"><a href="análise-básica-de-dados-experimentos.html#fatorar-algumas-variáveis"><i class="fa fa-check"></i>Fatorar algumas variáveis</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-experimentos.html"><a href="análise-básica-de-dados-experimentos.html#calcular-a-consistência-interna-e-a-média-de-perguntas-que-medem-o-mesmo-conceito"><i class="fa fa-check"></i>Calcular a consistência interna e a média de perguntas que medem o mesmo conceito</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-experimentos.html"><a href="análise-básica-de-dados-experimentos.html#recapitulando-importando-e-manipulando"><i class="fa fa-check"></i>Recapitulando: importando e manipulando</a></li>
+</ul></li>
+<li><a href="análise-básica-de-dados-experimentos.html#teste-t">Teste <span class="math inline">\(t\)</span></a><ul>
+<li><a href="análise-básica-de-dados-experimentos.html#teste-t-para-amostras-independentes">Teste <span class="math inline">\(t\)</span> para amostras independentes</a></li>
+<li><a href="análise-básica-de-dados-experimentos.html#teste-t-para-amostras-dependentes">Teste <span class="math inline">\(t\)</span> para amostras dependentes</a></li>
+<li><a href="análise-básica-de-dados-experimentos.html#teste-t-para-amostra-única">Teste <span class="math inline">\(t\)</span> para amostra única</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-experimentos.html"><a href="análise-básica-de-dados-experimentos.html#anova-bivariada"><i class="fa fa-check"></i>ANOVA Bivariada</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-experimentos.html"><a href="análise-básica-de-dados-experimentos.html#seguindo-com-contrastes"><i class="fa fa-check"></i>Seguindo com contrastes</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-experimentos.html"><a href="análise-básica-de-dados-experimentos.html#análise-de-moderação-interação-entre-variáveis-independentes-contínuas-e-categóricas"><i class="fa fa-check"></i>Análise de moderação: interação entre variáveis independentes contínuas e categóricas</a><ul>
+<li><a href="análise-básica-de-dados-experimentos.html#análise-spotlight">Análise <em>spotlight</em></a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-experimentos.html"><a href="análise-básica-de-dados-experimentos.html#análise-ancova"><i class="fa fa-check"></i>Análise ANCOVA</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-experimentos.html"><a href="análise-básica-de-dados-experimentos.html#medidas-repetidas-anova"><i class="fa fa-check"></i>Medidas repetidas ANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><i class="fa fa-check"></i>Análise de componentes principais para mapas perceptivos (office dataset)</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#dados"><i class="fa fa-check"></i>Dados</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#importação"><i class="fa fa-check"></i>Importação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#manipulação"><i class="fa fa-check"></i>Manipulação</a></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#recapitulação-importação-e-manipulação"><i class="fa fa-check"></i>Recapitulação: importação e manipulação</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#quantos-fatores-devemos-considerar"><i class="fa fa-check"></i>Quantos fatores devemos considerar ?</a></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#análise-de-componentes-principais"><i class="fa fa-check"></i>Análise de Componentes Principais</a><ul>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cargas-fatoriais"><i class="fa fa-check"></i>Cargas fatoriais</a></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#plotando-as-cargas-fatoriais"><i class="fa fa-check"></i>Plotando as cargas fatoriais</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html"><i class="fa fa-check"></i>Análise de componentes principais para mapas perceptivos (toothpaste dataset)</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#dados"><i class="fa fa-check"></i>Dados</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#importação"><i class="fa fa-check"></i>Importação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#manipulação"><i class="fa fa-check"></i>Manipulação</a></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#recapitulação-importação-e-manipulação"><i class="fa fa-check"></i>Recapitulação: importação e manipulação</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#quantos-fatores-devemos-considerar"><i class="fa fa-check"></i>Quantos fatores devemos considerar ?</a></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#análise-de-componentes-principais"><i class="fa fa-check"></i>Análise de Componentes Principais</a><ul>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cargas-fatoriais"><i class="fa fa-check"></i>Cargas fatoriais</a></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#gráfico-das-cargas-fatoriais"><i class="fa fa-check"></i>Gráfico das cargas fatoriais</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R para Estudantes de Marketing</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset" class="section level1 unlisted unnumbered">
+<h1>Análise de componentes principais para mapas perceptivos (toothpaste dataset)</h1>
+<p>Neste capítulo, você aprenderá como realizar uma análise de componentes principais e visualizar os resultados em um mapa perceptivo.</p>
+<p>Digamos que tenhamos um conjunto de observações que diferem entre si em várias dimensões; por exemplo, temos várias marcas de uísque (observações) classificadas em vários atributos, como corpo, doçura, sabor, etc. (dimensões ) Se algumas dessas dimensões estiverem fortemente correlacionadas, deve ser possível descrever as observações por um número menor (que o original) de dimensões sem perder muita informação. Por exemplo, doçura e frutificação podem ser altamente correlacionadas e, portanto, podem ser substituídas por uma variável. Essa redução de dimensionalidade é o objetivo da análise de componentes principais.</p>
+<div id="dados" class="section level2 unlisted unnumbered">
+<h2>Dados</h2>
+<div id="importação" class="section level3 unlisted unnumbered">
+<h3>Importação</h3>
+<p>Analisaremos os dados de uma pesquisa na qual 60 consumidores foram convidados a responder a seis perguntas sobre pasta de dente. Esses dados foram coletados pelos criadores do Radiant}, que é um pacote do R para análise de negócios que usaremos posteriormente. Faça o download dos dados <a href="http://users.telenet.be/samuelfranssens/tutorial_data/toothpaste.xlsx">aqui</a> e importe-os para o R:</p>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb287-1"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb287-2"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb287-2"></a><span class="kw">library</span>(readxl)</span>
+<span id="cb287-3"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb287-3"></a></span>
+<span id="cb287-4"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb287-4"></a></span>
+<span id="cb287-5"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb287-5"></a></span>
+<span id="cb287-6"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb287-6"></a>url&lt;-<span class="st">&quot;http://users.telenet.be/samuelfranssens/tutorial_data/toothpaste.xlsx&quot;</span></span>
+<span id="cb287-7"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb287-7"></a>toothpaste &lt;-<span class="st"> </span><span class="kw">tempfile</span>()</span>
+<span id="cb287-8"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb287-8"></a><span class="kw">download.file</span>(url, toothpaste, <span class="dt">mode=</span><span class="st">&quot;wb&quot;</span>)</span>
+<span id="cb287-9"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb287-9"></a>toothpaste&lt;-<span class="kw">read_excel</span>(<span class="dt">path =</span> toothpaste, <span class="dt">sheet =</span> <span class="dv">1</span>)</span>
+<span id="cb287-10"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb287-10"></a></span>
+<span id="cb287-11"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb287-11"></a>toothpaste</span></code></pre></div>
+<pre><code>## # A tibble: 60 x 9
+##    consumer prevents_caviti~ shiny_teeth strengthens_gums freshens_breath decay_preventio~
+##       &lt;dbl&gt;            &lt;dbl&gt;       &lt;dbl&gt;            &lt;dbl&gt;           &lt;dbl&gt;            &lt;dbl&gt;
+##  1        1                7           3                6               4                2
+##  2        2                1           3                2               4                5
+##  3        3                6           2                7               4                1
+##  4        4                4           5                4               6                2
+##  5        5                1           2                2               3                6
+##  6        6                6           3                6               4                2
+##  7        7                5           3                6               3                4
+##  8        8                6           4                7               4                1
+##  9        9                3           4                2               3                6
+## 10       10                2           6                2               6                7
+## # ... with 50 more rows, and 3 more variables: attractive_teeth &lt;dbl&gt;, age &lt;dbl&gt;,
+## #   gender &lt;chr&gt;</code></pre>
+</div>
+<div id="manipulação" class="section level3 unlisted unnumbered">
+<h3>Manipulação</h3>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb289-1"></a>toothpaste <span class="co"># Visualiza os dados</span></span></code></pre></div>
+<pre><code>## # A tibble: 60 x 9
+##    consumer prevents_caviti~ shiny_teeth strengthens_gums freshens_breath decay_preventio~
+##       &lt;dbl&gt;            &lt;dbl&gt;       &lt;dbl&gt;            &lt;dbl&gt;           &lt;dbl&gt;            &lt;dbl&gt;
+##  1        1                7           3                6               4                2
+##  2        2                1           3                2               4                5
+##  3        3                6           2                7               4                1
+##  4        4                4           5                4               6                2
+##  5        5                1           2                2               3                6
+##  6        6                6           3                6               4                2
+##  7        7                5           3                6               3                4
+##  8        8                6           4                7               4                1
+##  9        9                3           4                2               3                6
+## 10       10                2           6                2               6                7
+## # ... with 50 more rows, and 3 more variables: attractive_teeth &lt;dbl&gt;, age &lt;dbl&gt;,
+## #   gender &lt;chr&gt;</code></pre>
+<p>O conjunto de dados consiste em um identificador, consumer}, e as classificações do entrevistado sobre a importância de seis atributos de pasta de dente: prevents_cavities, shiny_teeth, strengthens_gums, freshens_breath, decay_prevention_unimportant, and attractive_teeth. Nos também temos os respondentes age e gender.</p>
+<p>Vamos fatorar o identificador e o gender
+:</p>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb291-1"></a>toothpaste &lt;-<span class="st"> </span>toothpaste <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb291-2"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb291-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">consumer =</span> <span class="kw">factor</span>(consumer),</span>
+<span id="cb291-3"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb291-3"></a>         <span class="dt">gender =</span> <span class="kw">factor</span>(gender))</span></code></pre></div>
+</div>
+<div id="recapitulação-importação-e-manipulação" class="section level3 unlisted unnumbered">
+<h3>Recapitulação: importação e manipulação</h3>
+<p>Aqui está o que fizemos até agora, em uma sequência ordenada de operações canalizadas (faça o download dos dados <a href="http://users.telenet.be/samuelfranssens/tutorial_data/toothpaste.xlsx">aqui</a> :</p>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb292-1"></a><span class="co">#library(tidyverse)</span></span>
+<span id="cb292-2"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb292-2"></a><span class="co">#library(readxl)</span></span>
+<span id="cb292-3"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb292-3"></a></span>
+<span id="cb292-4"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb292-4"></a><span class="co">#toothpaste &lt;- read_excel(&quot;toothpaste.xlsx&quot;)</span></span>
+<span id="cb292-5"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb292-5"></a><span class="co">#  mutate(consumer = factor(consumer),</span></span>
+<span id="cb292-6"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb292-6"></a>     <span class="co">#    gender = factor(gender))</span></span></code></pre></div>
+</div>
+</div>
+<div id="quantos-fatores-devemos-considerar" class="section level2 unlisted unnumbered">
+<h2>Quantos fatores devemos considerar ?</h2>
+<p>O objetivo da análise de componentes principais é reduzir o número de dimensões que descrevem nossos dados, sem perder muitas informações. O primeiro passo na análise de componentes principais é decidir o número de componentes ou fatores principais que queremos manter. Para nos ajudar a decidir, usaremos a função pre_factor do pacote radiant:</p>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb293-1"></a><span class="co">#install.packages(&quot;radiant&quot;)</span></span>
+<span id="cb293-2"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb293-2"></a><span class="kw">library</span>(radiant)</span>
+<span id="cb293-3"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb293-3"></a></span>
+<span id="cb293-4"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb293-4"></a><span class="co"># armazene os nomes das dimensoes em um vetor para que nao tenhamos que digita-las repetidamente</span></span>
+<span id="cb293-5"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb293-5"></a></span>
+<span id="cb293-6"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb293-6"></a>dimensions &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;prevents_cavities&quot;</span>, <span class="st">&quot;shiny_teeth&quot;</span>, <span class="st">&quot;strengthens_gums&quot;</span>, <span class="st">&quot;freshens_breath&quot;</span>, <span class="st">&quot;decay_prevention_unimportant&quot;</span>, <span class="st">&quot;attractive_teeth&quot;</span>) </span>
+<span id="cb293-7"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb293-7"></a></span>
+<span id="cb293-8"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb293-8"></a><span class="co"># dica: tambem poderiamos fazer o seguinte:</span></span>
+<span id="cb293-9"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb293-9"></a></span>
+<span id="cb293-10"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb293-10"></a><span class="co"># dimensions &lt;- toothpaste %&gt;% select(-consumer, -gender, -age) %&gt;% names()</span></span>
+<span id="cb293-11"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb293-11"></a></span>
+<span id="cb293-12"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb293-12"></a><span class="kw">summary</span>(<span class="kw">pre_factor</span>(toothpaste, <span class="dt">vars =</span> dimensions))</span></code></pre></div>
+<pre><code>## Pre-factor analysis diagnostics
+## Data        : toothpaste 
+## Variables   : prevents_cavities, shiny_teeth, strengthens_gums, freshens_breath, decay_prevention_unimportant, attractive_teeth 
+## Observations: 60 
+## Correlation : Pearson
+## 
+## Bartlett test
+## Null hyp. : variables are not correlated
+## Alt. hyp. : variables are correlated
+## Chi-square: 238.93 df(15), p.value &lt; .001
+## 
+## KMO test:  0.66 
+## 
+## Variable collinearity:
+##                               Rsq  KMO
+## prevents_cavities            0.86 0.62
+## shiny_teeth                  0.48 0.70
+## strengthens_gums             0.81 0.68
+## freshens_breath              0.54 0.64
+## decay_prevention_unimportant 0.76 0.77
+## attractive_teeth             0.59 0.56
+## 
+## Fit measures:
+##      Eigenvalues Variance % Cumulative %
+##  PC1        2.73       0.46         0.46
+##  PC2        2.22       0.37         0.82
+##  PC3        0.44       0.07         0.90
+##  PC4        0.34       0.06         0.96
+##  PC5        0.18       0.03         0.99
+##  PC6        0.09       0.01         1.00</code></pre>
+<p>Nas Fit measures, vemos que dois componentes explicam 82% da variação nas classificações. Isso já é bastante e sugere que podemos reduzir com segurança o número de dimensões para dois componentes. Uma regra prática aqui é que a variação cumulativa explicada pelos componentes deve ser de pelo menos 70%.</p>
+</div>
+<div id="análise-de-componentes-principais" class="section level2 unlisted unnumbered">
+<h2>Análise de Componentes Principais</h2>
+<p>Vamos extrair somente dois componentes ou fatores:</p>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb295-1"></a><span class="kw">summary</span>(<span class="kw">full_factor</span>(toothpaste, dimensions, <span class="dt">nr_fact =</span> <span class="dv">2</span>))</span></code></pre></div>
+<pre><code>## Factor analysis
+## Data        : toothpaste 
+## Variables   : prevents_cavities, shiny_teeth, strengthens_gums, freshens_breath, decay_prevention_unimportant, attractive_teeth 
+## Factors     : 2 
+## Method      : PCA 
+## Rotation    : varimax 
+## Observations: 60 
+## Correlation : Pearson
+## 
+## Factor loadings:
+##                                RC1   RC2
+## prevents_cavities             0.96 -0.03
+## shiny_teeth                  -0.05  0.85
+## strengthens_gums              0.93 -0.15
+## freshens_breath              -0.09  0.85
+## decay_prevention_unimportant -0.93 -0.08
+## attractive_teeth              0.09  0.88
+## 
+## Fit measures:
+##               RC1  RC2
+## Eigenvalues  2.69 2.26
+## Variance %   0.45 0.38
+## Cumulative % 0.45 0.82
+## 
+## Attribute communalities:                                   
+## prevents_cavities            92.59%
+## shiny_teeth                  72.27%
+## strengthens_gums             89.36%
+## freshens_breath              73.91%
+## decay_prevention_unimportant 87.78%
+## attractive_teeth             79.01%
+## 
+## Factor scores (max 10 shown):
+##    RC1   RC2
+##   1.15 -0.30
+##  -1.17 -0.34
+##   1.29 -0.86
+##   0.29  1.11
+##  -1.43 -1.49
+##   0.97 -0.31
+##   0.39 -0.94
+##   1.33 -0.03
+##  -1.02 -0.64
+##  -1.31  1.56</code></pre>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb297-1"></a><span class="co"># Peça dois fatores preenchendo o argumento nr_fact.</span></span></code></pre></div>
+<div id="cargas-fatoriais" class="section level3 unlisted unnumbered">
+<h3>Cargas fatoriais</h3>
+<p>Veja a tabela abaixo do Factor loadings. Essas cargas são as correlações entre as dimensões originais (prevents_cavities, shiny_teeth, etc.) e os dois fatores que são retidos (RC1 e RC2). Nós vemos que prevents_cavities, strengthens_gums, e decay_prevention_unimportant pontuação alta no primeiro fator, enquanto shiny_teeth, strengthens_gums, e freshens_breath pontuação alta no segundo fator. Poderíamos, portanto, dizer que o primeiro fator descreve preocupações relacionadas à saúde e que o segundo fator descreve preocupações relacionadas à aparência.</p>
+<p>Também queremos saber quanto cada uma das seis dimensões é explicada pelos fatores extraídos. Para isso, podemos observar a comunalidade das dimensões (cabeçalho: Attribute communalities). A comunalidade de uma variável é a porcentagem da variação dessa variável que é explicada pelos fatores. Seu complemento é chamado de exclusividade (= 1-comunalidade). A exclusividade pode ser puro erro de medição ou pode representar algo que é medido de forma confiável por essa variável específica, mas não por nenhuma das outras variáveis. Quanto maior a exclusividade, maior a probabilidade de que seja mais do que apenas erro de medição. Uma exclusividade superior a 0,6 é geralmente considerada alta. Se a exclusividade for alta, a variável não será bem explicada pelos fatores. Vemos que, para todas as dimensões, a comunalidade é alta e, portanto, a singularidade é baixa; portanto, todas as dimensões são bem capturadas pelos fatores extraídos.</p>
+</div>
+<div id="gráfico-das-cargas-fatoriais" class="section level3 unlisted unnumbered">
+<h3>Gráfico das cargas fatoriais</h3>
+<p>Também podemos traçar as cargas. Para isso, usaremos dois pacotes:</p>
+<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb298-1"></a><span class="co">#install.packages(&quot;FactoMiner&quot;)</span></span>
+<span id="cb298-2"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb298-2"></a><span class="co">#install.packages(&quot;factoextra&quot;)</span></span>
+<span id="cb298-3"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb298-3"></a><span class="kw">library</span>(FactoMineR)</span>
+<span id="cb298-4"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb298-4"></a><span class="kw">library</span>(factoextra)</span>
+<span id="cb298-5"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb298-5"></a>toothpaste <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># take dataset</span></span>
+<span id="cb298-6"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb298-6"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>consumer,<span class="op">-</span>age,<span class="op">-</span>gender) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># somente duas dimensoes</span></span>
+<span id="cb298-7"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb298-7"></a><span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># converter em um objeto data.frame, caso contrário, o PCA não o aceitará</span></span>
+<span id="cb298-8"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb298-8"></a><span class="st">  </span><span class="kw">PCA</span>(<span class="dt">ncp =</span> <span class="dv">2</span>, <span class="dt">graph =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># faça uma análise de componentes principais e retenha 2 fatores</span></span>
+<span id="cb298-9"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb298-9"></a><span class="st">  </span><span class="kw">fviz_pca_var</span>(<span class="dt">repel =</span> <span class="ot">TRUE</span>) <span class="co"># pegue essa análise e a transforme em uma visualização</span></span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-166-1.png" width="672" /></p>
+<p>Vemos que attractive_teeth, shiny_teeth, freshens_breath, têm pontuações altas no segundo fator (o Dim2 do eixo X). prevents_cavities e strengthens_gums têm pontuações altas no segundo fator (o eixo Y Dim2) e decay_prevention_unimportant tem uma pontuação baixa nesse fator (essa variável mede a importância da prevenção da cárie).</p>
+<p>Também podemos adicionar as observações (os diferentes consumidores) a esse gráfico:</p>
+<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb299-1"></a>toothpaste <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># pega os dados</span></span>
+<span id="cb299-2"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb299-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>consumer,<span class="op">-</span>age,<span class="op">-</span>gender) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># obtem as dimensoes somente</span></span>
+<span id="cb299-3"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb299-3"></a><span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># converte em data.frame object, caso contratio PCA nao aceita</span></span>
+<span id="cb299-4"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb299-4"></a><span class="st">  </span><span class="kw">PCA</span>(<span class="dt">ncp =</span> <span class="dv">2</span>, <span class="dt">graph =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># faz o pca e retem 2 fatores</span></span>
+<span id="cb299-5"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#cb299-5"></a><span class="st">  </span><span class="kw">fviz_pca_biplot</span>(<span class="dt">repel =</span> <span class="ot">TRUE</span>) <span class="co">#faz o grafico</span></span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-167-1.png" width="672" /></p>
+<p>Isto também é conhecido como biplot.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rhozon/rparamkt/edit/master/06-pca2.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/rhozon/rparamkt/blob/master/06-pca2.Rmd",
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

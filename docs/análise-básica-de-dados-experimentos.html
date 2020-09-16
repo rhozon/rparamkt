@@ -236,6 +236,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#plotando-as-cargas-fatoriais"><i class="fa fa-check"></i>Plotando as cargas fatoriais</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html"><i class="fa fa-check"></i>Análise de componentes principais para mapas perceptivos (toothpaste dataset)</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#dados"><i class="fa fa-check"></i>Dados</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#importação"><i class="fa fa-check"></i>Importação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#manipulação"><i class="fa fa-check"></i>Manipulação</a></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#recapitulação-importação-e-manipulação"><i class="fa fa-check"></i>Recapitulação: importação e manipulação</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#quantos-fatores-devemos-considerar"><i class="fa fa-check"></i>Quantos fatores devemos considerar ?</a></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#análise-de-componentes-principais"><i class="fa fa-check"></i>Análise de Componentes Principais</a><ul>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cargas-fatoriais"><i class="fa fa-check"></i>Cargas fatoriais</a></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-toothpaste-dataset.html#gráfico-das-cargas-fatoriais"><i class="fa fa-check"></i>Gráfico das cargas fatoriais</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -285,19 +297,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="importação" class="section level3 unlisted unnumbered">
 <h3>Importação</h3>
 <p>Faça o download dos dados <a href="http://users.telenet.be/samuelfranssens/tutorial_data/power_conspicuous_consumption.xlsx">aqui</a>. Como sempre, salve os dados em um diretório (de preferência um backup automático do software de compartilhamento de arquivos) e inicie seu script carregando o tidyverse e definindo o diretório de trabalho no diretório em que você acabou de salvar seus dados:</p>
-<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="análise-básica-de-dados-experimentos.html#cb214-1"></a><span class="co">#library(tidyverse)</span></span>
-<span id="cb214-2"><a href="análise-básica-de-dados-experimentos.html#cb214-2"></a><span class="co">#library(readxl) # precisamos deste pacote pois nossos dados estao num arquivo Excel</span></span>
-<span id="cb214-3"><a href="análise-básica-de-dados-experimentos.html#cb214-3"></a><span class="co">#setwd(&quot;c:/dropbox/work/teaching/R/&quot;) # mudando para o nosso diretorio de trabalho</span></span>
-<span id="cb214-4"><a href="análise-básica-de-dados-experimentos.html#cb214-4"></a></span>
-<span id="cb214-5"><a href="análise-básica-de-dados-experimentos.html#cb214-5"></a><span class="co">#powercc &lt;- read_excel(&quot;power_conspicuous_consumption.xlsx&quot;,&quot;data&quot;) # Importe o arquivo Excel. Perceba que o nome da aba do Excel eh data</span></span></code></pre></div>
-<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="análise-básica-de-dados-experimentos.html#cb215-1"></a><span class="kw">library</span>(readxl)</span>
-<span id="cb215-2"><a href="análise-básica-de-dados-experimentos.html#cb215-2"></a></span>
-<span id="cb215-3"><a href="análise-básica-de-dados-experimentos.html#cb215-3"></a>url&lt;-<span class="st">&quot;http://users.telenet.be/samuelfranssens/tutorial_data/power_conspicuous_consumption.xlsx&quot;</span></span>
-<span id="cb215-4"><a href="análise-básica-de-dados-experimentos.html#cb215-4"></a>powercc &lt;-<span class="st"> </span><span class="kw">tempfile</span>()</span>
-<span id="cb215-5"><a href="análise-básica-de-dados-experimentos.html#cb215-5"></a><span class="kw">download.file</span>(url, powercc, <span class="dt">mode=</span><span class="st">&quot;wb&quot;</span>)</span>
-<span id="cb215-6"><a href="análise-básica-de-dados-experimentos.html#cb215-6"></a>powercc&lt;-<span class="kw">read_excel</span>(<span class="dt">path =</span> powercc, <span class="dt">sheet =</span> <span class="dv">1</span>)</span>
-<span id="cb215-7"><a href="análise-básica-de-dados-experimentos.html#cb215-7"></a></span>
-<span id="cb215-8"><a href="análise-básica-de-dados-experimentos.html#cb215-8"></a>powercc</span></code></pre></div>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="análise-básica-de-dados-experimentos.html#cb198-1"></a><span class="co">#library(tidyverse)</span></span>
+<span id="cb198-2"><a href="análise-básica-de-dados-experimentos.html#cb198-2"></a><span class="co">#library(readxl) # precisamos deste pacote pois nossos dados estao num arquivo Excel</span></span>
+<span id="cb198-3"><a href="análise-básica-de-dados-experimentos.html#cb198-3"></a><span class="co">#setwd(&quot;c:/dropbox/work/teaching/R/&quot;) # mudando para o nosso diretorio de trabalho</span></span>
+<span id="cb198-4"><a href="análise-básica-de-dados-experimentos.html#cb198-4"></a></span>
+<span id="cb198-5"><a href="análise-básica-de-dados-experimentos.html#cb198-5"></a><span class="co">#powercc &lt;- read_excel(&quot;power_conspicuous_consumption.xlsx&quot;,&quot;data&quot;) # Importe o arquivo Excel. Perceba que o nome da aba do Excel eh data</span></span></code></pre></div>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="análise-básica-de-dados-experimentos.html#cb199-1"></a><span class="kw">library</span>(readxl)</span>
+<span id="cb199-2"><a href="análise-básica-de-dados-experimentos.html#cb199-2"></a></span>
+<span id="cb199-3"><a href="análise-básica-de-dados-experimentos.html#cb199-3"></a>url&lt;-<span class="st">&quot;http://users.telenet.be/samuelfranssens/tutorial_data/power_conspicuous_consumption.xlsx&quot;</span></span>
+<span id="cb199-4"><a href="análise-básica-de-dados-experimentos.html#cb199-4"></a>powercc &lt;-<span class="st"> </span><span class="kw">tempfile</span>()</span>
+<span id="cb199-5"><a href="análise-básica-de-dados-experimentos.html#cb199-5"></a><span class="kw">download.file</span>(url, powercc, <span class="dt">mode=</span><span class="st">&quot;wb&quot;</span>)</span>
+<span id="cb199-6"><a href="análise-básica-de-dados-experimentos.html#cb199-6"></a>powercc&lt;-<span class="kw">read_excel</span>(<span class="dt">path =</span> powercc, <span class="dt">sheet =</span> <span class="dv">1</span>)</span>
+<span id="cb199-7"><a href="análise-básica-de-dados-experimentos.html#cb199-7"></a></span>
+<span id="cb199-8"><a href="análise-básica-de-dados-experimentos.html#cb199-8"></a>powercc</span></code></pre></div>
 <pre><code>## # A tibble: 147 x 39
 ##    subject start_date          end_date            duration finished power audience
 ##      &lt;dbl&gt; &lt;dttm&gt;              &lt;dttm&gt;                 &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   
@@ -341,38 +353,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="fatorar-algumas-variáveis" class="section level3 unlisted unnumbered">
 <h3>Fatorar algumas variáveis</h3>
 <p>Após a inspeção dos dados, vemos que o tipo de subject é duplo, o que significa que o subject deve ser fatorado para que seus valores não sejam tratados como números. Também fatoraremos nossas condições experimentais:</p>
-<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="análise-básica-de-dados-experimentos.html#cb217-1"></a><span class="kw">library</span>(dplyr)</span>
-<span id="cb217-2"><a href="análise-básica-de-dados-experimentos.html#cb217-2"></a>powercc &lt;-<span class="st"> </span>powercc <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># nos criamos o objeto powercc anteriormente </span></span>
-<span id="cb217-3"><a href="análise-básica-de-dados-experimentos.html#cb217-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">subject =</span> <span class="kw">factor</span>(subject),</span>
-<span id="cb217-4"><a href="análise-básica-de-dados-experimentos.html#cb217-4"></a>         <span class="dt">power =</span> <span class="kw">factor</span>(power, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;low&quot;</span>,<span class="st">&quot;high&quot;</span>)), <span class="co"># note os niveis dos argumentos</span></span>
-<span id="cb217-5"><a href="análise-básica-de-dados-experimentos.html#cb217-5"></a>         <span class="dt">audience =</span> <span class="kw">factor</span>(audience, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;private&quot;</span>,<span class="st">&quot;public&quot;</span>))) <span class="co"># note os niveis dos argumentos</span></span></code></pre></div>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="análise-básica-de-dados-experimentos.html#cb201-1"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb201-2"><a href="análise-básica-de-dados-experimentos.html#cb201-2"></a>powercc &lt;-<span class="st"> </span>powercc <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># nos criamos o objeto powercc anteriormente </span></span>
+<span id="cb201-3"><a href="análise-básica-de-dados-experimentos.html#cb201-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">subject =</span> <span class="kw">factor</span>(subject),</span>
+<span id="cb201-4"><a href="análise-básica-de-dados-experimentos.html#cb201-4"></a>         <span class="dt">power =</span> <span class="kw">factor</span>(power, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;low&quot;</span>,<span class="st">&quot;high&quot;</span>)), <span class="co"># note os niveis dos argumentos</span></span>
+<span id="cb201-5"><a href="análise-básica-de-dados-experimentos.html#cb201-5"></a>         <span class="dt">audience =</span> <span class="kw">factor</span>(audience, <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;private&quot;</span>,<span class="st">&quot;public&quot;</span>))) <span class="co"># note os niveis dos argumentos</span></span></code></pre></div>
 <p>Observe que fornecemos novos levels de argumento ao fatorar poder e público. Este argumento especifica a ordem dos levels de um fator. No contexto desse experimento, é mais natural falar sobre o efeito da alta versus baixa potência no consumo do que falar sobre o efeito da baixa versus alta potência no consumo. Portanto, dizemos ao R que o baixo nível de energia deve ser considerado como o primeiro nível. Mais adiante, veremos que o resultado das análises pode ser interpretado como efeitos de alta potência (segundo nível) vs. baixa potência (primeiro nível). O mesmo raciocínio se aplica ao fator público, embora não seja necessário fornecer os níveis para esse fator porque o privado vem antes do público em ordem alfabética. Sua escolha do nível para o primeiro ou nível de referência influencia apenas a interpretação, não o resultado real da análise.</p>
 <p>Em uma sessão experimental, o alarme de incêndio disparou e tivemos que sair do laboratório. Vamos remover os participantes que não concluíram a experiência:</p>
-<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="análise-básica-de-dados-experimentos.html#cb218-1"></a>powercc &lt;-<span class="st"> </span>powercc <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># nos ja criamos o objeto powercc anteriormente</span></span>
-<span id="cb218-2"><a href="análise-básica-de-dados-experimentos.html#cb218-2"></a><span class="st">  </span><span class="kw">filter</span>(finished <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="co"># somente mantenha as observacoes que sao terminadas ou iguais a 1</span></span></code></pre></div>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="análise-básica-de-dados-experimentos.html#cb202-1"></a>powercc &lt;-<span class="st"> </span>powercc <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># nos ja criamos o objeto powercc anteriormente</span></span>
+<span id="cb202-2"><a href="análise-básica-de-dados-experimentos.html#cb202-2"></a><span class="st">  </span><span class="kw">filter</span>(finished <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="co"># somente mantenha as observacoes que sao terminadas ou iguais a 1</span></span></code></pre></div>
 <p>Observe o dobro <span class="math inline">\(==\)</span> ao testar a igualdade. Confira o livro <a href="https://r4ds.had.co.nz/transform.html#filter-rows-with-filter">R4 Data Science para outros operadores lógicos (role para baixo para chegar à Seção 5.2.2).</a></p>
 </div>
 <div id="calcular-a-consistência-interna-e-a-média-de-perguntas-que-medem-o-mesmo-conceito" class="section level3 unlisted unnumbered">
 <h3>Calcular a consistência interna e a média de perguntas que medem o mesmo conceito</h3>
 <p>Gostaríamos de calcular a média das perguntas que medem a dominância para obter um único número indicando se o participante tem uma personalidade dominante ou não dominante. Antes de fazer isso, devemos ter uma idéia da consistência interna das perguntas que medem o domínio. Isso nos dirá se todas essas perguntas medem o mesmo conceito. Uma medida da consistência interna é o alfa de Cronbach. Para calcular, precisamos de um pacote chamado psych:</p>
-<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="análise-básica-de-dados-experimentos.html#cb219-1"></a><span class="co">#install.packages(&quot;psych&quot;)</span></span>
-<span id="cb219-2"><a href="análise-básica-de-dados-experimentos.html#cb219-2"></a><span class="kw">library</span>(psych)</span></code></pre></div>
-<pre><code>## 
-## Attaching package: &#39;psych&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:car&#39;:
-## 
-##     logit</code></pre>
-<pre><code>## The following object is masked from &#39;package:Hmisc&#39;:
-## 
-##     describe</code></pre>
-<pre><code>## The following objects are masked from &#39;package:ggplot2&#39;:
-## 
-##     %+%, alpha</code></pre>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="análise-básica-de-dados-experimentos.html#cb203-1"></a><span class="co">#install.packages(&quot;psych&quot;)</span></span>
+<span id="cb203-2"><a href="análise-básica-de-dados-experimentos.html#cb203-2"></a><span class="kw">library</span>(psych)</span></code></pre></div>
 <p>Depois que o pacote for carregado, podemos usar a função alfa para calcular o alfa de Cronbach para um conjunto de perguntas:</p>
-<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="análise-básica-de-dados-experimentos.html#cb224-1"></a>dominance.questions &lt;-<span class="st"> </span>powercc <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb224-2"><a href="análise-básica-de-dados-experimentos.html#cb224-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="st">&quot;dominance&quot;</span>)) <span class="co"># pegue o dataframe powercc e selecione todas as viariaveis com o nome que se inicia com dominancia</span></span>
-<span id="cb224-3"><a href="análise-básica-de-dados-experimentos.html#cb224-3"></a></span>
-<span id="cb224-4"><a href="análise-básica-de-dados-experimentos.html#cb224-4"></a><span class="kw">alpha</span>(dominance.questions) <span class="co"># calcula o alfa de cronbach para essas variaveis</span></span></code></pre></div>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="análise-básica-de-dados-experimentos.html#cb204-1"></a>dominance.questions &lt;-<span class="st"> </span>powercc <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb204-2"><a href="análise-básica-de-dados-experimentos.html#cb204-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="kw">starts_with</span>(<span class="st">&quot;dominance&quot;</span>)) <span class="co"># pegue o dataframe powercc e selecione todas as viariaveis com o nome que se inicia com dominancia</span></span>
+<span id="cb204-3"><a href="análise-básica-de-dados-experimentos.html#cb204-3"></a></span>
+<span id="cb204-4"><a href="análise-básica-de-dados-experimentos.html#cb204-4"></a><span class="kw">alpha</span>(dominance.questions) <span class="co"># calcula o alfa de cronbach para essas variaveis</span></span></code></pre></div>
 <pre><code>## 
 ## Reliability analysis   
 ## Call: alpha(x = dominance.questions)
@@ -412,34 +413,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## dominance5 0.45 0.55    0
 ## dominance6 0.09 0.91    0
 ## dominance7 0.47 0.53    0</code></pre>
-<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="análise-básica-de-dados-experimentos.html#cb226-1"></a><span class="co"># Observe que também poderíamos ter escrito isso da seguinte maneira:</span></span>
-<span id="cb226-2"><a href="análise-básica-de-dados-experimentos.html#cb226-2"></a><span class="co"># powercc %&gt;% select(starts_with(&quot;dominance&quot;)) %&gt;% cronbach()</span></span></code></pre></div>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="análise-básica-de-dados-experimentos.html#cb206-1"></a><span class="co"># Observe que também poderíamos ter escrito isso da seguinte maneira:</span></span>
+<span id="cb206-2"><a href="análise-básica-de-dados-experimentos.html#cb206-2"></a><span class="co"># powercc %&gt;% select(starts_with(&quot;dominance&quot;)) %&gt;% cronbach()</span></span></code></pre></div>
 <p>Isso produz muita saída. Em raw_alpha, vemos que o alfa é 0,69, que fica no lado inferior (0,70 é geralmente considerado o mínimo necessário), mas ainda está ok. A tabela abaixo nos diz qual seria o alfa se retirássemos uma pergunta de nossa medida. A queda da dominance6 aumentaria o alfa para 0,7. Comparado ao alfa original de 0,69, esse aumento é pequeno e, portanto, não perdemos a dominance6. Se houvesse uma pergunta com um alto “alfa se descartado”, isso indicaria que esta pergunta está medindo algo diferente das outras perguntas. Nesse caso, você pode considerar remover esta pergunta da sua medida.</p>
 <p>Podemos proceder calculando a média das respostas sobre a questão do domínio:</p>
-<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="análise-básica-de-dados-experimentos.html#cb227-1"></a>powercc &lt;-<span class="st"> </span>powercc <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb227-2"><a href="análise-básica-de-dados-experimentos.html#cb227-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dominance =</span> (dominance1<span class="op">+</span>dominance2<span class="op">+</span>dominance3<span class="op">+</span>dominance4<span class="op">+</span>dominance5<span class="op">+</span>dominance6<span class="op">+</span>dominance7)<span class="op">/</span><span class="dv">7</span>,</span>
-<span id="cb227-3"><a href="análise-básica-de-dados-experimentos.html#cb227-3"></a>         <span class="dt">cc =</span> (conspicuous1<span class="op">+</span>conspicuous2<span class="op">+</span>conspicuous3<span class="op">+</span>conspicuous4<span class="op">+</span>conspicuous5)<span class="op">/</span><span class="dv">5</span>,</span>
-<span id="cb227-4"><a href="análise-básica-de-dados-experimentos.html#cb227-4"></a>         <span class="dt">icc =</span> (inconspicuous1<span class="op">+</span>inconspicuous2<span class="op">+</span>inconspicuous3<span class="op">+</span>inconspicuous4<span class="op">+</span>inconspicuous5)<span class="op">/</span><span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb227-5"><a href="análise-básica-de-dados-experimentos.html#cb227-5"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span><span class="kw">starts_with</span>(<span class="st">&quot;sa&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="análise-básica-de-dados-experimentos.html#cb207-1"></a>powercc &lt;-<span class="st"> </span>powercc <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb207-2"><a href="análise-básica-de-dados-experimentos.html#cb207-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">dominance =</span> (dominance1<span class="op">+</span>dominance2<span class="op">+</span>dominance3<span class="op">+</span>dominance4<span class="op">+</span>dominance5<span class="op">+</span>dominance6<span class="op">+</span>dominance7)<span class="op">/</span><span class="dv">7</span>,</span>
+<span id="cb207-3"><a href="análise-básica-de-dados-experimentos.html#cb207-3"></a>         <span class="dt">cc =</span> (conspicuous1<span class="op">+</span>conspicuous2<span class="op">+</span>conspicuous3<span class="op">+</span>conspicuous4<span class="op">+</span>conspicuous5)<span class="op">/</span><span class="dv">5</span>,</span>
+<span id="cb207-4"><a href="análise-básica-de-dados-experimentos.html#cb207-4"></a>         <span class="dt">icc =</span> (inconspicuous1<span class="op">+</span>inconspicuous2<span class="op">+</span>inconspicuous3<span class="op">+</span>inconspicuous4<span class="op">+</span>inconspicuous5)<span class="op">/</span><span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb207-5"><a href="análise-básica-de-dados-experimentos.html#cb207-5"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span><span class="kw">starts_with</span>(<span class="st">&quot;sa&quot;</span>))</span></code></pre></div>
 <p>Também calculei a média das perguntas sobre consumo conspícuo e consumo discreto, mas não sobre as aspirações de status porque o alfa de Cronbach era muito baixo. Excluí as perguntas sobre aspirações de status do conjunto de dados. Deixo como um exercício verificar os alfa de Cronbach de cada um desses conceitos (faça isso antes de excluir as perguntas sobre as aspirações de status, é claro).</p>
 </div>
 <div id="recapitulando-importando-e-manipulando" class="section level3 unlisted unnumbered">
 <h3>Recapitulando: importando e manipulando</h3>
 <p>Aqui está o que fizemos até agora, em uma sequência ordenada de operações canalizadas (faça o <a href="http://users.telenet.be/samuelfranssens/tutorial_data/power_conspicuous_consumption.xlsx">download</a> dos dados aqui}):</p>
-<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="análise-básica-de-dados-experimentos.html#cb228-1"></a><span class="co">#library(tidyverse)</span></span>
-<span id="cb228-2"><a href="análise-básica-de-dados-experimentos.html#cb228-2"></a><span class="co">#library(readxl)</span></span>
-<span id="cb228-3"><a href="análise-básica-de-dados-experimentos.html#cb228-3"></a><span class="co">#setwd(&quot;c:/dropbox/work/teaching/R/&quot;) # mudando para seu proprio diretorio</span></span>
-<span id="cb228-4"><a href="análise-básica-de-dados-experimentos.html#cb228-4"></a></span>
-<span id="cb228-5"><a href="análise-básica-de-dados-experimentos.html#cb228-5"></a><span class="co">#powercc &lt;- read_excel(&quot;power_conspicuous_consumption.xlsx&quot;,&quot;data&quot;)  %&gt;%</span></span>
-<span id="cb228-6"><a href="análise-básica-de-dados-experimentos.html#cb228-6"></a> <span class="co"># filter(finished == 1) %&gt;% </span></span>
-<span id="cb228-7"><a href="análise-básica-de-dados-experimentos.html#cb228-7"></a>  <span class="co">#mutate(subject = factor(subject),</span></span>
-<span id="cb228-8"><a href="análise-básica-de-dados-experimentos.html#cb228-8"></a>   <span class="co">#      power = factor(power, levels = c(&quot;low&quot;,&quot;high&quot;)),</span></span>
-<span id="cb228-9"><a href="análise-básica-de-dados-experimentos.html#cb228-9"></a></span>
-<span id="cb228-10"><a href="análise-básica-de-dados-experimentos.html#cb228-10"></a>    <span class="co">#     audience = factor(audience, levels = c(&quot;private&quot;,&quot;public&quot;)),</span></span>
-<span id="cb228-11"><a href="análise-básica-de-dados-experimentos.html#cb228-11"></a>     <span class="co">#    dominance = (dominance1+dominance2+dominance3+dominance4+dominance5+dominance6+dominance7)/7,</span></span>
-<span id="cb228-12"><a href="análise-básica-de-dados-experimentos.html#cb228-12"></a>     <span class="co">#    cc = (conspicuous1+conspicuous2+conspicuous3+conspicuous4+conspicuous5)/5,</span></span>
-<span id="cb228-13"><a href="análise-básica-de-dados-experimentos.html#cb228-13"></a>      <span class="co">#   icc = (inconspicuous1+inconspicuous2+inconspicuous3+inconspicuous4+inconspicuous5)/5) %&gt;% </span></span>
-<span id="cb228-14"><a href="análise-básica-de-dados-experimentos.html#cb228-14"></a>  <span class="co"># select(-starts_with(&quot;sa&quot;))</span></span></code></pre></div>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="análise-básica-de-dados-experimentos.html#cb208-1"></a><span class="co">#library(tidyverse)</span></span>
+<span id="cb208-2"><a href="análise-básica-de-dados-experimentos.html#cb208-2"></a><span class="co">#library(readxl)</span></span>
+<span id="cb208-3"><a href="análise-básica-de-dados-experimentos.html#cb208-3"></a><span class="co">#setwd(&quot;c:/dropbox/work/teaching/R/&quot;) # mudando para seu proprio diretorio</span></span>
+<span id="cb208-4"><a href="análise-básica-de-dados-experimentos.html#cb208-4"></a></span>
+<span id="cb208-5"><a href="análise-básica-de-dados-experimentos.html#cb208-5"></a><span class="co">#powercc &lt;- read_excel(&quot;power_conspicuous_consumption.xlsx&quot;,&quot;data&quot;)  %&gt;%</span></span>
+<span id="cb208-6"><a href="análise-básica-de-dados-experimentos.html#cb208-6"></a> <span class="co"># filter(finished == 1) %&gt;% </span></span>
+<span id="cb208-7"><a href="análise-básica-de-dados-experimentos.html#cb208-7"></a>  <span class="co">#mutate(subject = factor(subject),</span></span>
+<span id="cb208-8"><a href="análise-básica-de-dados-experimentos.html#cb208-8"></a>   <span class="co">#      power = factor(power, levels = c(&quot;low&quot;,&quot;high&quot;)),</span></span>
+<span id="cb208-9"><a href="análise-básica-de-dados-experimentos.html#cb208-9"></a></span>
+<span id="cb208-10"><a href="análise-básica-de-dados-experimentos.html#cb208-10"></a>    <span class="co">#     audience = factor(audience, levels = c(&quot;private&quot;,&quot;public&quot;)),</span></span>
+<span id="cb208-11"><a href="análise-básica-de-dados-experimentos.html#cb208-11"></a>     <span class="co">#    dominance = (dominance1+dominance2+dominance3+dominance4+dominance5+dominance6+dominance7)/7,</span></span>
+<span id="cb208-12"><a href="análise-básica-de-dados-experimentos.html#cb208-12"></a>     <span class="co">#    cc = (conspicuous1+conspicuous2+conspicuous3+conspicuous4+conspicuous5)/5,</span></span>
+<span id="cb208-13"><a href="análise-básica-de-dados-experimentos.html#cb208-13"></a>      <span class="co">#   icc = (inconspicuous1+inconspicuous2+inconspicuous3+inconspicuous4+inconspicuous5)/5) %&gt;% </span></span>
+<span id="cb208-14"><a href="análise-básica-de-dados-experimentos.html#cb208-14"></a>  <span class="co"># select(-starts_with(&quot;sa&quot;))</span></span></code></pre></div>
 </div>
 </div>
 <div id="teste-t" class="section level2 unlisted unnumbered">
@@ -447,14 +448,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="teste-t-para-amostras-independentes" class="section level3 unlisted unnumbered">
 <h3>Teste <span class="math inline">\(t\)</span> para amostras independentes</h3>
 <p>Digamos que queremos testar se homens e mulheres diferem no grau em que são dominantes. Vamos criar um boxplot primeiro e depois verificar as médias e os desvios padrão:</p>
-<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="análise-básica-de-dados-experimentos.html#cb229-1"></a><span class="kw">library</span>(ggplot2)</span>
-<span id="cb229-2"><a href="análise-básica-de-dados-experimentos.html#cb229-2"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> powercc, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> gender, <span class="dt">y =</span> dominance)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb229-3"><a href="análise-básica-de-dados-experimentos.html#cb229-3"></a><span class="st">  </span><span class="kw">geom_boxplot</span>()</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-110-1.png" width="672" /></p>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="análise-básica-de-dados-experimentos.html#cb230-1"></a>powercc <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb230-2"><a href="análise-básica-de-dados-experimentos.html#cb230-2"></a><span class="st">  </span><span class="kw">group_by</span>(gender) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb230-3"><a href="análise-básica-de-dados-experimentos.html#cb230-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean_dominance =</span> <span class="kw">mean</span>(dominance),</span>
-<span id="cb230-4"><a href="análise-básica-de-dados-experimentos.html#cb230-4"></a>            <span class="dt">sd_dominance =</span> <span class="kw">sd</span>(dominance))</span></code></pre></div>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="análise-básica-de-dados-experimentos.html#cb209-1"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb209-2"><a href="análise-básica-de-dados-experimentos.html#cb209-2"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> powercc, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> gender, <span class="dt">y =</span> dominance)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb209-3"><a href="análise-básica-de-dados-experimentos.html#cb209-3"></a><span class="st">  </span><span class="kw">geom_boxplot</span>()</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-119-1.png" width="672" /></p>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="análise-básica-de-dados-experimentos.html#cb210-1"></a>powercc <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb210-2"><a href="análise-básica-de-dados-experimentos.html#cb210-2"></a><span class="st">  </span><span class="kw">group_by</span>(gender) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb210-3"><a href="análise-básica-de-dados-experimentos.html#cb210-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean_dominance =</span> <span class="kw">mean</span>(dominance),</span>
+<span id="cb210-4"><a href="análise-básica-de-dados-experimentos.html#cb210-4"></a>            <span class="dt">sd_dominance =</span> <span class="kw">sd</span>(dominance))</span></code></pre></div>
 <pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
 <pre><code>## # A tibble: 2 x 3
 ##   gender mean_dominance sd_dominance
@@ -462,14 +463,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 1 female          0.614        0.247
 ## 2 male            0.646        0.296</code></pre>
 <p>Os homens pontuam um pouco mais alto que as mulheres, mas queremos saber se essa diferença é significativa. Um teste <span class="math inline">\(t\)</span> de amostras independentes pode fornecer a resposta (os homens e as mulheres em nosso experimento são amostras independentes), mas precisamos verificar primeiro uma suposição: as variações das duas amostras independentes são iguais?</p>
-<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="análise-básica-de-dados-experimentos.html#cb233-1"></a><span class="co">#install.packages(&quot;car&quot;) # para o teste de variancias iguais, precisamos de um pacote chamado car</span></span>
-<span id="cb233-2"><a href="análise-básica-de-dados-experimentos.html#cb233-2"></a><span class="kw">library</span>(car)</span>
-<span id="cb233-3"><a href="análise-básica-de-dados-experimentos.html#cb233-3"></a></span>
-<span id="cb233-4"><a href="análise-básica-de-dados-experimentos.html#cb233-4"></a><span class="co"># Teste Levene para igualdade de variancias.</span></span>
-<span id="cb233-5"><a href="análise-básica-de-dados-experimentos.html#cb233-5"></a><span class="co"># Baixo valor-p indica que as variancias nao sejam iguais.</span></span>
-<span id="cb233-6"><a href="análise-básica-de-dados-experimentos.html#cb233-6"></a><span class="co"># Primeiro argumento = variavel dependente continua, segundo argumento = variavel independente categorica</span></span>
-<span id="cb233-7"><a href="análise-básica-de-dados-experimentos.html#cb233-7"></a></span>
-<span id="cb233-8"><a href="análise-básica-de-dados-experimentos.html#cb233-8"></a><span class="kw">leveneTest</span>(powercc<span class="op">$</span>dominance, powercc<span class="op">$</span>gender) </span></code></pre></div>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="análise-básica-de-dados-experimentos.html#cb213-1"></a><span class="co">#install.packages(&quot;car&quot;) # para o teste de variancias iguais, precisamos de um pacote chamado car</span></span>
+<span id="cb213-2"><a href="análise-básica-de-dados-experimentos.html#cb213-2"></a><span class="kw">library</span>(car)</span>
+<span id="cb213-3"><a href="análise-básica-de-dados-experimentos.html#cb213-3"></a></span>
+<span id="cb213-4"><a href="análise-básica-de-dados-experimentos.html#cb213-4"></a><span class="co"># Teste Levene para igualdade de variancias.</span></span>
+<span id="cb213-5"><a href="análise-básica-de-dados-experimentos.html#cb213-5"></a><span class="co"># Baixo valor-p indica que as variancias nao sejam iguais.</span></span>
+<span id="cb213-6"><a href="análise-básica-de-dados-experimentos.html#cb213-6"></a><span class="co"># Primeiro argumento = variavel dependente continua, segundo argumento = variavel independente categorica</span></span>
+<span id="cb213-7"><a href="análise-básica-de-dados-experimentos.html#cb213-7"></a></span>
+<span id="cb213-8"><a href="análise-básica-de-dados-experimentos.html#cb213-8"></a><span class="kw">leveneTest</span>(powercc<span class="op">$</span>dominance, powercc<span class="op">$</span>gender) </span></code></pre></div>
 <pre><code>## Warning in leveneTest.default(powercc$dominance, powercc$gender): powercc$gender coerced to
 ## factor.</code></pre>
 <pre><code>## Levene&#39;s Test for Homogeneity of Variance (center = median)
@@ -477,10 +478,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## group   1  2.1915  0.141
 ##       141</code></pre>
 <p>A hipótese nula de variâncias iguais não é rejeitada (<span class="math inline">\(p = 0,14\)</span>), para que possamos continuar com um teste <span class="math inline">\(t\)</span> que assume variâncias iguais:</p>
-<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="análise-básica-de-dados-experimentos.html#cb236-1"></a><span class="co"># Teste se os meios de dominancia diferem entre os sexos.</span></span>
-<span id="cb236-2"><a href="análise-básica-de-dados-experimentos.html#cb236-2"></a><span class="co"># Indique se o teste deve assumir variacoes iguais ou nao (define var.equal = FALSE para um teste que nao assume variacoes iguais).</span></span>
-<span id="cb236-3"><a href="análise-básica-de-dados-experimentos.html#cb236-3"></a></span>
-<span id="cb236-4"><a href="análise-básica-de-dados-experimentos.html#cb236-4"></a><span class="kw">t.test</span>(powercc<span class="op">$</span>dominance <span class="op">~</span><span class="st"> </span>powercc<span class="op">$</span>gender, <span class="dt">var.equal =</span> <span class="ot">TRUE</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="análise-básica-de-dados-experimentos.html#cb216-1"></a><span class="co"># Teste se os meios de dominancia diferem entre os sexos.</span></span>
+<span id="cb216-2"><a href="análise-básica-de-dados-experimentos.html#cb216-2"></a><span class="co"># Indique se o teste deve assumir variacoes iguais ou nao (define var.equal = FALSE para um teste que nao assume variacoes iguais).</span></span>
+<span id="cb216-3"><a href="análise-básica-de-dados-experimentos.html#cb216-3"></a></span>
+<span id="cb216-4"><a href="análise-básica-de-dados-experimentos.html#cb216-4"></a><span class="kw">t.test</span>(powercc<span class="op">$</span>dominance <span class="op">~</span><span class="st"> </span>powercc<span class="op">$</span>gender, <span class="dt">var.equal =</span> <span class="ot">TRUE</span>) </span></code></pre></div>
 <pre><code>## 
 ## 	Two Sample t-test
 ## 
@@ -497,15 +498,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="teste-t-para-amostras-dependentes" class="section level3 unlisted unnumbered">
 <h3>Teste <span class="math inline">\(t\)</span> para amostras dependentes</h3>
 <p>Digamos que queremos testar se as pessoas estão mais dispostas a gastar em itens conspícuos do que em itens discretos. Vamos verificar os meios e os desvios padrão primeiro:</p>
-<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="análise-básica-de-dados-experimentos.html#cb238-1"></a>powercc <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># nao ha necessidade de agrupar! nao estamos dividindo nossa amostra em subgrupos</span></span>
-<span id="cb238-2"><a href="análise-básica-de-dados-experimentos.html#cb238-2"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean_cc =</span> <span class="kw">mean</span>(cc), <span class="dt">sd_cc =</span> <span class="kw">sd</span>(cc),</span>
-<span id="cb238-3"><a href="análise-básica-de-dados-experimentos.html#cb238-3"></a>            <span class="dt">mean_icc =</span> <span class="kw">mean</span>(icc), <span class="dt">sd_icc =</span> <span class="kw">sd</span>(icc))</span></code></pre></div>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="análise-básica-de-dados-experimentos.html#cb218-1"></a>powercc <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># nao ha necessidade de agrupar! nao estamos dividindo nossa amostra em subgrupos</span></span>
+<span id="cb218-2"><a href="análise-básica-de-dados-experimentos.html#cb218-2"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean_cc =</span> <span class="kw">mean</span>(cc), <span class="dt">sd_cc =</span> <span class="kw">sd</span>(cc),</span>
+<span id="cb218-3"><a href="análise-básica-de-dados-experimentos.html#cb218-3"></a>            <span class="dt">mean_icc =</span> <span class="kw">mean</span>(icc), <span class="dt">sd_icc =</span> <span class="kw">sd</span>(icc))</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 4
 ##   mean_cc sd_cc mean_icc sd_icc
 ##     &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;
 ## 1    6.01  1.05     3.60  0.988</code></pre>
 <p>As médias são mais altas para produtos conspícuos do que para produtos discretos, mas queremos saber se essa diferença é significativa e, portanto, realizar um teste t de amostras dependentes (cada participante classifica produtos conspícuos e discretos, portanto, essas classificações são dependentes):</p>
-<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="análise-básica-de-dados-experimentos.html#cb240-1"></a><span class="kw">t.test</span>(powercc<span class="op">$</span>cc, powercc<span class="op">$</span>icc, <span class="dt">paired =</span> <span class="ot">TRUE</span>) <span class="co"># Teste se as medias de cc e icc sao diferentes. Indique que este eh um teste t de amostras dependentes com emparelhado = TRUE.</span></span></code></pre></div>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="análise-básica-de-dados-experimentos.html#cb220-1"></a><span class="kw">t.test</span>(powercc<span class="op">$</span>cc, powercc<span class="op">$</span>icc, <span class="dt">paired =</span> <span class="ot">TRUE</span>) <span class="co"># Teste se as medias de cc e icc sao diferentes. Indique que este eh um teste t de amostras dependentes com emparelhado = TRUE.</span></span></code></pre></div>
 <pre><code>## 
 ## 	Paired t-test
 ## 
@@ -522,7 +523,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="teste-t-para-amostra-única" class="section level3 unlisted unnumbered">
 <h3>Teste <span class="math inline">\(t\)</span> para amostra única</h3>
 <p>Digamos que queremos testar se a disposição média de pagar pelos itens visíveis foi significativamente maior que 5 (o ponto médio da escala):</p>
-<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="análise-básica-de-dados-experimentos.html#cb242-1"></a><span class="kw">t.test</span>(powercc<span class="op">$</span>cc, <span class="dt">mu =</span> <span class="dv">5</span>) <span class="co"># Indique a variavel cuja media queremos comparar com um valor especifico (5).</span></span></code></pre></div>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="análise-básica-de-dados-experimentos.html#cb222-1"></a><span class="kw">t.test</span>(powercc<span class="op">$</span>cc, <span class="dt">mu =</span> <span class="dv">5</span>) <span class="co"># Indique a variavel cuja media queremos comparar com um valor especifico (5).</span></span></code></pre></div>
 <pre><code>## 
 ## 	One Sample t-test
 ## 
@@ -540,13 +541,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3>ANOVA Bivariada</h3>
 <p>Quando você lê um artigo acadêmico que relata um experimento, a seção de resultados geralmente começa com uma discussão dos principais efeitos dos fatores experimentais e sua interação, conforme testado por uma Análise de variância ou ANOVA. Vamos nos concentrar primeiro na WTP para produtos que melhoram o status. (Consideramos brevemente a WTP para produtos com status neutro em nossa discussão sobre testes t de amostras dependentes e discutiremos mais detalhadamente na seção ANOVA de medidas repetidas.)</p>
 <p>Vamos inspecionar algumas estatísticas descritivas primeiro. Gostaríamos de ver a WTP média para produtos visíveis, o desvio padrão dessa WTP e o número de participantes em cada célula experimental. Já aprendemos como fazer isso no capítulo introdutório (consulte as tabelas de frequência e as estatísticas descritivas):</p>
-<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="análise-básica-de-dados-experimentos.html#cb244-1"></a>powercc.summary &lt;-<span class="st"> </span>powercc <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># estamos atribuindo o resumo a um objeto, porque precisaremos desse resumo para fazer um grafico de barras</span></span>
-<span id="cb244-2"><a href="análise-básica-de-dados-experimentos.html#cb244-2"></a><span class="st">  </span><span class="kw">group_by</span>(audience, power) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># agora agrupamos por duas variaveis</span></span>
-<span id="cb244-3"><a href="análise-básica-de-dados-experimentos.html#cb244-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">count =</span> <span class="kw">n</span>(),</span>
-<span id="cb244-4"><a href="análise-básica-de-dados-experimentos.html#cb244-4"></a>            <span class="dt">mean =</span> <span class="kw">mean</span>(cc),</span>
-<span id="cb244-5"><a href="análise-básica-de-dados-experimentos.html#cb244-5"></a>            <span class="dt">sd =</span> <span class="kw">sd</span>(cc))</span></code></pre></div>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="análise-básica-de-dados-experimentos.html#cb224-1"></a>powercc.summary &lt;-<span class="st"> </span>powercc <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># estamos atribuindo o resumo a um objeto, porque precisaremos desse resumo para fazer um grafico de barras</span></span>
+<span id="cb224-2"><a href="análise-básica-de-dados-experimentos.html#cb224-2"></a><span class="st">  </span><span class="kw">group_by</span>(audience, power) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># agora agrupamos por duas variaveis</span></span>
+<span id="cb224-3"><a href="análise-básica-de-dados-experimentos.html#cb224-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">count =</span> <span class="kw">n</span>(),</span>
+<span id="cb224-4"><a href="análise-básica-de-dados-experimentos.html#cb224-4"></a>            <span class="dt">mean =</span> <span class="kw">mean</span>(cc),</span>
+<span id="cb224-5"><a href="análise-básica-de-dados-experimentos.html#cb224-5"></a>            <span class="dt">sd =</span> <span class="kw">sd</span>(cc))</span></code></pre></div>
 <pre><code>## `summarise()` regrouping output by &#39;audience&#39; (override with `.groups` argument)</code></pre>
-<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="análise-básica-de-dados-experimentos.html#cb246-1"></a>powercc.summary</span></code></pre></div>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="análise-básica-de-dados-experimentos.html#cb226-1"></a>powercc.summary</span></code></pre></div>
 <pre><code>## # A tibble: 4 x 5
 ## # Groups:   audience [2]
 ##   audience power count  mean    sd
@@ -557,35 +558,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4 public   high     38  6.07 1.03</code></pre>
 <p>Vemos que a diferença na WTP entre os participantes de alta e baixa potência é maior na condição privada do que na pública.</p>
 <p>Vamos resumir esses resultados em um gráfico de caixa:</p>
-<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="análise-básica-de-dados-experimentos.html#cb248-1"></a><span class="co"># ao criar um grafico de caixa, o conjunto de dados que serve como entrada para o ggplot eh o conjunto de dados completo, nao o resumo com os meios</span></span>
-<span id="cb248-2"><a href="análise-básica-de-dados-experimentos.html#cb248-2"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> powercc, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> audience, <span class="dt">y =</span> cc, <span class="dt">fill =</span> power)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb248-3"><a href="análise-básica-de-dados-experimentos.html#cb248-3"></a><span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="co"># argumentos sao os mesmos que para geom_bar, mas agora fornecemos a geom_boxplot</span></span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-118-1.png" width="672" /></p>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="análise-básica-de-dados-experimentos.html#cb228-1"></a><span class="co"># ao criar um grafico de caixa, o conjunto de dados que serve como entrada para o ggplot eh o conjunto de dados completo, nao o resumo com os meios</span></span>
+<span id="cb228-2"><a href="análise-básica-de-dados-experimentos.html#cb228-2"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> powercc, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> audience, <span class="dt">y =</span> cc, <span class="dt">fill =</span> power)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb228-3"><a href="análise-básica-de-dados-experimentos.html#cb228-3"></a><span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="co"># argumentos sao os mesmos que para geom_bar, mas agora fornecemos a geom_boxplot</span></span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-127-1.png" width="672" /></p>
 <p>Os gráficos boxplot são informativos porque nos dão uma idéia da mediana e da distribuição dos dados. No entanto, em trabalhos acadêmicos, os resultados das experiências são tradicionalmente resumidos em gráficos de barras (mesmo que os gráficos boxplots sejam mais informativos).</p>
-<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="análise-básica-de-dados-experimentos.html#cb249-1"></a><span class="co"># ao criar um grafico de barras, o conjunto de dados que serve como entrada para o ggplot eh o resumo com os meios, nao o conjunto de dados completo</span></span>
-<span id="cb249-2"><a href="análise-básica-de-dados-experimentos.html#cb249-2"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> powercc.summary, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> audience, <span class="dt">y =</span> mean, <span class="dt">fill =</span> power)) <span class="op">+</span></span>
-<span id="cb249-3"><a href="análise-básica-de-dados-experimentos.html#cb249-3"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-119-1.png" width="672" /></p>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="análise-básica-de-dados-experimentos.html#cb229-1"></a><span class="co"># ao criar um grafico de barras, o conjunto de dados que serve como entrada para o ggplot eh o resumo com os meios, nao o conjunto de dados completo</span></span>
+<span id="cb229-2"><a href="análise-básica-de-dados-experimentos.html#cb229-2"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> powercc.summary, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> audience, <span class="dt">y =</span> mean, <span class="dt">fill =</span> power)) <span class="op">+</span></span>
+<span id="cb229-3"><a href="análise-básica-de-dados-experimentos.html#cb229-3"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-128-1.png" width="672" /></p>
 <p>Para criar um gráfico de barras, informamos ao ggplot as variáveis que devem estar no eixo X e no eixo Y e também usamos cores diferentes para diferentes níveis de potência com o comando fill. Então pedimos um gráfico de barras com geom_bar. stat = “identity” e position = “dodge” devem ser incluídos como argumentos para geom_bar, mas uma discussão sobre esses argumentos está além do escopo deste tutorial.</p>
 <p>Antes de prosseguirmos com a ANOVA, devemos verificar se suas premissas são atendidas. Discutimos as suposições da ANOVA anteriormente, mas ignoramos aqui.</p>
 <p>Para realizar uma ANOVA, precisamos instalar alguns pacotes:</p>
-<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="análise-básica-de-dados-experimentos.html#cb250-1"></a><span class="co">#install.packages(remotes) # O pacote de controles remotos nos permite instalar pacotes armazenados no GitHub, um site para desenvolvedores de pacotes.</span></span>
-<span id="cb250-2"><a href="análise-básica-de-dados-experimentos.html#cb250-2"></a><span class="co">#install.packages(&quot;car&quot;) # Tambem precisaremos do pacote do carro para executar a ANOVA (não é necessário reinstala-lo se você já tiver feito isso).</span></span>
-<span id="cb250-3"><a href="análise-básica-de-dados-experimentos.html#cb250-3"></a></span>
-<span id="cb250-4"><a href="análise-básica-de-dados-experimentos.html#cb250-4"></a><span class="kw">library</span>(remotes)</span>
-<span id="cb250-5"><a href="análise-básica-de-dados-experimentos.html#cb250-5"></a><span class="kw">install_github</span>(<span class="st">&#39;samuelfranssens/type3anova&#39;</span>) <span class="co"># Instale o pacote type3anova. Esta e as etapas anteriores precisam ser executadas apenas uma vez.</span></span></code></pre></div>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="análise-básica-de-dados-experimentos.html#cb230-1"></a><span class="co">#install.packages(remotes) # O pacote de controles remotos nos permite instalar pacotes armazenados no GitHub, um site para desenvolvedores de pacotes.</span></span>
+<span id="cb230-2"><a href="análise-básica-de-dados-experimentos.html#cb230-2"></a><span class="co">#install.packages(&quot;car&quot;) # Tambem precisaremos do pacote do carro para executar a ANOVA (não é necessário reinstala-lo se você já tiver feito isso).</span></span>
+<span id="cb230-3"><a href="análise-básica-de-dados-experimentos.html#cb230-3"></a></span>
+<span id="cb230-4"><a href="análise-básica-de-dados-experimentos.html#cb230-4"></a><span class="kw">library</span>(remotes)</span>
+<span id="cb230-5"><a href="análise-básica-de-dados-experimentos.html#cb230-5"></a><span class="kw">install_github</span>(<span class="st">&#39;samuelfranssens/type3anova&#39;</span>) <span class="co"># Instale o pacote type3anova. Esta e as etapas anteriores precisam ser executadas apenas uma vez.</span></span></code></pre></div>
 <pre><code>## Skipping install of &#39;type3anova&#39; from a github remote, the SHA1 (0c38377d) has not changed since last install.
 ##   Use `force = TRUE` to force installation</code></pre>
-<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="análise-básica-de-dados-experimentos.html#cb252-1"></a><span class="kw">library</span>(type3anova) <span class="co"># Carrega o pacote type3anova </span></span></code></pre></div>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="análise-básica-de-dados-experimentos.html#cb232-1"></a><span class="kw">library</span>(type3anova) <span class="co"># Carrega o pacote type3anova </span></span></code></pre></div>
 <p>Agora podemos prosseguir com a ANOVA real:</p>
-<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="análise-básica-de-dados-experimentos.html#cb253-1"></a><span class="co"># Cria um modelo linear primeiramente</span></span>
-<span id="cb253-2"><a href="análise-básica-de-dados-experimentos.html#cb253-2"></a><span class="co"># A funcao lm() toma os dados e os argumentos</span></span>
-<span id="cb253-3"><a href="análise-básica-de-dados-experimentos.html#cb253-3"></a><span class="co"># A formula tem a seguinte sintaxe: variavel dependente  ~ variavel independente</span></span>
-<span id="cb253-4"><a href="análise-básica-de-dados-experimentos.html#cb253-4"></a>linearmodel &lt;-<span class="st"> </span><span class="kw">lm</span>(cc <span class="op">~</span><span class="st"> </span>power<span class="op">*</span>audience, <span class="dt">data=</span>powercc) </span>
-<span id="cb253-5"><a href="análise-básica-de-dados-experimentos.html#cb253-5"></a><span class="co"># power*audience: interacao eh calculada</span></span>
-<span id="cb253-6"><a href="análise-básica-de-dados-experimentos.html#cb253-6"></a><span class="co"># power+audience: interacao nao eh incluida</span></span>
-<span id="cb253-7"><a href="análise-básica-de-dados-experimentos.html#cb253-7"></a></span>
-<span id="cb253-8"><a href="análise-básica-de-dados-experimentos.html#cb253-8"></a><span class="kw">type3anova</span>(linearmodel) <span class="co"># Em seguida, peça a saída no formato ANOVA. Isso fornece a soma dos quadrados do Tipo III. Observe que isso é diferente da anova (modelo linear), que fornece a soma dos quadrados do tipo I.</span></span></code></pre></div>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="análise-básica-de-dados-experimentos.html#cb233-1"></a><span class="co"># Cria um modelo linear primeiramente</span></span>
+<span id="cb233-2"><a href="análise-básica-de-dados-experimentos.html#cb233-2"></a><span class="co"># A funcao lm() toma os dados e os argumentos</span></span>
+<span id="cb233-3"><a href="análise-básica-de-dados-experimentos.html#cb233-3"></a><span class="co"># A formula tem a seguinte sintaxe: variavel dependente  ~ variavel independente</span></span>
+<span id="cb233-4"><a href="análise-básica-de-dados-experimentos.html#cb233-4"></a>linearmodel &lt;-<span class="st"> </span><span class="kw">lm</span>(cc <span class="op">~</span><span class="st"> </span>power<span class="op">*</span>audience, <span class="dt">data=</span>powercc) </span>
+<span id="cb233-5"><a href="análise-básica-de-dados-experimentos.html#cb233-5"></a><span class="co"># power*audience: interacao eh calculada</span></span>
+<span id="cb233-6"><a href="análise-básica-de-dados-experimentos.html#cb233-6"></a><span class="co"># power+audience: interacao nao eh incluida</span></span>
+<span id="cb233-7"><a href="análise-básica-de-dados-experimentos.html#cb233-7"></a></span>
+<span id="cb233-8"><a href="análise-básica-de-dados-experimentos.html#cb233-8"></a><span class="kw">type3anova</span>(linearmodel) <span class="co"># Em seguida, peça a saída no formato ANOVA. Isso fornece a soma dos quadrados do Tipo III. Observe que isso é diferente da anova (modelo linear), que fornece a soma dos quadrados do tipo I.</span></span></code></pre></div>
 <pre><code>## # A tibble: 5 x 6
 ##   term                ss   df1   df2       f pvalue
 ##   &lt;chr&gt;            &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt;  &lt;dbl&gt;
@@ -600,17 +601,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3>Seguindo com contrastes</h3>
 <p>Ao realizar um experimento 2 x 2, geralmente fazemos a hipótese de uma interação. Uma interação significa que o efeito de uma variável independente é diferente dependendo dos níveis da outra variável independente. Na seção anterior, a ANOVA nos disse que a interação entre poder e público não era significativa. Isso significa que o efeito de alta versus baixa potência foi o mesmo na condição privada e pública e que o efeito de público versus privado foi o mesmo na condição de alta e baixa potência. Normalmente, a análise para com a não significância da interação. No entanto, faremos os testes de acompanhamento que um faria se a interação fosse significativa.</p>
 <p>Vamos considerar o significado da célula novamente:</p>
-<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="análise-básica-de-dados-experimentos.html#cb255-1"></a>powercc.summary &lt;-<span class="st"> </span>powercc <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb255-2"><a href="análise-básica-de-dados-experimentos.html#cb255-2"></a><span class="st">  </span><span class="kw">group_by</span>(audience, power) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb255-3"><a href="análise-básica-de-dados-experimentos.html#cb255-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">count =</span> <span class="kw">n</span>(),</span>
-<span id="cb255-4"><a href="análise-básica-de-dados-experimentos.html#cb255-4"></a>            <span class="dt">mean =</span> <span class="kw">mean</span>(cc),</span>
-<span id="cb255-5"><a href="análise-básica-de-dados-experimentos.html#cb255-5"></a>            <span class="dt">sd =</span> <span class="kw">sd</span>(cc))</span></code></pre></div>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="análise-básica-de-dados-experimentos.html#cb235-1"></a>powercc.summary &lt;-<span class="st"> </span>powercc <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb235-2"><a href="análise-básica-de-dados-experimentos.html#cb235-2"></a><span class="st">  </span><span class="kw">group_by</span>(audience, power) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb235-3"><a href="análise-básica-de-dados-experimentos.html#cb235-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">count =</span> <span class="kw">n</span>(),</span>
+<span id="cb235-4"><a href="análise-básica-de-dados-experimentos.html#cb235-4"></a>            <span class="dt">mean =</span> <span class="kw">mean</span>(cc),</span>
+<span id="cb235-5"><a href="análise-básica-de-dados-experimentos.html#cb235-5"></a>            <span class="dt">sd =</span> <span class="kw">sd</span>(cc))</span></code></pre></div>
 <pre><code>## `summarise()` regrouping output by &#39;audience&#39; (override with `.groups` argument)</code></pre>
-<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="análise-básica-de-dados-experimentos.html#cb257-1"></a><span class="co"># ao criar um grafico de barras, o conjunto de dados que serve como entrada para o ggplot eh o resumo com os meios, nao o conjunto de dados completo</span></span>
-<span id="cb257-2"><a href="análise-básica-de-dados-experimentos.html#cb257-2"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> powercc.summary,<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> audience, <span class="dt">y =</span> mean, <span class="dt">fill =</span> power)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb257-3"><a href="análise-básica-de-dados-experimentos.html#cb257-3"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-122-1.png" width="672" /></p>
-<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="análise-básica-de-dados-experimentos.html#cb258-1"></a>powercc.summary</span></code></pre></div>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="análise-básica-de-dados-experimentos.html#cb237-1"></a><span class="co"># ao criar um grafico de barras, o conjunto de dados que serve como entrada para o ggplot eh o resumo com os meios, nao o conjunto de dados completo</span></span>
+<span id="cb237-2"><a href="análise-básica-de-dados-experimentos.html#cb237-2"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> powercc.summary,<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> audience, <span class="dt">y =</span> mean, <span class="dt">fill =</span> power)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb237-3"><a href="análise-básica-de-dados-experimentos.html#cb237-3"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-131-1.png" width="672" /></p>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="análise-básica-de-dados-experimentos.html#cb238-1"></a>powercc.summary</span></code></pre></div>
 <pre><code>## # A tibble: 4 x 5
 ## # Groups:   audience [2]
 ##   audience power count  mean    sd
@@ -620,9 +621,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 3 public   low      40  6.17 1.15 
 ## 4 public   high     38  6.07 1.03</code></pre>
 <p>Queremos testar se a diferença entre alta e baixa potência na condição privada é significativa (baixa: 6,08 vs. alta: 5,63) e se a diferença entre alta e baixa potência na condição pública é significativa (baixa: 6,17 vs. alta : 6,07). Para fazer isso, podemos usar a função de contraste da biblioteca type3anova que instalamos anteriormente. A função de contraste usa dois argumentos: um modelo linear e uma especificação de contraste. O modelo linear é o mesmo de antes:</p>
-<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="análise-básica-de-dados-experimentos.html#cb260-1"></a>linearmodel &lt;-<span class="st"> </span><span class="kw">lm</span>(cc <span class="op">~</span><span class="st"> </span>power<span class="op">*</span>audience, <span class="dt">data=</span>powercc)</span></code></pre></div>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="análise-básica-de-dados-experimentos.html#cb240-1"></a>linearmodel &lt;-<span class="st"> </span><span class="kw">lm</span>(cc <span class="op">~</span><span class="st"> </span>power<span class="op">*</span>audience, <span class="dt">data=</span>powercc)</span></code></pre></div>
 <p>Mas, para saber como devemos especificar nosso contraste, precisamos dar uma olhada nos coeficientes de regressão em nosso modelo linear:</p>
-<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="análise-básica-de-dados-experimentos.html#cb261-1"></a><span class="kw">summary</span>(linearmodel)</span></code></pre></div>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="análise-básica-de-dados-experimentos.html#cb241-1"></a><span class="kw">summary</span>(linearmodel)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = cc ~ power * audience, data = powercc)
@@ -652,41 +653,41 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Vemos que a estimativa para a interceptação corresponde à média observada na célula privada de baixa potência. Adicione a isso a estimativa de powerhigh e obteremos a média observada na célula privada de alta potência. Adicione à estimativa para a interceptação, a estimativa de audiencepublic e obtenha a média observada na célula pública de baixa potência. Adicione à estimativa para a interceptação, a estimativa de powerhigh, audiencepublic e powerhigh:audiencepublic e obteremos a média observada na célula pública de alto poder. Geralmente visualizo isso em uma tabela (e salvo no meu script) para facilitar a especificação do contraste que quero testar:</p>
 <p>Digamos que estamos contrastando energia alta versus baixa na condição privada e testamos se (<span class="math inline">\(\beta_{0}+\beta_{1}\)</span> e <span class="math inline">\(\beta_{0}\)</span> diferem significativamente ou se (<span class="math inline">\(\beta_{0}+\beta_{1})-\beta_{0}=\beta_{1}\)</span> é significativamente diferente de zero. Nós especificamos isso da seguinte maneira:</p>
-<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="análise-básica-de-dados-experimentos.html#cb263-1"></a>contrast_specification &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>) </span>
-<span id="cb263-2"><a href="análise-básica-de-dados-experimentos.html#cb263-2"></a></span>
-<span id="cb263-3"><a href="análise-básica-de-dados-experimentos.html#cb263-3"></a><span class="co"># os quatro numeros correspondentes a b0, b1, b2, b3. </span></span>
-<span id="cb263-4"><a href="análise-básica-de-dados-experimentos.html#cb263-4"></a><span class="co"># queremos testar se b1 eh significativo, entao colocamos 1 em 2º lugar (o 1º lugar é para b0)</span></span>
-<span id="cb263-5"><a href="análise-básica-de-dados-experimentos.html#cb263-5"></a><span class="co">#contrast(linearmodel, contrast_specification)</span></span>
-<span id="cb263-6"><a href="análise-básica-de-dados-experimentos.html#cb263-6"></a><span class="co">## </span></span>
-<span id="cb263-7"><a href="análise-básica-de-dados-experimentos.html#cb263-7"></a><span class="co">## 	 Simultaneous Tests for General Linear Hypotheses</span></span>
-<span id="cb263-8"><a href="análise-básica-de-dados-experimentos.html#cb263-8"></a><span class="co">## </span></span>
-<span id="cb263-9"><a href="análise-básica-de-dados-experimentos.html#cb263-9"></a><span class="co">## Fit: aov(formula = linearmodel)</span></span>
-<span id="cb263-10"><a href="análise-básica-de-dados-experimentos.html#cb263-10"></a><span class="co">## </span></span>
-<span id="cb263-11"><a href="análise-básica-de-dados-experimentos.html#cb263-11"></a><span class="co">## Linear Hypotheses:</span></span>
-<span id="cb263-12"><a href="análise-básica-de-dados-experimentos.html#cb263-12"></a><span class="co">##        Estimate Std. Error t value Pr(&gt;|t|)  </span></span>
-<span id="cb263-13"><a href="análise-básica-de-dados-experimentos.html#cb263-13"></a><span class="co">## 1 == 0  -0.4501     0.2579  -1.745   0.0832 .</span></span>
-<span id="cb263-14"><a href="análise-básica-de-dados-experimentos.html#cb263-14"></a><span class="co">## ---</span></span>
-<span id="cb263-15"><a href="análise-básica-de-dados-experimentos.html#cb263-15"></a><span class="co">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
-<span id="cb263-16"><a href="análise-básica-de-dados-experimentos.html#cb263-16"></a><span class="co">## (Adjusted p values reported -- single-step method)</span></span></code></pre></div>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="análise-básica-de-dados-experimentos.html#cb243-1"></a>contrast_specification &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>) </span>
+<span id="cb243-2"><a href="análise-básica-de-dados-experimentos.html#cb243-2"></a></span>
+<span id="cb243-3"><a href="análise-básica-de-dados-experimentos.html#cb243-3"></a><span class="co"># os quatro numeros correspondentes a b0, b1, b2, b3. </span></span>
+<span id="cb243-4"><a href="análise-básica-de-dados-experimentos.html#cb243-4"></a><span class="co"># queremos testar se b1 eh significativo, entao colocamos 1 em 2º lugar (o 1º lugar é para b0)</span></span>
+<span id="cb243-5"><a href="análise-básica-de-dados-experimentos.html#cb243-5"></a><span class="co">#contrast(linearmodel, contrast_specification)</span></span>
+<span id="cb243-6"><a href="análise-básica-de-dados-experimentos.html#cb243-6"></a><span class="co">## </span></span>
+<span id="cb243-7"><a href="análise-básica-de-dados-experimentos.html#cb243-7"></a><span class="co">## 	 Simultaneous Tests for General Linear Hypotheses</span></span>
+<span id="cb243-8"><a href="análise-básica-de-dados-experimentos.html#cb243-8"></a><span class="co">## </span></span>
+<span id="cb243-9"><a href="análise-básica-de-dados-experimentos.html#cb243-9"></a><span class="co">## Fit: aov(formula = linearmodel)</span></span>
+<span id="cb243-10"><a href="análise-básica-de-dados-experimentos.html#cb243-10"></a><span class="co">## </span></span>
+<span id="cb243-11"><a href="análise-básica-de-dados-experimentos.html#cb243-11"></a><span class="co">## Linear Hypotheses:</span></span>
+<span id="cb243-12"><a href="análise-básica-de-dados-experimentos.html#cb243-12"></a><span class="co">##        Estimate Std. Error t value Pr(&gt;|t|)  </span></span>
+<span id="cb243-13"><a href="análise-básica-de-dados-experimentos.html#cb243-13"></a><span class="co">## 1 == 0  -0.4501     0.2579  -1.745   0.0832 .</span></span>
+<span id="cb243-14"><a href="análise-básica-de-dados-experimentos.html#cb243-14"></a><span class="co">## ---</span></span>
+<span id="cb243-15"><a href="análise-básica-de-dados-experimentos.html#cb243-15"></a><span class="co">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb243-16"><a href="análise-básica-de-dados-experimentos.html#cb243-16"></a><span class="co">## (Adjusted p values reported -- single-step method)</span></span></code></pre></div>
 <p>A saída nos diz que a estimativa do contraste é -0,45, que é realmente a diferença entre as médias observadas na condição privada (alta potência: 5,63 vs. baixa potência: 6,08). Você pode relatar esse resultado da seguinte forma: “O efeito de alta (M = 5,63, DP = 0,89) vs. baixa potência (M = 6,08, DP = 1,04) na condição privada foi marginalmente significativo (t (139) = -1,745 , p = 0,083).” Para obter os graus de liberdade, faça um contraste (linearmodel, contrast_specification)$df}</p>
 <p>Digamos que queremos testar um contraste mais complicado, ou seja, se a média na célula privada de alta potência é diferente da média das médias nas outras células. Estamos testando:</p>
 <p><span class="math inline">\((\beta_0 + \beta_1)-1/3*[(\beta_0)+(\beta_0 +\beta_2)+(\beta_0+\beta_1+\beta_2+\beta_3)]\)</span></p>
 <p><span class="math inline">\(=\beta_1-1/3*(\beta_1+2\beta_2+\beta_3)\)</span></p>
 <p><span class="math inline">\(=2/3 * \beta_1-2/3 * \beta_2-1/3 * \beta_3\)</span></p>
 <p>A especificação de contraste é a seguinte:</p>
-<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="análise-básica-de-dados-experimentos.html#cb264-1"></a>contrast_specification &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">2</span><span class="op">/</span><span class="dv">3</span>, <span class="dv">-2</span><span class="op">/</span><span class="dv">3</span>, <span class="dv">-1</span><span class="op">/</span><span class="dv">3</span>) </span>
-<span id="cb264-2"><a href="análise-básica-de-dados-experimentos.html#cb264-2"></a><span class="co">#contrast(linearmodel, contrast_specification)</span></span>
-<span id="cb264-3"><a href="análise-básica-de-dados-experimentos.html#cb264-3"></a><span class="co">## </span></span>
-<span id="cb264-4"><a href="análise-básica-de-dados-experimentos.html#cb264-4"></a><span class="co">## 	 Simultaneous Tests for General Linear Hypotheses</span></span>
-<span id="cb264-5"><a href="análise-básica-de-dados-experimentos.html#cb264-5"></a><span class="co">## </span></span>
-<span id="cb264-6"><a href="análise-básica-de-dados-experimentos.html#cb264-6"></a><span class="co">## Fit: aov(formula = linearmodel)</span></span>
-<span id="cb264-7"><a href="análise-básica-de-dados-experimentos.html#cb264-7"></a><span class="co">## </span></span>
-<span id="cb264-8"><a href="análise-básica-de-dados-experimentos.html#cb264-8"></a><span class="co">## Linear Hypotheses:</span></span>
-<span id="cb264-9"><a href="análise-básica-de-dados-experimentos.html#cb264-9"></a><span class="co">##        Estimate Std. Error t value Pr(&gt;|t|)  </span></span>
-<span id="cb264-10"><a href="análise-básica-de-dados-experimentos.html#cb264-10"></a><span class="co">## 1 == 0  -0.4764     0.2109  -2.259   0.0254 *</span></span>
-<span id="cb264-11"><a href="análise-básica-de-dados-experimentos.html#cb264-11"></a><span class="co">## ---</span></span>
-<span id="cb264-12"><a href="análise-básica-de-dados-experimentos.html#cb264-12"></a><span class="co">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
-<span id="cb264-13"><a href="análise-básica-de-dados-experimentos.html#cb264-13"></a><span class="co">## (Adjusted p values reported -- single-step method)</span></span></code></pre></div>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="análise-básica-de-dados-experimentos.html#cb244-1"></a>contrast_specification &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">2</span><span class="op">/</span><span class="dv">3</span>, <span class="dv">-2</span><span class="op">/</span><span class="dv">3</span>, <span class="dv">-1</span><span class="op">/</span><span class="dv">3</span>) </span>
+<span id="cb244-2"><a href="análise-básica-de-dados-experimentos.html#cb244-2"></a><span class="co">#contrast(linearmodel, contrast_specification)</span></span>
+<span id="cb244-3"><a href="análise-básica-de-dados-experimentos.html#cb244-3"></a><span class="co">## </span></span>
+<span id="cb244-4"><a href="análise-básica-de-dados-experimentos.html#cb244-4"></a><span class="co">## 	 Simultaneous Tests for General Linear Hypotheses</span></span>
+<span id="cb244-5"><a href="análise-básica-de-dados-experimentos.html#cb244-5"></a><span class="co">## </span></span>
+<span id="cb244-6"><a href="análise-básica-de-dados-experimentos.html#cb244-6"></a><span class="co">## Fit: aov(formula = linearmodel)</span></span>
+<span id="cb244-7"><a href="análise-básica-de-dados-experimentos.html#cb244-7"></a><span class="co">## </span></span>
+<span id="cb244-8"><a href="análise-básica-de-dados-experimentos.html#cb244-8"></a><span class="co">## Linear Hypotheses:</span></span>
+<span id="cb244-9"><a href="análise-básica-de-dados-experimentos.html#cb244-9"></a><span class="co">##        Estimate Std. Error t value Pr(&gt;|t|)  </span></span>
+<span id="cb244-10"><a href="análise-básica-de-dados-experimentos.html#cb244-10"></a><span class="co">## 1 == 0  -0.4764     0.2109  -2.259   0.0254 *</span></span>
+<span id="cb244-11"><a href="análise-básica-de-dados-experimentos.html#cb244-11"></a><span class="co">## ---</span></span>
+<span id="cb244-12"><a href="análise-básica-de-dados-experimentos.html#cb244-12"></a><span class="co">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb244-13"><a href="análise-básica-de-dados-experimentos.html#cb244-13"></a><span class="co">## (Adjusted p values reported -- single-step method)</span></span></code></pre></div>
 <p>Verifique se a estimativa realmente corresponde à diferença entre a média de alta potência, privada e a média das médias nas outras células. Você pode relatar o seguinte: “A célula privada de alta potência tinha uma WTP significativamente menor do que as outras células experimentais em nosso projeto (est = -0,476, t (139) = -2,259, p = 0,025)”.</p>
 </div>
 </div>
@@ -694,20 +695,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>Análise de moderação: interação entre variáveis independentes contínuas e categóricas</h2>
 <p>Digamos que queremos testar se os resultados do experimento dependem do nível de domínio das pessoas. Em outras palavras, os efeitos do poder e da audiência são diferentes para participantes dominantes versus participantes não dominantes? Ainda em outras palavras, existe uma interação de três vias entre poder, audiência e domínio?</p>
 <p>Vamos criar um gráfico primeiro:</p>
-<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="análise-básica-de-dados-experimentos.html#cb265-1"></a><span class="co"># Nossa variavel dependente eh o consumo conspicuo, nossa variavel independente (no eixo X) eh a dominancia.</span></span>
-<span id="cb265-2"><a href="análise-básica-de-dados-experimentos.html#cb265-2"></a><span class="co"># Entao, estamos tracando a relacao entre dominancia e consumo conspicuo.</span></span>
-<span id="cb265-3"><a href="análise-básica-de-dados-experimentos.html#cb265-3"></a><span class="co"># O argumento da cor diz a R que queremos um relacionamento para cada nivel de poder.</span></span>
-<span id="cb265-4"><a href="análise-básica-de-dados-experimentos.html#cb265-4"></a></span>
-<span id="cb265-5"><a href="análise-básica-de-dados-experimentos.html#cb265-5"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> powercc, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> dominance, <span class="dt">y =</span> cc, <span class="dt">color =</span> power)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb265-6"><a href="análise-básica-de-dados-experimentos.html#cb265-6"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>audience) <span class="op">+</span><span class="st"> </span><span class="co"># Diga a R que tambem queremos dividir por audiencia.</span></span>
-<span id="cb265-7"><a href="análise-básica-de-dados-experimentos.html#cb265-7"></a><span class="st">  </span><span class="kw">geom_jitter</span>() <span class="op">+</span><span class="st"> </span><span class="co"># Use geom_jitter em vez de geom_point, caso contrario, os pontos serao desenhados um sobre o outro</span></span>
-<span id="cb265-8"><a href="análise-básica-de-dados-experimentos.html#cb265-8"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&#39;lm&#39;</span>, <span class="dt">se=</span><span class="ot">FALSE</span>) <span class="co"># Desenhe uma linha de regressao linear atraves dos pontos.</span></span></code></pre></div>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="análise-básica-de-dados-experimentos.html#cb245-1"></a><span class="co"># Nossa variavel dependente eh o consumo conspicuo, nossa variavel independente (no eixo X) eh a dominancia.</span></span>
+<span id="cb245-2"><a href="análise-básica-de-dados-experimentos.html#cb245-2"></a><span class="co"># Entao, estamos tracando a relacao entre dominancia e consumo conspicuo.</span></span>
+<span id="cb245-3"><a href="análise-básica-de-dados-experimentos.html#cb245-3"></a><span class="co"># O argumento da cor diz a R que queremos um relacionamento para cada nivel de poder.</span></span>
+<span id="cb245-4"><a href="análise-básica-de-dados-experimentos.html#cb245-4"></a></span>
+<span id="cb245-5"><a href="análise-básica-de-dados-experimentos.html#cb245-5"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> powercc, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> dominance, <span class="dt">y =</span> cc, <span class="dt">color =</span> power)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb245-6"><a href="análise-básica-de-dados-experimentos.html#cb245-6"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>audience) <span class="op">+</span><span class="st"> </span><span class="co"># Diga a R que tambem queremos dividir por audiencia.</span></span>
+<span id="cb245-7"><a href="análise-básica-de-dados-experimentos.html#cb245-7"></a><span class="st">  </span><span class="kw">geom_jitter</span>() <span class="op">+</span><span class="st"> </span><span class="co"># Use geom_jitter em vez de geom_point, caso contrario, os pontos serao desenhados um sobre o outro</span></span>
+<span id="cb245-8"><a href="análise-básica-de-dados-experimentos.html#cb245-8"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&#39;lm&#39;</span>, <span class="dt">se=</span><span class="ot">FALSE</span>) <span class="co"># Desenhe uma linha de regressao linear atraves dos pontos.</span></span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-127-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-136-1.png" width="672" /></p>
 <p>Este gráfico é informativo. Isso nos mostra que, na condição privada, o efeito da alta versus baixa potência no consumo conspícuo é mais negativo para participantes menos dominantes do que para participantes mais dominantes. Na condição pública, o efeito da alta versus baixa potência no consumo conspícuo não difere entre os participantes menos versus os mais dominantes. Também vemos que, tanto na condição privada quanto na pública, os participantes mais vs. menos dominantes estão mais dispostos a gastar em consumo conspícuo.</p>
 <p>Vamos verificar se a interação de três vias é significativa:</p>
-<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="análise-básica-de-dados-experimentos.html#cb267-1"></a>linearmodel &lt;-<span class="st"> </span><span class="kw">lm</span>(cc <span class="op">~</span><span class="st"> </span>power <span class="op">*</span><span class="st"> </span>audience <span class="op">*</span><span class="st"> </span>dominance, <span class="dt">data =</span> powercc)</span>
-<span id="cb267-2"><a href="análise-básica-de-dados-experimentos.html#cb267-2"></a><span class="kw">type3anova</span>(linearmodel)</span></code></pre></div>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="análise-básica-de-dados-experimentos.html#cb247-1"></a>linearmodel &lt;-<span class="st"> </span><span class="kw">lm</span>(cc <span class="op">~</span><span class="st"> </span>power <span class="op">*</span><span class="st"> </span>audience <span class="op">*</span><span class="st"> </span>dominance, <span class="dt">data =</span> powercc)</span>
+<span id="cb247-2"><a href="análise-básica-de-dados-experimentos.html#cb247-2"></a><span class="kw">type3anova</span>(linearmodel)</span></code></pre></div>
 <pre><code>## # A tibble: 9 x 6
 ##   term                          ss   df1   df2       f pvalue
 ##   &lt;chr&gt;                      &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt;  &lt;dbl&gt;
@@ -721,7 +722,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 8 power:audience:dominance   1.30      1   135   1.29   0.258
 ## 9 Residuals                137.      135   135  NA     NA</code></pre>
 <p>Somente o efeito da dominância é significativa. Se a interação de três vias fosse significativa, poderíamos acompanhar com mais testes. Por exemplo, poderíamos testar se a interação bidirecional entre dominância e poder é significativa na condição privada, como sugere o gráfico. Para fazer isso, vamos primeiro examinar os coeficientes de regressão do nosso modelo linear:</p>
-<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="análise-básica-de-dados-experimentos.html#cb269-1"></a><span class="kw">summary</span>(linearmodel)</span></code></pre></div>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="análise-básica-de-dados-experimentos.html#cb249-1"></a><span class="kw">summary</span>(linearmodel)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = cc ~ power * audience * dominance, data = powercc)
@@ -758,9 +759,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><span class="math inline">\(\beta_7\)</span> ou o coeficiente para -“powerhigh:audiencepublic:dominance”-</li>
 </ul>
 <p>Resultando nessa tabela de coeficientes:</p>
-<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="análise-básica-de-dados-experimentos.html#cb271-1"></a><span class="co">#                     private                         public</span></span>
-<span id="cb271-2"><a href="análise-básica-de-dados-experimentos.html#cb271-2"></a><span class="co"># low power          [b0] + (b3)                     [b0+b2] + (b3+b6)</span></span>
-<span id="cb271-3"><a href="análise-básica-de-dados-experimentos.html#cb271-3"></a><span class="co"># high power         [b0+b1] + (b3+b5)               [b0+b1+b2+b4] + (b3+b5+b6+b7)</span></span></code></pre></div>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="análise-básica-de-dados-experimentos.html#cb251-1"></a><span class="co">#                     private                         public</span></span>
+<span id="cb251-2"><a href="análise-básica-de-dados-experimentos.html#cb251-2"></a><span class="co"># low power          [b0] + (b3)                     [b0+b2] + (b3+b6)</span></span>
+<span id="cb251-3"><a href="análise-básica-de-dados-experimentos.html#cb251-3"></a><span class="co"># high power         [b0+b1] + (b3+b5)               [b0+b1+b2+b4] + (b3+b5+b6+b7)</span></span></code></pre></div>
 <p>Como conseguimos essa tabela? Com o modelo linear especificado acima, cada valor estimado de consumo conspícuo (a variável dependente) é uma função da condição experimental do participante e do nível de dominância do participante. Digamos que tenhamos um participante na condição pública de baixa potência com um nível de dominância de 0,5. O valor estimado do consumo conspícuo para esse participante é:</p>
 <ul>
 <li><span class="math inline">\(\beta_0\)</span> ou intercepto x 1;</li>
@@ -785,22 +786,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 \]</span></p>
 <p>e podemos obter as fórmulas para as diferentes células de maneira semelhante. Vemos que em cada célula, o coeficiente entre colchetes é o valor estimado na medida de consumo conspícuo para um participante que pontua 0 em dominância. O coeficiente entre parênteses arredondados é o aumento estimado na medida de consumo conspícuo para cada aumento de uma unidade no domínio. Em outras palavras, os coeficientes entre colchetes representam a interceptação e os coeficientes entre colchetes representam a inclinação da linha que representa a regressão do consumo conspícuo (Y) na dominância (X) dentro de cada célula experimental (ou seja, cada potência e público-alvo) combinação).</p>
 <p>Um teste da interação entre poder e dominância dentro da condição privada se resumiria a testar se as linhas azul e vermelha no painel esquerdo da figura acima devem ser consideradas paralelas ou não. Se eles são paralelos, o efeito da dominância no consumo conspícuo é o mesmo nas condições de baixa e alta potência. Se eles não são paralelos, o efeito da dominância é diferente nas condições de baixa e alta potência. Em outras palavras, devemos testar se os coeficientes de regressão são iguais dentro de baixa potência, privado e dentro de alta potência, privado. Em outras palavras, testamos se <span class="math inline">\((\beta_3+\beta_5)-\beta_3=\beta_5\)</span> é igual a zero:</p>
-<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="análise-básica-de-dados-experimentos.html#cb272-1"></a><span class="co"># agora temos oito numeros correspondentes aos oito coeficientes de regressao</span></span>
-<span id="cb272-2"><a href="análise-básica-de-dados-experimentos.html#cb272-2"></a><span class="co"># queremos testar se b5 eh significativo, entao colocamos 1 em 6º lugar (o 1º lugar é para b0)</span></span>
-<span id="cb272-3"><a href="análise-básica-de-dados-experimentos.html#cb272-3"></a></span>
-<span id="cb272-4"><a href="análise-básica-de-dados-experimentos.html#cb272-4"></a>contrast_specification &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span>
-<span id="cb272-5"><a href="análise-básica-de-dados-experimentos.html#cb272-5"></a></span>
-<span id="cb272-6"><a href="análise-básica-de-dados-experimentos.html#cb272-6"></a><span class="co">#contrast(linearmodel, contrast_specification)</span></span>
-<span id="cb272-7"><a href="análise-básica-de-dados-experimentos.html#cb272-7"></a></span>
-<span id="cb272-8"><a href="análise-básica-de-dados-experimentos.html#cb272-8"></a><span class="co">## </span></span>
-<span id="cb272-9"><a href="análise-básica-de-dados-experimentos.html#cb272-9"></a><span class="co">##   Simultaneous Tests for General Linear Hypotheses</span></span>
-<span id="cb272-10"><a href="análise-básica-de-dados-experimentos.html#cb272-10"></a><span class="co">## </span></span>
-<span id="cb272-11"><a href="análise-básica-de-dados-experimentos.html#cb272-11"></a><span class="co">## Fit: aov(formula = linearmodel)</span></span>
-<span id="cb272-12"><a href="análise-básica-de-dados-experimentos.html#cb272-12"></a><span class="co">## </span></span>
-<span id="cb272-13"><a href="análise-básica-de-dados-experimentos.html#cb272-13"></a><span class="co">## Linear Hypotheses:</span></span>
-<span id="cb272-14"><a href="análise-básica-de-dados-experimentos.html#cb272-14"></a><span class="co">##        Estimate Std. Error t value Pr(&gt;|t|)</span></span>
-<span id="cb272-15"><a href="análise-básica-de-dados-experimentos.html#cb272-15"></a><span class="co">## 1 == 0    1.502      1.111   1.352    0.179</span></span>
-<span id="cb272-16"><a href="análise-básica-de-dados-experimentos.html#cb272-16"></a><span class="co">## (Adjusted p values reported -- single-step method)</span></span></code></pre></div>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="análise-básica-de-dados-experimentos.html#cb252-1"></a><span class="co"># agora temos oito numeros correspondentes aos oito coeficientes de regressao</span></span>
+<span id="cb252-2"><a href="análise-básica-de-dados-experimentos.html#cb252-2"></a><span class="co"># queremos testar se b5 eh significativo, entao colocamos 1 em 6º lugar (o 1º lugar é para b0)</span></span>
+<span id="cb252-3"><a href="análise-básica-de-dados-experimentos.html#cb252-3"></a></span>
+<span id="cb252-4"><a href="análise-básica-de-dados-experimentos.html#cb252-4"></a>contrast_specification &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb252-5"><a href="análise-básica-de-dados-experimentos.html#cb252-5"></a></span>
+<span id="cb252-6"><a href="análise-básica-de-dados-experimentos.html#cb252-6"></a><span class="co">#contrast(linearmodel, contrast_specification)</span></span>
+<span id="cb252-7"><a href="análise-básica-de-dados-experimentos.html#cb252-7"></a></span>
+<span id="cb252-8"><a href="análise-básica-de-dados-experimentos.html#cb252-8"></a><span class="co">## </span></span>
+<span id="cb252-9"><a href="análise-básica-de-dados-experimentos.html#cb252-9"></a><span class="co">##   Simultaneous Tests for General Linear Hypotheses</span></span>
+<span id="cb252-10"><a href="análise-básica-de-dados-experimentos.html#cb252-10"></a><span class="co">## </span></span>
+<span id="cb252-11"><a href="análise-básica-de-dados-experimentos.html#cb252-11"></a><span class="co">## Fit: aov(formula = linearmodel)</span></span>
+<span id="cb252-12"><a href="análise-básica-de-dados-experimentos.html#cb252-12"></a><span class="co">## </span></span>
+<span id="cb252-13"><a href="análise-básica-de-dados-experimentos.html#cb252-13"></a><span class="co">## Linear Hypotheses:</span></span>
+<span id="cb252-14"><a href="análise-básica-de-dados-experimentos.html#cb252-14"></a><span class="co">##        Estimate Std. Error t value Pr(&gt;|t|)</span></span>
+<span id="cb252-15"><a href="análise-básica-de-dados-experimentos.html#cb252-15"></a><span class="co">## 1 == 0    1.502      1.111   1.352    0.179</span></span>
+<span id="cb252-16"><a href="análise-básica-de-dados-experimentos.html#cb252-16"></a><span class="co">## (Adjusted p values reported -- single-step method)</span></span></code></pre></div>
 <p>A interação não é significativa, no entanto. Você pode relatar o seguinte: “Dentro da condição privada, não houve interação entre poder e dominância (t (135) = 1,352, p = 0,18).”</p>
 <div id="análise-spotlight" class="section level3 unlisted unnumbered">
 <h3>Análise <em>spotlight</em></h3>
@@ -810,8 +811,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="análise-ancova" class="section level2 unlisted unnumbered">
 <h2>Análise ANCOVA</h2>
 <p>Descobrimos que nossas condições experimentais não afetam significativamente o consumo conspícuo:</p>
-<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="análise-básica-de-dados-experimentos.html#cb273-1"></a>linearmodel1 &lt;-<span class="st"> </span><span class="kw">lm</span>(cc <span class="op">~</span><span class="st"> </span>power<span class="op">*</span>audience, <span class="dt">data =</span> powercc)</span>
-<span id="cb273-2"><a href="análise-básica-de-dados-experimentos.html#cb273-2"></a><span class="kw">type3anova</span>(linearmodel1)</span></code></pre></div>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="análise-básica-de-dados-experimentos.html#cb253-1"></a>linearmodel1 &lt;-<span class="st"> </span><span class="kw">lm</span>(cc <span class="op">~</span><span class="st"> </span>power<span class="op">*</span>audience, <span class="dt">data =</span> powercc)</span>
+<span id="cb253-2"><a href="análise-básica-de-dados-experimentos.html#cb253-2"></a><span class="kw">type3anova</span>(linearmodel1)</span></code></pre></div>
 <pre><code>## # A tibble: 5 x 6
 ##   term                ss   df1   df2       f pvalue
 ##   &lt;chr&gt;            &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt;  &lt;dbl&gt;
@@ -821,8 +822,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4 power:audience    1.11     1   139    1.03  0.313
 ## 5 Residuals       150.     139   139   NA    NA</code></pre>
 <p>Por um lado, isso pode significar que simplesmente não há efeitos das condições experimentais no consumo conspícuo. Por outro lado, isso poderia significar que as manipulações experimentais não são fortes o suficiente ou que há muita variação inexplicada em nossa variável dependente (ou ambas). Podemos reduzir a variação inexplicável em nossa variável dependente, no entanto, incluindo uma variável em nosso modelo que suspeitamos estar relacionada à variável dependente. No nosso caso, suspeitamos que a disposição de gastar em consumo discreto (icc) esteja relacionada à disposição de gastar em consumo conspícuo. Embora icc seja uma variável contínua, podemos incluí-la como uma variável independente em nossa ANOVA e isso nos permitirá reduzir a variação inexplicável em nossa variável dependente:</p>
-<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="análise-básica-de-dados-experimentos.html#cb275-1"></a>linearmodel2 &lt;-<span class="st"> </span><span class="kw">lm</span>(cc <span class="op">~</span><span class="st"> </span>power<span class="op">*</span>audience <span class="op">+</span><span class="st"> </span>icc, <span class="dt">data =</span> powercc)</span>
-<span id="cb275-2"><a href="análise-básica-de-dados-experimentos.html#cb275-2"></a><span class="kw">type3anova</span>(linearmodel2)</span></code></pre></div>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="análise-básica-de-dados-experimentos.html#cb255-1"></a>linearmodel2 &lt;-<span class="st"> </span><span class="kw">lm</span>(cc <span class="op">~</span><span class="st"> </span>power<span class="op">*</span>audience <span class="op">+</span><span class="st"> </span>icc, <span class="dt">data =</span> powercc)</span>
+<span id="cb255-2"><a href="análise-básica-de-dados-experimentos.html#cb255-2"></a><span class="kw">type3anova</span>(linearmodel2)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 6
 ##   term               ss   df1   df2      f pvalue
 ##   &lt;chr&gt;           &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;
@@ -839,23 +840,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2>Medidas repetidas ANOVA</h2>
 <p>Neste experimento, temos mais de uma medida por unidade de observação, ou seja, disposição para gastar em produtos conspícuos e disposição para gastar em produtos discretos. Uma ANOVA de medidas repetidas pode ser usada para testar se os efeitos das condições experimentais são diferentes para produtos conspícuos versus inconspícuos.</p>
 <p>Para executar uma ANOVA de medidas repetidas, precisamos reestruturar nosso quadro de dados de amplo a longo. Um amplo quadro de dados possui uma linha por unidade de observação (em nosso experimento: uma linha por participante) e uma coluna por observação (em nosso experimento: uma coluna para os produtos conspícuos e uma coluna para os produtos inconspícuos). Um quadro de dados longo possui uma linha por observação (em nosso experimento: duas linhas por participante, uma linha para o produto conspícuo e uma linha para o produto inconspícuo) e uma coluna extra que indica com que tipo de observação estamos lidando (conspícua ou imperceptível). Vamos converter o quadro de dados e ver como os quadros de dados amplos e longos diferem um do outro.</p>
-<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="análise-básica-de-dados-experimentos.html#cb277-1"></a><span class="kw">library</span>(tidyr)</span>
-<span id="cb277-2"><a href="análise-básica-de-dados-experimentos.html#cb277-2"></a>powercc.long &lt;-<span class="st"> </span>powercc <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb277-3"><a href="análise-básica-de-dados-experimentos.html#cb277-3"></a><span class="st">  </span><span class="kw">gather</span>(consumption_type, wtp, cc, icc)</span>
-<span id="cb277-4"><a href="análise-básica-de-dados-experimentos.html#cb277-4"></a></span>
-<span id="cb277-5"><a href="análise-básica-de-dados-experimentos.html#cb277-5"></a><span class="co"># Converter de grande para longo significa que estamos empilhando varias colunas umas sobre as outras. Para isso, precisamos de uma variavel extra para acompanhar qual coluna estamos lidando.</span></span>
-<span id="cb277-6"><a href="análise-básica-de-dados-experimentos.html#cb277-6"></a><span class="co"># A funcao de coleta converte conjuntos de dados de amplos para longos.</span></span>
-<span id="cb277-7"><a href="análise-básica-de-dados-experimentos.html#cb277-7"></a><span class="co"># O primeiro argumento (consumer_type) nos dira com qual coluna estamos lidando. Essa eh a variavel que armazenara os nomes das colunas que estamos empilhando.</span></span>
-<span id="cb277-8"><a href="análise-básica-de-dados-experimentos.html#cb277-8"></a><span class="co"># O segundo argumento (wtp) armazenara as colunas reais empilhadas umas sobre as outras.</span></span>
-<span id="cb277-9"><a href="análise-básica-de-dados-experimentos.html#cb277-9"></a><span class="co"># Os argumentos a seguir sao as colunas que queremos empilhar.</span></span>
-<span id="cb277-10"><a href="análise-básica-de-dados-experimentos.html#cb277-10"></a></span>
-<span id="cb277-11"><a href="análise-básica-de-dados-experimentos.html#cb277-11"></a><span class="co"># Entao, dizemos ao gather para criar duas novas variaveis: tipo_de_consumo e vontade de pagar, para representar o empilhamento de um determinado numero de colunas.</span></span>
-<span id="cb277-12"><a href="análise-básica-de-dados-experimentos.html#cb277-12"></a></span>
-<span id="cb277-13"><a href="análise-básica-de-dados-experimentos.html#cb277-13"></a><span class="co"># Vamos dizer ao R para nos mostrar apenas as colunas relevantes (isto eh apenas para fins de apresentacao):</span></span>
-<span id="cb277-14"><a href="análise-básica-de-dados-experimentos.html#cb277-14"></a></span>
-<span id="cb277-15"><a href="análise-básica-de-dados-experimentos.html#cb277-15"></a>powercc.long <span class="op">%&gt;%</span></span>
-<span id="cb277-16"><a href="análise-básica-de-dados-experimentos.html#cb277-16"></a><span class="st">  </span><span class="kw">select</span>(subject, power, audience, consumption_type, wtp) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb277-17"><a href="análise-básica-de-dados-experimentos.html#cb277-17"></a><span class="st">  </span><span class="kw">arrange</span>(subject)</span></code></pre></div>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="análise-básica-de-dados-experimentos.html#cb257-1"></a><span class="kw">library</span>(tidyr)</span>
+<span id="cb257-2"><a href="análise-básica-de-dados-experimentos.html#cb257-2"></a>powercc.long &lt;-<span class="st"> </span>powercc <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb257-3"><a href="análise-básica-de-dados-experimentos.html#cb257-3"></a><span class="st">  </span><span class="kw">gather</span>(consumption_type, wtp, cc, icc)</span>
+<span id="cb257-4"><a href="análise-básica-de-dados-experimentos.html#cb257-4"></a></span>
+<span id="cb257-5"><a href="análise-básica-de-dados-experimentos.html#cb257-5"></a><span class="co"># Converter de grande para longo significa que estamos empilhando varias colunas umas sobre as outras. Para isso, precisamos de uma variavel extra para acompanhar qual coluna estamos lidando.</span></span>
+<span id="cb257-6"><a href="análise-básica-de-dados-experimentos.html#cb257-6"></a><span class="co"># A funcao de coleta converte conjuntos de dados de amplos para longos.</span></span>
+<span id="cb257-7"><a href="análise-básica-de-dados-experimentos.html#cb257-7"></a><span class="co"># O primeiro argumento (consumer_type) nos dira com qual coluna estamos lidando. Essa eh a variavel que armazenara os nomes das colunas que estamos empilhando.</span></span>
+<span id="cb257-8"><a href="análise-básica-de-dados-experimentos.html#cb257-8"></a><span class="co"># O segundo argumento (wtp) armazenara as colunas reais empilhadas umas sobre as outras.</span></span>
+<span id="cb257-9"><a href="análise-básica-de-dados-experimentos.html#cb257-9"></a><span class="co"># Os argumentos a seguir sao as colunas que queremos empilhar.</span></span>
+<span id="cb257-10"><a href="análise-básica-de-dados-experimentos.html#cb257-10"></a></span>
+<span id="cb257-11"><a href="análise-básica-de-dados-experimentos.html#cb257-11"></a><span class="co"># Entao, dizemos ao gather para criar duas novas variaveis: tipo_de_consumo e vontade de pagar, para representar o empilhamento de um determinado numero de colunas.</span></span>
+<span id="cb257-12"><a href="análise-básica-de-dados-experimentos.html#cb257-12"></a></span>
+<span id="cb257-13"><a href="análise-básica-de-dados-experimentos.html#cb257-13"></a><span class="co"># Vamos dizer ao R para nos mostrar apenas as colunas relevantes (isto eh apenas para fins de apresentacao):</span></span>
+<span id="cb257-14"><a href="análise-básica-de-dados-experimentos.html#cb257-14"></a></span>
+<span id="cb257-15"><a href="análise-básica-de-dados-experimentos.html#cb257-15"></a>powercc.long <span class="op">%&gt;%</span></span>
+<span id="cb257-16"><a href="análise-básica-de-dados-experimentos.html#cb257-16"></a><span class="st">  </span><span class="kw">select</span>(subject, power, audience, consumption_type, wtp) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb257-17"><a href="análise-básica-de-dados-experimentos.html#cb257-17"></a><span class="st">  </span><span class="kw">arrange</span>(subject)</span></code></pre></div>
 <pre><code>## # A tibble: 286 x 5
 ##    subject power audience consumption_type   wtp
 ##    &lt;fct&gt;   &lt;fct&gt; &lt;fct&gt;    &lt;chr&gt;            &lt;dbl&gt;
@@ -871,9 +872,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 10 5       high  public   icc                3  
 ## # ... with 276 more rows</code></pre>
 <p>Temos duas linhas por assunto, uma coluna de disposição para pagar e outra coluna (tipo de consumo) que indica se está disposta a pagar por produtos visíveis ou imperceptíveis. Compare isso com o amplo conjunto de dados:</p>
-<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="análise-básica-de-dados-experimentos.html#cb279-1"></a>powercc <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb279-2"><a href="análise-básica-de-dados-experimentos.html#cb279-2"></a><span class="st">  </span><span class="kw">select</span>(subject, power, audience, cc, icc) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb279-3"><a href="análise-básica-de-dados-experimentos.html#cb279-3"></a><span class="st">  </span><span class="kw">arrange</span>(subject) <span class="co"># Mostre somente as colunas relevantes</span></span></code></pre></div>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="análise-básica-de-dados-experimentos.html#cb259-1"></a>powercc <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb259-2"><a href="análise-básica-de-dados-experimentos.html#cb259-2"></a><span class="st">  </span><span class="kw">select</span>(subject, power, audience, cc, icc) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb259-3"><a href="análise-básica-de-dados-experimentos.html#cb259-3"></a><span class="st">  </span><span class="kw">arrange</span>(subject) <span class="co"># Mostre somente as colunas relevantes</span></span></code></pre></div>
 <pre><code>## # A tibble: 143 x 5
 ##    subject power audience    cc   icc
 ##    &lt;fct&gt;   &lt;fct&gt; &lt;fct&gt;    &lt;dbl&gt; &lt;dbl&gt;
@@ -890,28 +891,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## # ... with 133 more rows</code></pre>
 <p>Temos uma linha por assunto e duas colunas, uma para cada tipo de produto.</p>
 <p>Agora podemos realizar uma medida repetida ANOVA. Para isso, precisamos do pacote ez.</p>
-<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="análise-básica-de-dados-experimentos.html#cb281-1"></a><span class="co">#install.packages(&quot;ez&quot;) # Precisamos do pacote ez para RM ANOVA</span></span>
-<span id="cb281-2"><a href="análise-básica-de-dados-experimentos.html#cb281-2"></a><span class="kw">library</span>(ez)</span></code></pre></div>
-<pre><code>## Registered S3 methods overwritten by &#39;lme4&#39;:
-##   method                          from
-##   cooks.distance.influence.merMod car 
-##   influence.merMod                car 
-##   dfbeta.influence.merMod         car 
-##   dfbetas.influence.merMod        car</code></pre>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="análise-básica-de-dados-experimentos.html#cb261-1"></a><span class="co">#install.packages(&quot;ez&quot;) # Precisamos do pacote ez para RM ANOVA</span></span>
+<span id="cb261-2"><a href="análise-básica-de-dados-experimentos.html#cb261-2"></a><span class="kw">library</span>(ez)</span></code></pre></div>
 <p>Queremos testar se a interação entre poder e público é diferente para produtos conspícuos e inconspícuos. Vamos dar uma olhada em um gráfico primeiro:</p>
-<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="análise-básica-de-dados-experimentos.html#cb283-1"></a>powercc.long.summary &lt;-<span class="st"> </span>powercc.long <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># para um grafico de barras precisamos de summary primeiro</span></span>
-<span id="cb283-2"><a href="análise-básica-de-dados-experimentos.html#cb283-2"></a><span class="st">  </span><span class="kw">group_by</span>(power, audience, consumption_type) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># agrupa por tres variaveis independentes</span></span>
-<span id="cb283-3"><a href="análise-básica-de-dados-experimentos.html#cb283-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">wtp =</span> <span class="kw">mean</span>(wtp)) <span class="co"># obtem a media de wtp</span></span></code></pre></div>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="análise-básica-de-dados-experimentos.html#cb262-1"></a>powercc.long.summary &lt;-<span class="st"> </span>powercc.long <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># para um grafico de barras precisamos de summary primeiro</span></span>
+<span id="cb262-2"><a href="análise-básica-de-dados-experimentos.html#cb262-2"></a><span class="st">  </span><span class="kw">group_by</span>(power, audience, consumption_type) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># agrupa por tres variaveis independentes</span></span>
+<span id="cb262-3"><a href="análise-básica-de-dados-experimentos.html#cb262-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">wtp =</span> <span class="kw">mean</span>(wtp)) <span class="co"># obtem a media de wtp</span></span></code></pre></div>
 <pre><code>## `summarise()` regrouping output by &#39;power&#39;, &#39;audience&#39; (override with `.groups` argument)</code></pre>
-<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="análise-básica-de-dados-experimentos.html#cb285-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> powercc.long.summary, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> audience, <span class="dt">y =</span> wtp, <span class="dt">fill =</span> power)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb285-2"><a href="análise-básica-de-dados-experimentos.html#cb285-2"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>consumption_type) <span class="op">+</span><span class="st"> </span><span class="co"># create a panel for each consumption type</span></span>
-<span id="cb285-3"><a href="análise-básica-de-dados-experimentos.html#cb285-3"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-137-1.png" width="672" /></p>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="análise-básica-de-dados-experimentos.html#cb264-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> powercc.long.summary, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> audience, <span class="dt">y =</span> wtp, <span class="dt">fill =</span> power)) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb264-2"><a href="análise-básica-de-dados-experimentos.html#cb264-2"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>consumption_type) <span class="op">+</span><span class="st"> </span><span class="co"># create a panel for each consumption type</span></span>
+<span id="cb264-3"><a href="análise-básica-de-dados-experimentos.html#cb264-3"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-146-1.png" width="672" /></p>
 <p>Agora podemos testar formalmente a interação de três vias:</p>
-<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="análise-básica-de-dados-experimentos.html#cb286-1"></a><span class="co"># Especifique os dados, a variavel dependente, o identificador (wid),</span></span>
-<span id="cb286-2"><a href="análise-básica-de-dados-experimentos.html#cb286-2"></a><span class="co"># a variavel que representa a condicao dentro dos sujeitos e as variaveis que representam as condicoes entre os sujeitos.</span></span>
-<span id="cb286-3"><a href="análise-básica-de-dados-experimentos.html#cb286-3"></a></span>
-<span id="cb286-4"><a href="análise-básica-de-dados-experimentos.html#cb286-4"></a><span class="kw">ezANOVA</span>(<span class="dt">data =</span> powercc.long, <span class="dt">dv =</span> wtp, <span class="dt">wid =</span> subject, <span class="dt">within =</span> consumption_type, <span class="dt">between =</span> power<span class="op">*</span>audience)</span></code></pre></div>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="análise-básica-de-dados-experimentos.html#cb265-1"></a><span class="co"># Especifique os dados, a variavel dependente, o identificador (wid),</span></span>
+<span id="cb265-2"><a href="análise-básica-de-dados-experimentos.html#cb265-2"></a><span class="co"># a variavel que representa a condicao dentro dos sujeitos e as variaveis que representam as condicoes entre os sujeitos.</span></span>
+<span id="cb265-3"><a href="análise-básica-de-dados-experimentos.html#cb265-3"></a></span>
+<span id="cb265-4"><a href="análise-básica-de-dados-experimentos.html#cb265-4"></a><span class="kw">ezANOVA</span>(<span class="dt">data =</span> powercc.long, <span class="dt">dv =</span> wtp, <span class="dt">wid =</span> subject, <span class="dt">within =</span> consumption_type, <span class="dt">between =</span> power<span class="op">*</span>audience)</span></code></pre></div>
 <pre><code>## Warning: You have removed one or more Ss from the analysis. Refactoring &quot;subject&quot; for
 ## ANOVA.</code></pre>
 <pre><code>## Warning: Converting &quot;consumption_type&quot; to factor for ANOVA.</code></pre>
