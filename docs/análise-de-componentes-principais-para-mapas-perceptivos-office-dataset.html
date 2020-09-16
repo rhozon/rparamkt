@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>R para Estudantes de Marketing</title>
-  <meta name="description" content="R para Estudantes de Marketing" />
+  <title>Análise de componentes principais para mapas perceptivos (office dataset) | R para Estudantes de Marketing</title>
+  <meta name="description" content="Análise de componentes principais para mapas perceptivos (office dataset) | R para Estudantes de Marketing" />
   <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="R para Estudantes de Marketing" />
+  <meta property="og:title" content="Análise de componentes principais para mapas perceptivos (office dataset) | R para Estudantes de Marketing" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="R para Estudantes de Marketing" />
+  <meta name="twitter:title" content="Análise de componentes principais para mapas perceptivos (office dataset) | R para Estudantes de Marketing" />
   
   
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
+<link rel="prev" href="análise-básica-de-dados-experimentos.html"/>
 
-<link rel="next" href="sobre-este-tutorial.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -255,34 +255,142 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">R para Estudantes de Marketing</h1>
-<p class="author"><em>KU Leuven Marketing department (tradução: Rodrigo Hermont Ozon)</em></p>
-<p class="date"><em>2020-09-16</em></p>
+<div id="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset" class="section level1 unlisted unnumbered">
+<h1>Análise de componentes principais para mapas perceptivos (office dataset)</h1>
+<p>Neste capítulo, você aprenderá como realizar uma análise de componentes principais e visualizar os resultados em um mapa perceptivo.</p>
+<p>Digamos que tenhamos um conjunto de observações que diferem entre si em várias dimensões; por exemplo, temos várias marcas de uísque (observações) classificadas em vários atributos, como corpo, doçura, sabor, etc. (dimensões). Se algumas dessas dimensões estiverem fortemente correlacionadas, deve ser possível descrever as observações por um número menor (que o original) de dimensões sem perder muita informação. Por exemplo, doçura e frutificação podem ser altamente correlacionadas e, portanto, podem ser substituídas por uma variável. Essa redução de dimensionalidade é o objetivo da análise de componentes principais.</p>
+<div id="dados" class="section level2 unlisted unnumbered">
+<h2>Dados</h2>
+<div id="importação" class="section level3 unlisted unnumbered">
+<h3>Importação</h3>
+<p>Analisaremos os dados de uma pesquisa na qual os entrevistados foram solicitados a classificar quatro marcas de equipamentos de escritório em seis dimensões. Faça o download dos dados <a href="http://users.telenet.be/samuelfranssens/tutorial_data/perceptual_map_office.xlsx">aqui</a> e importe-os para o R:</p>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb291-1"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb291-2"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb291-2"></a><span class="kw">library</span>(readxl)</span>
+<span id="cb291-3"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb291-3"></a></span>
+<span id="cb291-4"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb291-4"></a></span>
+<span id="cb291-5"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb291-5"></a>url&lt;-<span class="st">&quot;http://users.telenet.be/samuelfranssens/tutorial_data/perceptual_map_office.xlsx&quot;</span></span>
+<span id="cb291-6"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb291-6"></a>office &lt;-<span class="st"> </span><span class="kw">tempfile</span>()</span>
+<span id="cb291-7"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb291-7"></a><span class="kw">download.file</span>(url, office, <span class="dt">mode=</span><span class="st">&quot;wb&quot;</span>)</span>
+<span id="cb291-8"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb291-8"></a>office&lt;-<span class="kw">read_excel</span>(<span class="dt">path =</span> office, <span class="dt">sheet =</span> <span class="dv">1</span>)</span>
+<span id="cb291-9"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb291-9"></a></span>
+<span id="cb291-10"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb291-10"></a>office</span></code></pre></div>
+<pre><code>## # A tibble: 4 x 7
+##   brand large_choice low_prices service_quality product_quality convenience
+##   &lt;chr&gt;        &lt;dbl&gt;      &lt;dbl&gt;           &lt;dbl&gt;           &lt;dbl&gt;       &lt;dbl&gt;
+## 1 Offi~          5.2        2.1             4.2             3.7         2.7
+## 2 Pape~          4.4        4.5             2.3             2.6         1.4
+## 3 Offi~          3.9        2.6             3.1             3.1         4.7
+## 4 Supe~          2.3        4.1             1.8             2.9         5.1
+## # ... with 1 more variable: preference_score &lt;dbl&gt;</code></pre>
 </div>
-<div id="sobre-o-autor-desta-tradução" class="section level1 unlisted unnumbered">
-<h1>Sobre o autor desta tradução</h1>
-<p><img src="https://github.com/rhozon/site/raw/master/me.jpg" /></p>
-<p><em>Rodrigo Hermont Ozon,</em> economista e apaixonado por econometria, pelas aplicações de modelos econômicos a problemas reais e cotidianos vivenciados na sociedade e na realidade do mundo empresarial e corporativo.</p>
-<p>Seus contatos podem ser acessados em:</p>
-<ul>
-<li><p><a href="https://rhozon.github.io/">WebSite</a></p></li>
-<li><p><a href="https://www.linkedin.com/in/rodrigohermontozon/">LinkeDin</a></p></li>
-</ul>
-<div id="resumo" class="section level3 unlisted unnumbered">
-<h3>Resumo</h3>
-<p>O objetivo de traduzir esse tutorial consiste em facilitar o aprendizado e utilização da linguagem estatística R para os profissionais de marketing e demais áreas de negócio que precisam se adequar a uma realidade mutante e movida por um fluxo significativo de informações por todos os lados. Trabalhar e interpretar bem os dados é um desafio computacional para muitos profissionais dessa área; e esta tradução visa cobrir (ainda que superficialmente) tal lacuna.</p>
-<p>Este bookdown foi escrito no inicialmente no <a href="http://www.overleaf.com">overleaf</a> com o pacote knitr <a href="https://bookdown.org/content/1340/">para a página interativa de autoria de KU Leven Marketing Department.</a></p>
-<hr />
-<p>Ao meu amado paizão e professor pra vida inteira, Ronaldo – <em>“Ensina a criança no caminho em que deve andar, e, ainda quando for velho, não se desviará dele.”</em></p>
+<div id="manipulação" class="section level3 unlisted unnumbered">
+<h3>Manipulação</h3>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb293-1"></a>office <span class="co"># visualiza os dados</span></span></code></pre></div>
+<pre><code>## # A tibble: 4 x 7
+##   brand large_choice low_prices service_quality product_quality convenience
+##   &lt;chr&gt;        &lt;dbl&gt;      &lt;dbl&gt;           &lt;dbl&gt;           &lt;dbl&gt;       &lt;dbl&gt;
+## 1 Offi~          5.2        2.1             4.2             3.7         2.7
+## 2 Pape~          4.4        4.5             2.3             2.6         1.4
+## 3 Offi~          3.9        2.6             3.1             3.1         4.7
+## 4 Supe~          2.3        4.1             1.8             2.9         5.1
+## # ... with 1 more variable: preference_score &lt;dbl&gt;</code></pre>
+<p>O conjunto de dados consiste em um identificador, a marca do equipamento de escritório (brand}) e a classificação média (entre os entrevistados) de cada marca em seis atributos: escolha grande (large_choice), preços baixos (low_prices), qualidade do serviço (service_quality), qualidade do produto (product_quality), conveniência (convenience}) e pontuação da preferência (preference_score). Vamos fatorar o identificador:</p>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb295-1"></a>office &lt;-<span class="st"> </span>office <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb295-2"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb295-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">brand =</span> <span class="kw">factor</span>(brand))</span></code></pre></div>
+</div>
+<div id="recapitulação-importação-e-manipulação" class="section level3 unlisted unnumbered">
+<h3>Recapitulação: importação e manipulação</h3>
+<p>Aqui está o que fizemos até agora, em uma sequência ordenada de operações canalizadas/pipe (faça o download dos dados aqui):</p>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb296-1"></a><span class="co">#library(tidyverse)</span></span>
+<span id="cb296-2"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb296-2"></a><span class="co">#library(readxl)</span></span>
+<span id="cb296-3"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb296-3"></a></span>
+<span id="cb296-4"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb296-4"></a><span class="co">#office &lt;- read_excel(&quot;perceptual_map_office.xlsx&quot;,&quot;attributes&quot;) %&gt;% # </span></span>
+<span id="cb296-5"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb296-5"></a>  <span class="co">#mutate(brand = factor(brand))</span></span></code></pre></div>
+</div>
+</div>
+<div id="quantos-fatores-devemos-considerar" class="section level2 unlisted unnumbered">
+<h2>Quantos fatores devemos considerar ?</h2>
+<p>O objetivo da análise de componentes principais é reduzir o número de dimensões que descrevem nossos dados, sem perder muitas informações. O primeiro passo na análise de componentes principais é decidir o número de componentes ou fatores principais que queremos manter. Para nos ajudar a decidir, usaremos a função PCA do pacote FactoMineR:</p>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb297-1"></a><span class="co">#install.packages(&quot;FactoMineR&quot;)</span></span>
+<span id="cb297-2"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb297-2"></a><span class="kw">library</span>(FactoMineR)</span></code></pre></div>
+<p>Para poder usar a função PCA, precisamos primeiro transformar o quadro de dados:</p>
+<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb298-1"></a>office.df &lt;-<span class="st"> </span>office <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb298-2"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb298-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span><span class="st"> </span>brand) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># A entrada para a analise de componentes principais deve ser apenas as dimensoes, nao o (s) identificador (es); portanto, vamos remover os identificadores.</span></span>
+<span id="cb298-3"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb298-3"></a><span class="st">  </span><span class="kw">as.data.frame</span>() <span class="co"># altere o tipo do objeto para &#39;data.frame&#39;. Isso eh necessario para a funcao PCA</span></span>
+<span id="cb298-4"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb298-4"></a></span>
+<span id="cb298-5"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb298-5"></a><span class="kw">rownames</span>(office.df) &lt;-<span class="st"> </span>office<span class="op">$</span>brand <span class="co"># Defina os nomes das linhas do data.frame para as marcas (isso eh importante mais tarde ao fazer um biplot)</span></span></code></pre></div>
+<p>Agora podemos prosseguir com a análise de componentes principais:</p>
+<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb299-1"></a>office.pca &lt;-<span class="st"> </span><span class="kw">PCA</span>(office.df, <span class="dt">graph=</span><span class="ot">FALSE</span>) <span class="co"># Realizar a analise de componentes principais</span></span>
+<span id="cb299-2"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb299-2"></a></span>
+<span id="cb299-3"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb299-3"></a>office.pca<span class="op">$</span>eig <span class="co"># e veja a tabela com informacoes sobre variancia explicada</span></span></code></pre></div>
+<pre><code>##        eigenvalue percentage of variance cumulative percentage of variance
+## comp 1  4.2656310              71.093850                          71.09385
+## comp 2  1.6197932              26.996554                          98.09040
+## comp 3  0.1145758               1.909596                         100.00000</code></pre>
+<p>Se olharmos para esta tabela, veremos que dois componentes explicam 98,1% da variância nas classificações. Isso já é bastante e sugere que podemos fazer com segurança duas dimensões para descrever nossos dados. Uma regra prática aqui é que a variância cumulativa explicada pelos componentes deve ser de pelo menos 70%.</p>
+</div>
+<div id="análise-de-componentes-principais" class="section level2 unlisted unnumbered">
+<h2>Análise de Componentes Principais</h2>
+<p>Vamos reter apenas dois componentes ou fatores:</p>
+<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb301-1"></a>office.pca.two &lt;-<span class="st"> </span><span class="kw">PCA</span>(office.df, <span class="dt">ncp =</span> <span class="dv">2</span>, <span class="dt">graph=</span><span class="ot">FALSE</span>) <span class="co">#Peca dois fatores preenchendo o argumento ncp.</span></span></code></pre></div>
+<div id="cargas-fatoriais" class="section level3 unlisted unnumbered">
+<h3>Cargas fatoriais</h3>
+<p>Agora podemos inspecionar a tabela com as cargas fatoriais:</p>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb302-1"></a>office.pca.two<span class="op">$</span>var<span class="op">$</span>cor <span class="op">%&gt;%</span><span class="st"> </span><span class="co">#tabela com cargas fatoriais varimax </span></span>
+<span id="cb302-2"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb302-2"></a><span class="co">#, mas solicite uma rotacao varimax para melhorar a interpretacao</span></span>
+<span id="cb302-3"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb302-3"></a><span class="st">  </span>varimax</span></code></pre></div>
+<pre><code>## $loadings
+## 
+## Loadings:
+##                  Dim.1  Dim.2 
+## large_choice      0.516 -0.850
+## low_prices       -0.990       
+## service_quality   0.912 -0.410
+## product_quality   0.964       
+## convenience       0.175  0.978
+## preference_score  0.708 -0.706
+## 
+##                Dim.1 Dim.2
+## SS loadings    3.538 2.347
+## Proportion Var 0.590 0.391
+## Cumulative Var 0.590 0.981
+## 
+## $rotmat
+##           [,1]       [,2]
+## [1,] 0.8515627 -0.5242528
+## [2,] 0.5242528  0.8515627</code></pre>
+<p>Essas cargas são as correlações entre as dimensões originais (large_choice}, low_prices}, etc.) e dois fatores são extraídos (Dim.1 and Dim.2}). Nós vemos que low_prices}, service_quality}, e product_quality} pontuação alta no primeiro fator, enquanto large_choice}, convenience}, e preference_score} pontuação alta no segundo fator. Poderíamos, portanto, dizer que o primeiro fator descreve o preço e a qualidade da marca e que o segundo fator descreve a conveniência das lojas da marca.</p>
+<p>Também queremos saber quanto cada uma das seis dimensões é explicada pelos fatores extraídos. Para isso, precisamos calcular a comunalidade e / ou seu complemento, a singularidade das dimensões:</p>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb304-1"></a>loadings &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(office.pca.two<span class="op">$</span>var<span class="op">$</span>cor) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Precisamos capturar os carregamentos como um quadro de dados em um novo objeto. Use as_tibble(), caso contrario, nao podemos acessar os diferentes fatores</span></span>
+<span id="cb304-2"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb304-2"></a></span>
+<span id="cb304-3"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb304-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">variable =</span> <span class="kw">rownames</span>(office.pca.two<span class="op">$</span>var<span class="op">$</span>cor), <span class="co"># manter o controle dos nomes das linhas (eles sao removidos ao converter para tibble)</span></span>
+<span id="cb304-4"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb304-4"></a>         <span class="dt">communality =</span> Dim<span class="fl">.1</span><span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span>Dim<span class="fl">.2</span><span class="op">^</span><span class="dv">2</span>, </span>
+<span id="cb304-5"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb304-5"></a>         <span class="dt">uniqueness =</span> <span class="dv">1</span> <span class="op">-</span><span class="st"> </span>communality) <span class="co"># O operador ^ eleva um valor a uma determinada potencia. Para calcular a comunalidade, precisamos somar os quadrados das cargas em cada fator.</span></span>
+<span id="cb304-6"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb304-6"></a>         </span>
+<span id="cb304-7"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb304-7"></a>loadings</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 5
+##    Dim.1  Dim.2 variable         communality uniqueness
+##    &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;                  &lt;dbl&gt;      &lt;dbl&gt;
+## 1  0.885 -0.453 large_choice           0.988   0.0116  
+## 2 -0.845 -0.516 low_prices             0.980   0.0198  
+## 3  0.991  0.128 service_quality        0.999   0.000669
+## 4  0.841  0.473 product_quality        0.930   0.0696  
+## 5 -0.364  0.925 convenience            0.988   0.0124  
+## 6  0.973 -0.230 preference_score       0.999   0.000524</code></pre>
+<p>A comunalidade de uma variável é a porcentagem da variação dessa variável que é explicada pelos fatores. Seu complemento é chamado de exclusividade. A exclusividade (unicidade) pode ser puro erro de medição ou pode representar algo que é medido de forma confiável por essa variável específica, mas não por nenhuma das outras variáveis. Quanto maior a exclusividade, maior a probabilidade de que seja mais do que apenas erro de medição. Uma exclusividade superior a 0,6 é geralmente considerada alta. Se a exclusividade for alta, a variável não será bem explicada pelos fatores. Vemos que, para todas as dimensões, a comunalidade é alta e, portanto, a singularidade é baixa; portanto, todas as dimensões são bem capturadas pelos fatores extraídos.</p>
+</div>
+<div id="plotando-as-cargas-fatoriais" class="section level3 unlisted unnumbered">
+<h3>Plotando as cargas fatoriais</h3>
+<p>Também podemos plotar as cargas. Para isso, precisamos de outro pacote chamado factoextra:</p>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb306-1"></a><span class="co">#install.packages(factoextra)</span></span>
+<span id="cb306-2"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb306-2"></a><span class="kw">library</span>(factoextra)</span>
+<span id="cb306-3"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb306-3"></a><span class="kw">fviz_pca_var</span>(office.pca.two, <span class="dt">repel =</span> <span class="ot">TRUE</span>) <span class="co"># o argumento repel = TRUE garante que o texto seja exibido corretamente no grafico</span></span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-149-1.png" width="672" /></p>
+<p>Nós vimos que large_choice, service_quality, product_quality e preference_score têm pontuações altas no primeiro fator (o Dim1 do eixo X) e essa conveniência tem uma pontuação alta no segundo fator (o Dim2 do eixo Y). Também podemos adicionar as observações (as diferentes marcas) a esse gráfico:</p>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cb307-1"></a><span class="kw">fviz_pca_biplot</span>(office.pca.two, <span class="dt">repel =</span> <span class="ot">TRUE</span>) <span class="co"># tracar as cargas e as marcas juntas em uma trama</span></span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-150-1.png" width="672" /></p>
+<p>Isso também é chamado de biplot. Podemos ver, por exemplo, que o OfficeStar tem uma pontuação alta no primeiro fator.</p>
 
-<p><a href="https://bibliaportugues.com/proverbs/22-6.htm">Provérbios 22:6</a></p>
-<div id="nota-do-tradutor" class="section level4 unlisted unnumbered">
-<h4>Nota do tradutor</h4>
-<p>Esse e-book traduzido é oriundo de <a href="https://bookdown.org/content/1340/"><em>R for marketing students</em></a>.</p>
-
-<p><em>As traduções aqui são somente as transcrições. Não me preocupei em aperfeiçoá-las para a língua portuguesa com maior nível de clareza nos textos. As figuras e imagens não foram traduzidas.</em></p>
-<hr />
 </div>
 </div>
 </div>
@@ -291,8 +399,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
+<a href="análise-básica-de-dados-experimentos.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-<a href="sobre-este-tutorial.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -323,7 +431,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rhozon/rparamkt/edit/master/index.Rmd",
+"link": "https://github.com/rhozon/rparamkt/edit/master/05-pca.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -331,7 +439,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/rhozon/rparamkt/blob/master/index.Rmd",
+"link": "https://github.com/rhozon/rparamkt/blob/master/05-pca.Rmd",
 "text": null
 },
 "download": null,

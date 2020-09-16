@@ -224,6 +224,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="análise-básica-de-dados-experimentos.html"><a href="análise-básica-de-dados-experimentos.html#análise-ancova"><i class="fa fa-check"></i>Análise ANCOVA</a></li>
 <li class="chapter" data-level="" data-path="análise-básica-de-dados-experimentos.html"><a href="análise-básica-de-dados-experimentos.html#medidas-repetidas-anova"><i class="fa fa-check"></i>Medidas repetidas ANOVA</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><i class="fa fa-check"></i>Análise de componentes principais para mapas perceptivos (office dataset)</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#dados"><i class="fa fa-check"></i>Dados</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#importação"><i class="fa fa-check"></i>Importação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#manipulação"><i class="fa fa-check"></i>Manipulação</a></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#recapitulação-importação-e-manipulação"><i class="fa fa-check"></i>Recapitulação: importação e manipulação</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#quantos-fatores-devemos-considerar"><i class="fa fa-check"></i>Quantos fatores devemos considerar ?</a></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#análise-de-componentes-principais"><i class="fa fa-check"></i>Análise de Componentes Principais</a><ul>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cargas-fatoriais"><i class="fa fa-check"></i>Cargas fatoriais</a></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#plotando-as-cargas-fatoriais"><i class="fa fa-check"></i>Plotando as cargas fatoriais</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -251,7 +263,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="regressão-linear.html#cb147-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> airbnb, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> overall_satisfaction, <span class="dt">y =</span> price)) <span class="op">+</span></span>
 <span id="cb147-2"><a href="regressão-linear.html#cb147-2"></a><span class="st">  </span><span class="kw">geom_jitter</span>() <span class="co"># jitter em vez de pontos, caso contrario, muitos pontos sao desenhados um sobre o outro</span></span></code></pre></div>
 <pre><code>## Warning: Removed 7064 rows containing missing values (geom_point).</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-69-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-72-1.png" width="672" /></p>
 <p>(Recebemos uma mensagem de erro informando que várias linhas foram removidas. Essas são as linhas com valores ausentes para a overall_satisfaction, portanto, não há necessidade de se preocupar com essa mensagem de erro. Consulte as <a href="https://bookdown.org/content/1340/data.html#modelling_manipulations">manipulações de dados) para saber por que faltam valores para a overall_satisfaction.</a></p>
 <p>Os outliers de preço reduzem a informatividade do gráfico, portanto, vamos transformar a variável price. Também vamos adicionar alguns meios ao gráfico, como aprendemos <a href="https://bookdown.org/content/1340/graphs.html#graphs">aqui</a>, e uma linha de regressão:</p>
 <div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="regressão-linear.html#cb149-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> airbnb, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> overall_satisfaction, <span class="dt">y =</span> <span class="kw">log</span>(price, <span class="dt">base =</span> <span class="kw">exp</span>(<span class="dv">1</span>)))) <span class="op">+</span></span>
@@ -263,7 +275,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <pre><code>## Warning: Removed 7064 rows containing non-finite values (stat_smooth).</code></pre>
 <pre><code>## Warning: Removed 7064 rows containing missing values (geom_point).</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-70-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-73-1.png" width="672" /></p>
 <p>Vemos que o preço tende a aumentar um pouco com maior satisfação. Para testar se a relação entre preço e satisfação é realmente significativa, podemos realizar uma regressão simples (simples refere-se ao fato de haver apenas um preditor):</p>
 <div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="regressão-linear.html#cb155-1"></a>linearmodel &lt;-<span class="st"> </span><span class="kw">lm</span>(price <span class="op">~</span><span class="st"> </span>overall_satisfaction, <span class="dt">data =</span> airbnb) <span class="co"># criamos um modelo linear. O primeiro argumento eh o modelo que assume a forma de variavel dependente - variavel (s) independente (s). O segundo argumento sao os dados que devemos considerar.</span></span>
 <span id="cb155-2"><a href="regressão-linear.html#cb155-2"></a></span>
@@ -330,7 +342,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb163-2"><a href="regressão-linear.html#cb163-2"></a><span class="kw">library</span>(corrplot)</span></code></pre></div>
 <pre><code>## corrplot 0.84 loaded</code></pre>
 <div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="regressão-linear.html#cb165-1"></a><span class="kw">corrplot</span>(<span class="kw">cor</span>(airbnb.corr), <span class="dt">method =</span> <span class="st">&quot;number&quot;</span>, <span class="dt">type =</span> <span class="st">&quot;lower&quot;</span>, <span class="dt">bg =</span> <span class="st">&quot;grey&quot;</span>) <span class="co"># apresente numa tabela</span></span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-74-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-77-1.png" width="672" /></p>
 <p>As cores das correlações dependem de seus valores absolutos.</p>
 <p>Você também pode obter valores de p para as correlações (<span class="math inline">\(p &lt;0,05\)</span> indica que a correlação difere significativamente de zero):</p>
 <div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="regressão-linear.html#cb166-1"></a><span class="co"># O comando para os valores-p eh cor.mtest(airbnb.corr)</span></span>
@@ -425,7 +437,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb176-3"><a href="regressão-linear.html#cb176-3"></a><span class="st">  </span><span class="kw">geom_jitter</span>() <span class="op">+</span></span>
 <span id="cb176-4"><a href="regressão-linear.html#cb176-4"></a><span class="st">  </span><span class="kw">stat_smooth</span>(<span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-80-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-83-1.png" width="672" /></p>
 <p>Vemos que a relação entre overall_satisfaction e price é sempre positiva, mas é mais positiva para listagens com muitas críticas do que para listagens com poucas críticas. Pode haver muitas razões para isso. Talvez seja o caso de listagens com críticas positivas aumentarem o preço, mas somente depois de receberem uma certa quantidade de críticas.</p>
 <p>Também vemos que as listagens com muitas avaliações quase nunca têm uma classificação de satisfação menor que 3. Isso faz sentido, porque é difícil continuar atraindo pessoas quando a classificação de uma listagem é baixa. Listas com poucas críticas tendem a ter baixos índices de satisfação geral.</p>
 <p>Portanto, parece que nossos preditores estão correlacionados: quanto mais avaliações uma listagem tiver, maior será seu índice de satisfação. Isso potencialmente apresenta um problema que discutiremos em uma das próximas seções sobre <a href="https://bookdown.org/content/1340/linear-regression.html#multicollinearity">multicolinearidade</a></p>
@@ -449,7 +461,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb178-10"><a href="regressão-linear.html#cb178-10"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> residuals, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> value)) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb178-11"><a href="regressão-linear.html#cb178-11"></a><span class="st">  </span><span class="kw">geom_histogram</span>()</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-81-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-84-1.png" width="672" /></p>
 </div>
 <div id="homocedasticidade-de-resíduos" class="section level2 unlisted unnumbered">
 <h2>Homocedasticidade de resíduos</h2>
@@ -462,7 +474,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb180-6"><a href="regressão-linear.html#cb180-6"></a></span>
 <span id="cb180-7"><a href="regressão-linear.html#cb180-7"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> residuals_predicted, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> predicted, <span class="dt">y =</span> residuals)) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb180-8"><a href="regressão-linear.html#cb180-8"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-82-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-85-1.png" width="672" /></p>
 <p>Essa suposição é violada porque, quanto maiores nossos valores previstos, maior a variação que vemos nos resíduos.</p>
 </div>
 <div id="multicolinearidade" class="section level2 unlisted unnumbered">

@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="regressão-logística-opcional.html"/>
-
+<link rel="next" href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -223,6 +223,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="análise-básica-de-dados-experimentos.html"><a href="análise-básica-de-dados-experimentos.html#análise-ancova"><i class="fa fa-check"></i>Análise ANCOVA</a></li>
 <li class="chapter" data-level="" data-path="análise-básica-de-dados-experimentos.html"><a href="análise-básica-de-dados-experimentos.html#medidas-repetidas-anova"><i class="fa fa-check"></i>Medidas repetidas ANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><i class="fa fa-check"></i>Análise de componentes principais para mapas perceptivos (office dataset)</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#dados"><i class="fa fa-check"></i>Dados</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#importação"><i class="fa fa-check"></i>Importação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#manipulação"><i class="fa fa-check"></i>Manipulação</a></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#recapitulação-importação-e-manipulação"><i class="fa fa-check"></i>Recapitulação: importação e manipulação</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#quantos-fatores-devemos-considerar"><i class="fa fa-check"></i>Quantos fatores devemos considerar ?</a></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#análise-de-componentes-principais"><i class="fa fa-check"></i>Análise de Componentes Principais</a><ul>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cargas-fatoriais"><i class="fa fa-check"></i>Cargas fatoriais</a></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#plotando-as-cargas-fatoriais"><i class="fa fa-check"></i>Plotando as cargas fatoriais</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -438,7 +450,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="análise-básica-de-dados-experimentos.html#cb229-1"></a><span class="kw">library</span>(ggplot2)</span>
 <span id="cb229-2"><a href="análise-básica-de-dados-experimentos.html#cb229-2"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> powercc, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> gender, <span class="dt">y =</span> dominance)) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb229-3"><a href="análise-básica-de-dados-experimentos.html#cb229-3"></a><span class="st">  </span><span class="kw">geom_boxplot</span>()</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-107-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-110-1.png" width="672" /></p>
 <div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="análise-básica-de-dados-experimentos.html#cb230-1"></a>powercc <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb230-2"><a href="análise-básica-de-dados-experimentos.html#cb230-2"></a><span class="st">  </span><span class="kw">group_by</span>(gender) <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb230-3"><a href="análise-básica-de-dados-experimentos.html#cb230-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean_dominance =</span> <span class="kw">mean</span>(dominance),</span>
@@ -548,12 +560,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="análise-básica-de-dados-experimentos.html#cb248-1"></a><span class="co"># ao criar um grafico de caixa, o conjunto de dados que serve como entrada para o ggplot eh o conjunto de dados completo, nao o resumo com os meios</span></span>
 <span id="cb248-2"><a href="análise-básica-de-dados-experimentos.html#cb248-2"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> powercc, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> audience, <span class="dt">y =</span> cc, <span class="dt">fill =</span> power)) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb248-3"><a href="análise-básica-de-dados-experimentos.html#cb248-3"></a><span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="co"># argumentos sao os mesmos que para geom_bar, mas agora fornecemos a geom_boxplot</span></span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-115-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-118-1.png" width="672" /></p>
 <p>Os gráficos boxplot são informativos porque nos dão uma idéia da mediana e da distribuição dos dados. No entanto, em trabalhos acadêmicos, os resultados das experiências são tradicionalmente resumidos em gráficos de barras (mesmo que os gráficos boxplots sejam mais informativos).</p>
 <div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="análise-básica-de-dados-experimentos.html#cb249-1"></a><span class="co"># ao criar um grafico de barras, o conjunto de dados que serve como entrada para o ggplot eh o resumo com os meios, nao o conjunto de dados completo</span></span>
 <span id="cb249-2"><a href="análise-básica-de-dados-experimentos.html#cb249-2"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> powercc.summary, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> audience, <span class="dt">y =</span> mean, <span class="dt">fill =</span> power)) <span class="op">+</span></span>
 <span id="cb249-3"><a href="análise-básica-de-dados-experimentos.html#cb249-3"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-116-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-119-1.png" width="672" /></p>
 <p>Para criar um gráfico de barras, informamos ao ggplot as variáveis que devem estar no eixo X e no eixo Y e também usamos cores diferentes para diferentes níveis de potência com o comando fill. Então pedimos um gráfico de barras com geom_bar. stat = “identity” e position = “dodge” devem ser incluídos como argumentos para geom_bar, mas uma discussão sobre esses argumentos está além do escopo deste tutorial.</p>
 <p>Antes de prosseguirmos com a ANOVA, devemos verificar se suas premissas são atendidas. Discutimos as suposições da ANOVA anteriormente, mas ignoramos aqui.</p>
 <p>Para realizar uma ANOVA, precisamos instalar alguns pacotes:</p>
@@ -597,7 +609,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="análise-básica-de-dados-experimentos.html#cb257-1"></a><span class="co"># ao criar um grafico de barras, o conjunto de dados que serve como entrada para o ggplot eh o resumo com os meios, nao o conjunto de dados completo</span></span>
 <span id="cb257-2"><a href="análise-básica-de-dados-experimentos.html#cb257-2"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> powercc.summary,<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> audience, <span class="dt">y =</span> mean, <span class="dt">fill =</span> power)) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb257-3"><a href="análise-básica-de-dados-experimentos.html#cb257-3"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-119-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-122-1.png" width="672" /></p>
 <div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="análise-básica-de-dados-experimentos.html#cb258-1"></a>powercc.summary</span></code></pre></div>
 <pre><code>## # A tibble: 4 x 5
 ## # Groups:   audience [2]
@@ -691,7 +703,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb265-7"><a href="análise-básica-de-dados-experimentos.html#cb265-7"></a><span class="st">  </span><span class="kw">geom_jitter</span>() <span class="op">+</span><span class="st"> </span><span class="co"># Use geom_jitter em vez de geom_point, caso contrario, os pontos serao desenhados um sobre o outro</span></span>
 <span id="cb265-8"><a href="análise-básica-de-dados-experimentos.html#cb265-8"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&#39;lm&#39;</span>, <span class="dt">se=</span><span class="ot">FALSE</span>) <span class="co"># Desenhe uma linha de regressao linear atraves dos pontos.</span></span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-124-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-127-1.png" width="672" /></p>
 <p>Este gráfico é informativo. Isso nos mostra que, na condição privada, o efeito da alta versus baixa potência no consumo conspícuo é mais negativo para participantes menos dominantes do que para participantes mais dominantes. Na condição pública, o efeito da alta versus baixa potência no consumo conspícuo não difere entre os participantes menos versus os mais dominantes. Também vemos que, tanto na condição privada quanto na pública, os participantes mais vs. menos dominantes estão mais dispostos a gastar em consumo conspícuo.</p>
 <p>Vamos verificar se a interação de três vias é significativa:</p>
 <div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="análise-básica-de-dados-experimentos.html#cb267-1"></a>linearmodel &lt;-<span class="st"> </span><span class="kw">lm</span>(cc <span class="op">~</span><span class="st"> </span>power <span class="op">*</span><span class="st"> </span>audience <span class="op">*</span><span class="st"> </span>dominance, <span class="dt">data =</span> powercc)</span>
@@ -894,7 +906,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="análise-básica-de-dados-experimentos.html#cb285-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> powercc.long.summary, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> audience, <span class="dt">y =</span> wtp, <span class="dt">fill =</span> power)) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb285-2"><a href="análise-básica-de-dados-experimentos.html#cb285-2"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>consumption_type) <span class="op">+</span><span class="st"> </span><span class="co"># create a panel for each consumption type</span></span>
 <span id="cb285-3"><a href="análise-básica-de-dados-experimentos.html#cb285-3"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>)</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-134-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-137-1.png" width="672" /></p>
 <p>Agora podemos testar formalmente a interação de três vias:</p>
 <div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="análise-básica-de-dados-experimentos.html#cb286-1"></a><span class="co"># Especifique os dados, a variavel dependente, o identificador (wid),</span></span>
 <span id="cb286-2"><a href="análise-básica-de-dados-experimentos.html#cb286-2"></a><span class="co"># a variavel que representa a condicao dentro dos sujeitos e as variaveis que representam as condicoes entre os sujeitos.</span></span>
@@ -923,8 +935,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="regressão-logística-opcional.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="regressão-logística-opcional.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

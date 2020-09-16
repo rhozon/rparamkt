@@ -224,6 +224,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="análise-básica-de-dados-experimentos.html"><a href="análise-básica-de-dados-experimentos.html#análise-ancova"><i class="fa fa-check"></i>Análise ANCOVA</a></li>
 <li class="chapter" data-level="" data-path="análise-básica-de-dados-experimentos.html"><a href="análise-básica-de-dados-experimentos.html#medidas-repetidas-anova"><i class="fa fa-check"></i>Medidas repetidas ANOVA</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><i class="fa fa-check"></i>Análise de componentes principais para mapas perceptivos (office dataset)</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#dados"><i class="fa fa-check"></i>Dados</a><ul>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#importação"><i class="fa fa-check"></i>Importação</a></li>
+<li class="chapter" data-level="" data-path="análise-básica-de-dados-analisando-dados-secundários.html"><a href="análise-básica-de-dados-analisando-dados-secundários.html#manipulação"><i class="fa fa-check"></i>Manipulação</a></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#recapitulação-importação-e-manipulação"><i class="fa fa-check"></i>Recapitulação: importação e manipulação</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#quantos-fatores-devemos-considerar"><i class="fa fa-check"></i>Quantos fatores devemos considerar ?</a></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#análise-de-componentes-principais"><i class="fa fa-check"></i>Análise de Componentes Principais</a><ul>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#cargas-fatoriais"><i class="fa fa-check"></i>Cargas fatoriais</a></li>
+<li class="chapter" data-level="" data-path="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html"><a href="análise-de-componentes-principais-para-mapas-perceptivos-office-dataset.html#plotando-as-cargas-fatoriais"><i class="fa fa-check"></i>Plotando as cargas fatoriais</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -900,7 +912,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Vamos criar um <em>scatterplot</em> dos preços por cidade:</p>
 <div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="introdução-ao-r.html#cb68-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> airbnb.topten, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> city, <span class="dt">y =</span> price)) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb68-2"><a href="introdução-ao-r.html#cb68-2"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
 <p>Se tudo correr bem, uma plotagem deve aparecer no canto inferior direito da tela. As figuras são feitas com o comando ggplot. Na primeira linha, você diz ao ggplot quais dados devem ser usados para criar um gráfico e quais variáveis devem aparecer no eixo X e no eixo Y. Dizemos para colocar cidade no eixo X e preço no eixo Y. A especificação do eixo X e do eixo Y sempre deve vir como argumentos para uma função aes, que por sua vez é fornecida como um argumento para a função mapping (mapeamento). Na segunda linha, você diz ao ggplot para desenhar pontos (geom_point).</p>
 <p>Ao criar um gráfico, lembre-se de sempre adicionar um <span class="math inline">\(+\)</span> no final de cada linha de código que compõe o gráfico, exceto o último (adicionar o <span class="math inline">\(+\)</span> no início de uma linha não funcionará).</p>
 <p>O gráfico não é muito informativo porque muitos pontos são desenhados um sobre o outro.</p>
@@ -910,7 +922,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Vamos adicionar o gráfico do tipo jitter aos nossos pontos:</p>
 <div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="introdução-ao-r.html#cb69-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> airbnb.topten, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> city, <span class="dt">y =</span> price)) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb69-2"><a href="introdução-ao-r.html#cb69-2"></a><span class="st">  </span><span class="kw">geom_jitter</span>() <span class="co"># O mesmo codigo de antes mas agora mudamos geom_point para geom_jitter.</span></span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
 <p>Em vez de solicitar pontos com geom_point(), agora solicitamos pontos com jitter adicionado com geom_jitter(). Jitter é um valor aleatório que é adicionado a cada coordenada X e Y, de modo que os pontos de dados não sejam desenhados um sobre o outro. Observe que fazemos isso apenas para tornar o gráfico mais informativo (compare-o com o gráfico de dispersão anterior, onde muitos pontos de dados são desenhados um sobre o outro); não altera os valores reais em nosso conjunto de dados.</p>
 </div>
 <div id="histograma" class="section level3 unlisted unnumbered">
@@ -924,7 +936,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="introdução-ao-r.html#cb70-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> airbnb.topten, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> price)) <span class="op">+</span><span class="st"> </span><span class="co"># Observe que nao temos mais uma cidade x =. O preco deve estar no eixo X e as frequencias dos precos devem estar no eixo Y</span></span>
 <span id="cb70-2"><a href="introdução-ao-r.html#cb70-2"></a><span class="st">  </span><span class="kw">geom_histogram</span>() <span class="co"># Eixo Y = frequencia dos valores no eixo X</span></span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
 <p>De fato, existem alguns preços extremamente altos (em comparação com a maioria dos preços), portanto, os preços estão inclinados à direita. Nota: o stat_bin() usando compartimentos = 30. Escolha um valor melhor com o aviso de largura de caixa no console que possa ser ignorado com segurança.</p>
 </div>
 <div id="transformação-logarítmica" class="section level3 unlisted unnumbered">
@@ -934,7 +946,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb72-2"><a href="introdução-ao-r.html#cb72-2"></a></span>
 <span id="cb72-3"><a href="introdução-ao-r.html#cb72-3"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> airbnb.topten, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> city, <span class="dt">y =</span> <span class="kw">log</span>(price, <span class="dt">base=</span><span class="kw">exp</span>(<span class="dv">1</span>)))) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb72-4"><a href="introdução-ao-r.html#cb72-4"></a><span class="st">  </span><span class="kw">geom_jitter</span>()</span></code></pre></div>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
 </div>
 <div id="plotando-a-mediana" class="section level3 unlisted unnumbered">
 <h3>Plotando a mediana</h3>
@@ -943,13 +955,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb73-2"><a href="introdução-ao-r.html#cb73-2"></a><span class="st">  </span><span class="kw">geom_jitter</span>() <span class="op">+</span></span>
 <span id="cb73-3"><a href="introdução-ao-r.html#cb73-3"></a><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y=</span>median, <span class="dt">colour=</span><span class="st">&quot;tomato3&quot;</span>, <span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">geom=</span><span class="st">&quot;point&quot;</span>)</span></code></pre></div>
 <pre><code>## Warning: `fun.y` is deprecated. Use `fun` instead.</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
 <p>A linha de código para obter a mediana pode ser lida da seguinte forma: stat_summary solicitará um resumo estatístico. A estatística que queremos é a mediana em uma cor chamada tomato3, com tamanho 4. Ela deve ser representada como um “ponto”. Vemos que Bruges é a cidade com o preço mediano mais alto. É muito mais fácil ver isso quando transformamos o preço por log:</p>
 <div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="introdução-ao-r.html#cb75-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> airbnb.topten, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> city, <span class="dt">y =</span> <span class="kw">log</span>(price, <span class="dt">base =</span> <span class="kw">exp</span>(<span class="dv">1</span>)))) <span class="op">+</span><span class="st"> </span></span>
 <span id="cb75-2"><a href="introdução-ao-r.html#cb75-2"></a><span class="st">  </span><span class="kw">geom_jitter</span>() <span class="op">+</span></span>
 <span id="cb75-3"><a href="introdução-ao-r.html#cb75-3"></a><span class="st">  </span><span class="kw">stat_summary</span>(<span class="dt">fun.y=</span>median, <span class="dt">colour=</span><span class="st">&quot;tomato3&quot;</span>, <span class="dt">size =</span> <span class="dv">4</span>, <span class="dt">geom=</span><span class="st">&quot;point&quot;</span>)</span></code></pre></div>
 <pre><code>## Warning: `fun.y` is deprecated. Use `fun` instead.</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
 </div>
 <div id="plotando-a-média" class="section level3 unlisted unnumbered">
 <h3>Plotando a média</h3>
@@ -961,7 +973,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## Warning: `fun.y` is deprecated. Use `fun` instead.
 
 ## Warning: `fun.y` is deprecated. Use `fun` instead.</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
 <p>O código para obter a média é muito semelhante ao usado para obter a mediana. Simplesmente alteramos a estatística, a cor e adicionamos a forma =23 para obter diamantes em vez de círculos e preencher =green para preencher os diamantes (pontos do gráfico). Vemos que os meios e medianas são bastante semelhantes.</p>
 </div>
 <div id="salvando-imagens" class="section level3 unlisted unnumbered">
