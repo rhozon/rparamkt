@@ -28,12 +28,11 @@ Seus contatos podem ser acessados em:
   
   Este bookdown foi escrito no inicialmente no [overleaf](http://www.overleaf.com) com o pacote knitr [para a página interativa de autoria de KU Leven Marketing Department.](https://bookdown.org/content/1340/)
   
+  [Baixe a versão .pdf deste e-book traduzido aqui](https://github.com/rhozon/R-para-estudantes-de-marketing/raw/master/R_para_estudantes_de_marketing.pdf)
+  
 ***
 
-
 Ao meu amado paizão e professor pra vida inteira, Ronaldo --  _"Ensina a criança no caminho em que deve andar, e, ainda quando for velho, não se desviará dele."_
-
-
 
 
 \hspace{13cm}[Provérbios 22:6](https://bibliaportugues.com/proverbs/22-6.htm)
